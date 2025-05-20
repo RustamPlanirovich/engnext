@@ -1,0 +1,507 @@
+import fs from 'fs';
+import path from 'path';
+import { Analytics, AnalyticsItem, Example, Lesson } from '@/types/lesson';
+import { getActiveProfile } from './profileUtils';
+
+// Server-side utility functions that use Node.js modules
+const DATA_DIR = path.join(process.cwd(), 'data');
+const LESSONS_DIR = path.join(DATA_DIR, 'lessons');
+const ANALYTICS_DIR = path.join(DATA_DIR, 'analytics');
+const ANALYTICS_FILE = path.join(DATA_DIR, 'analytics.json');
+
+// Ensure data directories exist
+export const ensureDirectories = () => {
+  if (!fs.existsSync(DATA_DIR)) {
+    fs.mkdirSync(DATA_DIR, { recursive: true });
+  }
+  
+  if (!fs.existsSync(LESSONS_DIR)) {
+    fs.mkdirSync(LESSONS_DIR, { recursive: true });
+  }
+  
+  if (!fs.existsSync(ANALYTICS_DIR)) {
+    fs.mkdirSync(ANALYTICS_DIR, { recursive: true });
+  }
+};
+
+// Get all available lessons
+export const getLessons = (): string[] => {
+  ensureDirectories();
+  try {
+    return fs.readdirSync(LESSONS_DIR)
+      .filter(file => file.endsWith('.json'))
+      .map(file => file.replace('.json', ''));
+  } catch (error) {
+    console.error('Error reading lessons directory:', error);
+    return [];
+  }
+};
+
+// Get a specific lesson by ID
+export const getLesson = (lessonId: string): Lesson | null => {
+  try {
+    const lessonPath = path.join(LESSONS_DIR, `${lessonId}.json`);
+    if (!fs.existsSync(lessonPath)) {
+      // Check if the lesson exists in the root directory (for lesson1.json)
+      const rootLessonPath = path.join(process.cwd(), `${lessonId}.json`);
+      if (fs.existsSync(rootLessonPath)) {
+        const lessonData = fs.readFileSync(rootLessonPath, 'utf8');
+        return JSON.parse(lessonData);
+      }
+      return null;
+    }
+    const lessonData = fs.readFileSync(lessonPath, 'utf8');
+    return JSON.parse(lessonData);
+  } catch (error) {
+    console.error(`Error reading lesson ${lessonId}:`, error);
+    return null;
+  }
+};
+
+// Extract all examples from a lesson for exercises
+export const extractExamples = (lesson: Lesson): Example[] => {
+  const examples: Example[] = [];
+  
+  const processSubconcept = (subconcept: any) => {
+    if (subconcept.examples) {
+      examples.push(...subconcept.examples);
+    }
+    
+    if (subconcept.subconcepts) {
+      subconcept.subconcepts.forEach(processSubconcept);
+    }
+  };
+  
+  lesson.subconcepts.forEach(processSubconcept);
+  
+  return examples;
+};
+
+// Get analytics data
+export const getAnalytics = (profileId?: string): Analytics => {
+  // If profileId is not provided, try to get the active profile
+  if (!profileId) {
+    const activeProfile = getActiveProfile();
+    profileId = activeProfile?.id;
+  }
+  
+  // Если ID профиля не найден, возвращаем пустую аналитику без создания файла
+  if (!profileId) {
+    return {
+      errors: [],
+      completedLessons: [],
+      loadedLessons: [],
+      totalExercisesCompleted: 0,
+      lastPracticeDate: 0
+    };
+  }
+  
+  // Используем ID профиля для пути к файлу аналитики
+  const analyticsPath = path.join(ANALYTICS_DIR, `${profileId}.json`);
+  
+  if (!fs.existsSync(analyticsPath)) {
+    const defaultAnalytics: Analytics = {
+      errors: [],
+      completedLessons: [],
+      loadedLessons: [],
+      totalExercisesCompleted: 0,
+      lastPracticeDate: 0
+    };
+    
+    // Ensure the directory exists
+    const dir = path.dirname(analyticsPath);
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+    
+    fs.writeFileSync(analyticsPath, JSON.stringify(defaultAnalytics, null, 2));
+    return defaultAnalytics;
+  }
+  
+  const analyticsData = fs.readFileSync(analyticsPath, 'utf8');
+  return JSON.parse(analyticsData);
+};
+
+// Save analytics data
+export const saveAnalytics = (analytics: Analytics, profileId?: string): void => {
+  try {
+    // If profileId is not provided, try to get the active profile
+    if (!profileId) {
+      const activeProfile = getActiveProfile();
+      profileId = activeProfile?.id;
+    }
+    
+    // Если ID профиля не найден, не сохраняем аналитику
+    if (!profileId) {
+      console.warn('Попытка сохранить аналитику без ID профиля');
+      return;
+    }
+    
+    // Используем ID профиля для пути к файлу аналитики
+    const analyticsPath = path.join(ANALYTICS_DIR, `${profileId}.json`);
+    
+    // Ensure the directory exists
+    const dir = path.dirname(analyticsPath);
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+    
+    fs.writeFileSync(analyticsPath, JSON.stringify(analytics, null, 2));
+  } catch (error) {
+    console.error('Error saving analytics:', error);
+  }
+};
+
+// Generate a unique ID for an error entry
+function generateErrorId(lessonId: string, sentence: { russian: string, english: string }, timestamp: number): string {
+  return `${lessonId}_${sentence.russian}_${sentence.english}_${timestamp}`;
+}
+
+// Add an error to analytics
+export const addError = (lessonId: string, sentence: { russian: string, english: string }, profileId?: string): void => {
+  try {
+    const analytics = getAnalytics(profileId);
+    const timestamp = Date.now();
+    
+    // Add new error entry with unique ID
+    const errorId = generateErrorId(lessonId, sentence, timestamp);
+    
+    analytics.errors.push({
+      id: errorId,
+      lessonId,
+      sentence,
+      errors: 1,
+      timestamp
+    });
+    
+    saveAnalytics(analytics, profileId);
+  } catch (error) {
+    console.error('Error adding error to analytics:', error);
+  }
+};
+
+// Remove error from analytics when user correctly answers in practice mode
+export const removeError = (lessonId: string, sentence: { russian: string, english: string }, errorId?: string, profileId?: string): void => {
+  try {
+    console.log(`Attempting to remove error: ${errorId || 'no ID'} for sentence "${sentence.english}"`);
+    
+    const analytics = getAnalytics(profileId);
+    console.log(`Current errors count: ${analytics.errors.length}`);
+    
+    let errorIndex = -1;
+    
+    if (errorId) {
+      // Find the error by ID if provided
+      errorIndex = analytics.errors.findIndex(error => error.id === errorId);
+      console.log(`Searching by ID ${errorId}, found at index: ${errorIndex}`);
+    } else {
+      // Fallback to finding by content (for backward compatibility)
+      errorIndex = analytics.errors.findIndex(
+        error => error.lessonId === lessonId && 
+                 error.sentence.russian === sentence.russian && 
+                 error.sentence.english === sentence.english
+      );
+      console.log(`Searching by content, found at index: ${errorIndex}`);
+      
+      // If not found by exact match, try case-insensitive match
+      if (errorIndex === -1) {
+        errorIndex = analytics.errors.findIndex(
+          error => error.lessonId === lessonId && 
+                  error.sentence.russian.toLowerCase() === sentence.russian.toLowerCase() && 
+                  error.sentence.english.toLowerCase() === sentence.english.toLowerCase()
+        );
+        console.log(`Searching by case-insensitive content, found at index: ${errorIndex}`);
+      }
+    }
+    
+    if (errorIndex !== -1) {
+      // Log the error being removed
+      const errorToRemove = analytics.errors[errorIndex];
+      console.log(`Removing error: ${JSON.stringify(errorToRemove)}`);
+      
+      // Remove the error from the list
+      analytics.errors.splice(errorIndex, 1);
+      console.log(`Errors after removal: ${analytics.errors.length}`);
+      
+      // Save updated analytics
+      saveAnalytics(analytics, profileId);
+      console.log('Analytics saved successfully after error removal');
+    } else {
+      console.log(`No matching error found to remove for "${sentence.english}"`);
+      
+      // Log all errors for debugging
+      console.log('Current errors:');
+      analytics.errors.forEach((error, index) => {
+        console.log(`${index}: ${error.id} - "${error.sentence.english}" (${error.lessonId})`);
+      });
+    }
+  } catch (error) {
+    console.error('Error removing error from analytics:', error);
+  }
+};
+
+// Mark a lesson as completed
+export const markLessonCompleted = (lessonId: string, profileId?: string): void => {
+  const analytics = getAnalytics(profileId);
+  
+  if (!analytics.completedLessons.includes(lessonId)) {
+    analytics.completedLessons.push(lessonId);
+    analytics.lastPracticeDate = Date.now();
+    
+    // Удалить прогресс для этого урока, так как он завершен
+    if (analytics.lessonProgress) {
+      analytics.lessonProgress = analytics.lessonProgress.filter(p => p.lessonId !== lessonId);
+    }
+    
+    saveAnalytics(analytics, profileId);
+  }
+};
+
+// Сохранить прогресс урока
+export const saveLessonProgress = (lessonId: string, lastExerciseEnglish: string, profileId?: string): void => {
+  try {
+    const analytics = getAnalytics(profileId);
+    
+    // Если урок уже завершен, не сохраняем прогресс
+    if (analytics.completedLessons.includes(lessonId)) {
+      return;
+    }
+    
+    // Инициализируем массив прогресса, если он не существует
+    if (!analytics.lessonProgress) {
+      analytics.lessonProgress = [];
+    }
+    
+    // Проверяем, есть ли уже прогресс для этого урока
+    const existingProgressIndex = analytics.lessonProgress.findIndex(p => p.lessonId === lessonId);
+    
+    if (existingProgressIndex !== -1) {
+      // Обновляем существующий прогресс
+      analytics.lessonProgress[existingProgressIndex] = {
+        lessonId,
+        lastExerciseEnglish,
+        timestamp: Date.now()
+      };
+    } else {
+      // Добавляем новый прогресс
+      analytics.lessonProgress.push({
+        lessonId,
+        lastExerciseEnglish,
+        timestamp: Date.now()
+      });
+    }
+    
+    // Обновляем дату последней практики
+    analytics.lastPracticeDate = Date.now();
+    
+    // Сохраняем аналитику с обновленным прогрессом
+    saveAnalytics(analytics, profileId);
+    
+    console.log(`Progress saved for lesson ${lessonId}: ${lastExerciseEnglish}`);
+  } catch (error) {
+    console.error('Error saving lesson progress:', error);
+  }
+};
+
+// Получить прогресс урока
+export const getLessonProgress = (lessonId: string, profileId?: string): string | null => {
+  const analytics = getAnalytics(profileId);
+  
+  // Если урок уже завершен или нет прогресса, возвращаем null
+  if (analytics.completedLessons.includes(lessonId) || !analytics.lessonProgress) {
+    return null;
+  }
+  
+  // Находим прогресс для этого урока
+  const progress = analytics.lessonProgress.find(p => p.lessonId === lessonId);
+  
+  return progress ? progress.lastExerciseEnglish : null;
+};
+
+// Get most problematic sentences for practice
+export const getMostProblematicSentences = (limit: number = 10, profileId?: string): AnalyticsItem[] => {
+  const analytics = getAnalytics(profileId);
+  
+  return [...analytics.errors]
+    .sort((a, b) => b.errors - a.errors)
+    .slice(0, limit);
+};
+
+// Save a new lesson file
+export const saveLesson = async (fileName: string, lessonData: string): Promise<{ success: boolean, message: string }> => {
+  ensureDirectories();
+  
+  try {
+    // Validate JSON
+    JSON.parse(lessonData);
+    
+    const lessonFileName = fileName.endsWith('.json') ? fileName : `${fileName}.json`;
+    const lessonPath = path.join(LESSONS_DIR, lessonFileName);
+    
+    // Check if file already exists
+    if (fs.existsSync(lessonPath)) {
+      return { 
+        success: false, 
+        message: 'Файл с таким именем уже существует. Пожалуйста, выберите другое имя.' 
+      };
+    }
+    
+    fs.writeFileSync(lessonPath, lessonData);
+    
+    // Update loaded lessons in analytics
+    const analytics = getAnalytics();
+    const lessonId = lessonFileName.replace('.json', '');
+    
+    if (!analytics.loadedLessons.includes(lessonId)) {
+      analytics.loadedLessons.push(lessonId);
+      saveAnalytics(analytics);
+    }
+    
+    return { success: true, message: 'Урок успешно сохранен.' };
+  } catch (error) {
+    console.error('Error saving lesson file:', error);
+    return { 
+      success: false, 
+      message: 'Ошибка при сохранении файла. Проверьте формат JSON.' 
+    };
+  }
+};
+
+// Delete a lesson file
+export const deleteLesson = (lessonId: string): { success: boolean, message: string } => {
+  ensureDirectories();
+  
+  try {
+    const lessonPath = path.join(LESSONS_DIR, `${lessonId}.json`);
+    
+    // Don't allow deleting lesson1.json from the root directory
+    if (lessonId === 'lesson1') {
+      return { 
+        success: false, 
+        message: 'Нельзя удалить базовый урок lesson1.json.' 
+      };
+    }
+    
+    // Check if file exists
+    if (!fs.existsSync(lessonPath)) {
+      return { 
+        success: false, 
+        message: 'Файл урока не найден.' 
+      };
+    }
+    
+    fs.unlinkSync(lessonPath);
+    
+    // Update loaded lessons in analytics
+    const analytics = getAnalytics();
+    analytics.loadedLessons = analytics.loadedLessons.filter(id => id !== lessonId);
+    
+    // Remove errors related to this lesson
+    analytics.errors = analytics.errors.filter(error => error.lessonId !== lessonId);
+    
+    // Remove from completed lessons if present
+    analytics.completedLessons = analytics.completedLessons.filter(id => id !== lessonId);
+    
+    saveAnalytics(analytics);
+    
+    return { success: true, message: 'Урок успешно удален.' };
+  } catch (error) {
+    console.error('Error deleting lesson file:', error);
+    return { 
+      success: false, 
+      message: 'Ошибка при удалении файла.' 
+    };
+  }
+};
+
+// Create backup of analytics
+export const createAnalyticsBackup = (profileId?: string): { success: boolean, message: string } => {
+  try {
+    // Create backup directory if it doesn't exist
+    const backupDir = path.join(DATA_DIR, 'backups');
+    if (!fs.existsSync(backupDir)) {
+      fs.mkdirSync(backupDir, { recursive: true });
+    }
+    
+    // Create timestamp for backup filename
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+    
+    if (profileId) {
+      // Backup specific profile
+      const analytics = getAnalytics(profileId);
+      const backupFile = path.join(backupDir, `analytics-backup-${profileId}-${timestamp}.json`);
+      fs.writeFileSync(backupFile, JSON.stringify(analytics, null, 2));
+      
+      return {
+        success: true,
+        message: `Backup created successfully for profile ${profileId}: ${path.basename(backupFile)}`
+      };
+    } else {
+      // Backup all profiles
+      const profilesDir = path.join(DATA_DIR, 'profiles');
+      const profilesFile = path.join(profilesDir, 'profiles.json');
+      
+      if (fs.existsSync(profilesFile)) {
+        const profilesData = JSON.parse(fs.readFileSync(profilesFile, 'utf8'));
+        const backupProfilesFile = path.join(backupDir, `profiles-backup-${timestamp}.json`);
+        fs.writeFileSync(backupProfilesFile, JSON.stringify(profilesData, null, 2));
+      }
+      
+      // Backup default analytics file if it exists
+      const defaultAnalyticsFile = path.join(DATA_DIR, 'analytics.json');
+      if (fs.existsSync(defaultAnalyticsFile)) {
+        const analytics = JSON.parse(fs.readFileSync(defaultAnalyticsFile, 'utf8'));
+        const backupFile = path.join(backupDir, `analytics-backup-default-${timestamp}.json`);
+        fs.writeFileSync(backupFile, JSON.stringify(analytics, null, 2));
+      }
+      
+      // Backup all profile analytics files
+      const analyticsDir = path.join(DATA_DIR, 'analytics');
+      if (fs.existsSync(analyticsDir)) {
+        const files = fs.readdirSync(analyticsDir);
+        for (const file of files) {
+          if (file.endsWith('.json')) {
+            const filePath = path.join(analyticsDir, file);
+            const profileId = file.replace('.json', '');
+            const backupFile = path.join(backupDir, `analytics-backup-${profileId}-${timestamp}.json`);
+            fs.copyFileSync(filePath, backupFile);
+          }
+        }
+      }
+      
+      return {
+        success: true,
+        message: `Backup created successfully for all profiles at ${timestamp}`
+      };
+    }
+  } catch (error) {
+    console.error('Error creating analytics backup:', error);
+    return {
+      success: false,
+      message: `Failed to create backup: ${error instanceof Error ? error.message : String(error)}`
+    };
+  }
+};
+
+// Copy lesson1.json to the lessons directory if it doesn't exist there
+export const copyLesson1ToLessonsDir = (): void => {
+  ensureDirectories();
+  
+  const rootLesson1Path = path.join(process.cwd(), 'lesson1.json');
+  const lessonsLesson1Path = path.join(LESSONS_DIR, 'lesson1.json');
+  
+  if (fs.existsSync(rootLesson1Path) && !fs.existsSync(lessonsLesson1Path)) {
+    try {
+      fs.copyFileSync(rootLesson1Path, lessonsLesson1Path);
+      
+      // Update loaded lessons in analytics
+      const analytics = getAnalytics();
+      if (!analytics.loadedLessons.includes('lesson1')) {
+        analytics.loadedLessons.push('lesson1');
+        saveAnalytics(analytics);
+      }
+    } catch (error) {
+      console.error('Error copying lesson1.json to lessons directory:', error);
+    }
+  }
+};

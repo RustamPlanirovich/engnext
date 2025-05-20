@@ -1,0 +1,18 @@
+{
+  "profiles": [
+    {
+      "id": "89d44248-d032-4e74-9dfd-e3ad4c28537f",
+      "name": "Папа",
+      "createdAt": 1747582657579,
+      "lastActiveAt": 1747587363214,
+      "isAdmin": true,
+      "settings": {
+        "timerEnabled": false,
+        "timerDuration": 30,
+        "darkMode": false,
+        "exerciseMode": "ru-to-en-typing",
+        "exercisesPerSession": 10
+      }
+    }
+  ]
+}
