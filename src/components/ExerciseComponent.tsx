@@ -482,7 +482,7 @@ export default function ExerciseComponent({
       } else if ('id' in currentExample && currentExample.id) {
         // Если это не режим практики и у примера есть ID, добавляем его в список пройденных
         console.log(`Marking sentence as completed: ${String(currentExample.id)}`);
-        saveLessonProgress(lessonId, currentExample.english, currentExample.id);
+        saveLessonProgress(lessonId, currentExample.english, String(currentExample.id));
       }
     }
     
@@ -522,7 +522,7 @@ export default function ExerciseComponent({
       } else if ('id' in currentExample && currentExample.id) {
         // Если это не режим практики и у примера есть ID, добавляем его в список пройденных
         console.log(`Marking sentence as completed: ${String(currentExample.id)}`);
-        saveLessonProgress(lessonId, currentExample.english, currentExample.id);
+        saveLessonProgress(lessonId, currentExample.english, String(currentExample.id));
       }
     }
     
