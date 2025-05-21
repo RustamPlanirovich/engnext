@@ -1,0 +1,442 @@
+{
+  "concept": "Уровень А0. Урок 5",
+  "explanation": "-",
+  "source": "-",
+  "subconcepts": [
+    {
+      "concept": "-",
+      "explanation": "-",
+      "formula": "-",
+      "source": "-",
+      "examples": [
+        {
+          "russian": "Я хочу путешествовать",
+          "english": "I want to travel",
+          "source": "",
+          "id": "4dd20091-78df-4ec3-bfeb-4ac514983638",
+          "learn": 0
+        },
+        {
+          "russian": "Я хочу увидеть это",
+          "english": "I want to see it",
+          "source": "",
+          "id": "8238c3db-c318-4504-866e-ef7445bcb298",
+          "learn": 0
+        },
+        {
+          "russian": "Я хочу понять это",
+          "english": "I want to understand it",
+          "source": "",
+          "id": "b1b4a043-ed17-4502-876a-6c7d82c8a3d7",
+          "learn": 0
+        },
+        {
+          "russian": "Я бы хотел пойти туда сейчас",
+          "english": "I'd like to go there now",
+          "source": "",
+          "id": "22e62296-2716-41bb-b549-300ae1ad6405",
+          "learn": 0
+        },
+        {
+          "russian": "Я хотел бы посетить новые страны и города",
+          "english": "I'd like to visit new countries and cities",
+          "source": "",
+          "id": "61473e8b-e8e4-4ac5-87c9-212674aaad3c",
+          "learn": 0
+        },
+        {
+          "russian": "Я хочу пойти туда",
+          "english": "I want to go there",
+          "source": "",
+          "id": "17c0a0a5-dd2c-4a91-9811-afe066e1ebee",
+          "learn": 0
+        },
+        {
+          "russian": "Я хотел бы сделать это сейчас",
+          "english": "I'd like to do it now",
+          "source": "",
+          "id": "a03dc239-747b-4540-9e2a-471d5e50634d",
+          "learn": 0
+        },
+        {
+          "russian": "Я хочу быть счастливым",
+          "english": "I want to be happy",
+          "source": "",
+          "id": "d2ba1fcc-370e-48d8-9271-161dce3cc672",
+          "learn": 0
+        },
+        {
+          "russian": "Мы хотим посетить Италию в следующем месяце",
+          "english": "We want to Visit italy next month",
+          "source": "",
+          "id": "3e2ac57a-d98c-4f2a-9541-4ba4fda332ba",
+          "learn": 0
+        },
+        {
+          "russian": "Я хочу посетить Англию",
+          "english": "I want to visit England",
+          "source": "",
+          "id": "6bf17da0-e749-4496-b8a9-a7ad2edb49b7",
+          "learn": 0
+        },
+        {
+          "russian": "Я хочу посетить Германию",
+          "english": "I want to visit Germany",
+          "source": "",
+          "id": "06bd6204-8b62-49a2-8899-9be5d8026b93",
+          "learn": 0
+        },
+        {
+          "russian": "Я хочу посетить Соединённые Штаты",
+          "english": "I want to visit the United States",
+          "source": "",
+          "id": "06368f1b-7731-43d4-8af8-4775ccafae0a",
+          "learn": 0
+        },
+        {
+          "russian": "Я хочу поехать в Англию",
+          "english": "I want to go to England",
+          "source": "",
+          "id": "68643665-0b52-4765-afec-7637bca3a254",
+          "learn": 0
+        },
+        {
+          "russian": "Я хочу поехать во Францию",
+          "english": "I want to go to France",
+          "source": "",
+          "id": "5defa2b4-ac1f-49c9-82ae-fe6627c2d495",
+          "learn": 0
+        },
+        {
+          "russian": "Я хочу поехать в Америку",
+          "english": "I want to go to America",
+          "source": "",
+          "id": "6da57e1d-89b9-4f45-a3f8-714d5419ed67",
+          "learn": 0
+        },
+        {
+          "russian": "Я хочу поехать в Соединённые Штаты",
+          "english": "I want to go to the United States",
+          "source": "",
+          "id": "cbab95d4-24eb-4264-ab64-07348322ce89",
+          "learn": 0
+        },
+        {
+          "russian": "Я хотел бы поехать в Англию",
+          "english": "I'd like to go to England",
+          "source": "",
+          "id": "8b934b57-a78a-4d84-96db-a9a49142ecc4",
+          "learn": 0
+        },
+        {
+          "russian": "Я хотел бы поехать в Америку",
+          "english": "I'd like to go to America",
+          "source": "",
+          "id": "4f32098d-0b42-4639-98ce-601fc7392c8f",
+          "learn": 0
+        },
+        {
+          "russian": "Я хотел бы поехать в Соединённые Штаты",
+          "english": "I'd like to go to the United States",
+          "source": "",
+          "id": "d1f44645-434d-4896-8a18-fd818d020ee6",
+          "learn": 0
+        },
+        {
+          "russian": "Я хочу купить билет",
+          "english": "I want to buy a ticket",
+          "source": "",
+          "id": "f3979475-b4ab-446e-8ff3-4a1cfa1aaa61",
+          "learn": 0
+        },
+        {
+          "russian": "Я хотел бы купить один билет",
+          "english": "I'd like to buy one ticket",
+          "source": "",
+          "id": "3398c07b-d393-4a5d-b2ab-f8bd56923699",
+          "learn": 0
+        },
+        {
+          "russian": "Мы хотим купить два билета",
+          "english": "We want to buy tickets",
+          "source": "",
+          "id": "470def30-7167-486f-9390-661f18b83bad",
+          "learn": 0
+        },
+        {
+          "russian": "Я хочу купить компьютер",
+          "english": "I want to buy a computer",
+          "source": "",
+          "id": "688b025a-4b73-4e1d-8986-4359b4c623b8",
+          "learn": 0
+        },
+        {
+          "russian": "Я хочу купить этот компьютер",
+          "english": "I want to buy this computer",
+          "source": "",
+          "id": "27b1fae8-ce09-461b-98b9-8510cbdbdfcd",
+          "learn": 0
+        },
+        {
+          "russian": "Я хотел бы купить тот компьютер",
+          "english": "I'd like to buy that computer",
+          "source": "",
+          "id": "3c979054-c9e5-47dd-ad94-1a61f3ecee8f",
+          "learn": 0
+        },
+        {
+          "russian": "Я хотел бы пойти в это место",
+          "english": "I'd like to go to this place",
+          "source": "",
+          "id": "da3fc4e8-9558-41ad-b533-53243fb1a97b",
+          "learn": 0
+        },
+        {
+          "russian": "Я хотел бы посетить это место",
+          "english": "I'd like to visit this place",
+          "source": "",
+          "id": "38981df9-d080-4f31-9866-d9baee6589f3",
+          "learn": 0
+        },
+        {
+          "russian": "Мы хотели бы пойти в то место",
+          "english": "We'd like to go to that place",
+          "source": "",
+          "id": "fb8d6af5-47fe-426a-a306-a1b59abb4fa0",
+          "learn": 0
+        },
+        {
+          "russian": "Я вижу ты хотел бы сделать это",
+          "english": "I see you'd like to do it",
+          "source": "",
+          "id": "d883bf4e-29cf-410a-98e4-381d6d611ecd",
+          "learn": 0
+        },
+        {
+          "russian": "Они хотели бы пойти туда с нами",
+          "english": "They'd like to go there with us",
+          "source": "",
+          "id": "a343d3b7-2b9f-4cde-afc2-82a4c8e9a1c0",
+          "learn": 0
+        },
+        {
+          "russian": "Я хочу увидеть его",
+          "english": "I want to see him",
+          "source": "",
+          "id": "9ce93078-53bf-4e1a-9d5e-b99d0ccf5efa",
+          "learn": 0
+        },
+        {
+          "russian": "Я хочу позвонить ему",
+          "english": "I want to call him",
+          "source": "",
+          "id": "7a4a997e-2eef-403c-b217-8d58c8da6690",
+          "learn": 0
+        },
+        {
+          "russian": "Я хочу увидеть его друга",
+          "english": "I want to see his friend",
+          "source": "",
+          "id": "b9dd8ec2-86ab-4d28-af43-0e7af88d415f",
+          "learn": 0
+        },
+        {
+          "russian": "Я вижу его",
+          "english": "I see him",
+          "source": "",
+          "id": "c765657a-1752-4e69-9d09-e4b560d72253",
+          "learn": 0
+        },
+        {
+          "russian": "Я вижу его машину",
+          "english": "I see his car",
+          "source": "",
+          "id": "37d08921-355f-4cb5-830d-8e19f4e433ec",
+          "learn": 0
+        },
+        {
+          "russian": "Я хочу позвонить ей сейчас",
+          "english": "I want to call her now",
+          "source": "",
+          "id": "956ae593-68c2-4020-9746-e07881da3d07",
+          "learn": 0
+        },
+        {
+          "russian": "я вижу её друга",
+          "english": "I see her friend",
+          "source": "",
+          "id": "7ecf8dd4-efad-4625-881c-115ba2a56d68",
+          "learn": 0
+        },
+        {
+          "russian": "я вижу их",
+          "english": "I see them",
+          "source": "",
+          "id": "718a781b-69e7-4afa-98e6-bca9120a0aaf",
+          "learn": 0
+        },
+        {
+          "russian": "я знаю их",
+          "english": "I know them",
+          "source": "",
+          "id": "826da332-4906-4722-9799-cab5fa6280a8",
+          "learn": 0
+        },
+        {
+          "russian": "Мне нравится их Идея",
+          "english": "I like the idea",
+          "source": "",
+          "id": "f1ee5a96-7fb3-4b0a-b7e3-32cc0513bdbb",
+          "learn": 0
+        },
+        {
+          "russian": "Она хочет помочь нам",
+          "english": "she wants to help us",
+          "source": "",
+          "id": "0c99f3a1-9a84-4d44-8f94-6e06cc8279f4",
+          "learn": 0
+        },
+        {
+          "russian": "я вижу Наш дом",
+          "english": "I see our house",
+          "source": "",
+          "id": "808c129d-b7ee-4c2f-a0e5-b41163d48354",
+          "learn": 0
+        },
+        {
+          "russian": "Я хочу сделать это на этой неделе",
+          "english": "I want to do it this week",
+          "source": "",
+          "id": "f43b4bd0-39bd-4c5d-8bfc-3ffec7b729da",
+          "learn": 0
+        },
+        {
+          "russian": "Я хотел бы поехать туда на следующей неделе",
+          "english": "I'd like to go there next week",
+          "source": "",
+          "id": "ad2571c2-3caa-4b7e-bb0c-f74d60c1e615",
+          "learn": 0
+        },
+        {
+          "russian": "Она хочет жить за границей",
+          "english": "She wants to live abroad",
+          "source": "",
+          "id": "9bef7b76-3a3b-4f7e-8f50-3f8176caf14e",
+          "learn": 0
+        },
+        {
+          "russian": "она хочет жить в другой стране",
+          "english": "She wants to live in another country",
+          "source": "",
+          "id": "81e6fc05-3683-443a-8cfa-f9c59cafb96f",
+          "learn": 0
+        },
+        {
+          "russian": "Он хочет учиться за границей",
+          "english": "He wants to study abroad",
+          "source": "",
+          "id": "c64f38b4-ccfc-4949-9444-91061d21a752",
+          "learn": 0
+        },
+        {
+          "russian": "Он хочет учиться в другой стране",
+          "english": "He wants to study in another country",
+          "source": "",
+          "id": "16b47399-97dd-4b54-b685-4c6a04b14f95",
+          "learn": 0
+        },
+        {
+          "russian": "Я хочу поехать за границу в следующем году",
+          "english": "I want to go abroad next year",
+          "source": "",
+          "id": "0771a801-487e-4c23-beb5-48682df73a40",
+          "learn": 0
+        },
+        {
+          "russian": "Я хочу поехать в другую страну в следующем году",
+          "english": "I want to go to another country next year",
+          "source": "",
+          "id": "168dd857-1adb-45a5-82fe-370f6e3f2846",
+          "learn": 0
+        },
+        {
+          "russian": "Я хочу быть менеджером",
+          "english": "I want to be a manager",
+          "source": "",
+          "id": "537c1920-9a21-4a92-897a-5581a28673d9",
+          "learn": 0
+        },
+        {
+          "russian": "Она хочет быть врачом",
+          "english": "She wants to be a doctor",
+          "source": "",
+          "id": "a8f8f56d-cbb4-48ce-9600-6dec81272c7b",
+          "learn": 0
+        },
+        {
+          "russian": "Он хочет стать бизнесменом",
+          "english": "He wants to become a businessman",
+          "source": "",
+          "id": "8eac9f4e-6d89-4baa-968f-90c78b571f8e",
+          "learn": 0
+        },
+        {
+          "russian": "Он хотел бы жить в Америке",
+          "english": "He'd like to live in America",
+          "source": "",
+          "id": "e4586b15-59e5-41f1-93f8-46e269e74972",
+          "learn": 0
+        },
+        {
+          "russian": "Она хотела бы работать здесь",
+          "english": "She'd like to work here",
+          "source": "",
+          "id": "e4e43e93-b097-424d-97dd-e5928e69f50f",
+          "learn": 0
+        },
+        {
+          "russian": "Я хочу говорить по-английски",
+          "english": "I want to speak english",
+          "source": "",
+          "id": "865ef9ea-3cbd-4555-a331-1c934ad0cc9e",
+          "learn": 0
+        },
+        {
+          "russian": "Я хочу говорить по-английски без ошибок",
+          "english": "I want to speak english without mistakes",
+          "source": "",
+          "id": "cfd60fdd-9788-49c6-b40b-76323baa6d4b",
+          "learn": 0
+        },
+        {
+          "russian": "Я хочу говорить по-английски правильно",
+          "english": "I want to speak english correctly",
+          "source": "",
+          "id": "d919206d-8667-4265-9c3b-b300fd50d0cb",
+          "learn": 0
+        },
+        {
+          "russian": "Я хочу свободно говорить по-английски",
+          "english": "I want to speak english fluently",
+          "source": "",
+          "id": "47e68a1d-963b-48b1-94ba-7a20aefa4044",
+          "learn": 0
+        },
+        {
+          "russian": "Я хочу говорить по-английски свободно и правильно",
+          "english": "I want to speak english fluently and correctly",
+          "source": "",
+          "id": "f1364392-b086-433f-9771-f620327fdcd2",
+          "learn": 0
+        },
+        {
+          "russian": "Я хотел бы говорить по-английски свободно и правильно",
+          "english": "I'd like to speak english fluently and correctly",
+          "source": "",
+          "id": "4456772d-27ff-4759-a6f8-173e4d92ba5c",
+          "learn": 0
+        }
+      ]
+    }
+  ]
+}

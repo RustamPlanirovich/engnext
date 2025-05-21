@@ -8,7 +8,7 @@ export async function POST(request: NextRequest) {
     const profileId = searchParams.get('profileId');
     
     // Получаем данные из тела запроса
-    const { lessonId, lastExerciseEnglish } = await request.json();
+    const { lessonId, lastExerciseEnglish, sentenceId } = await request.json();
     
     if (!lessonId || !lastExerciseEnglish) {
       return NextResponse.json(
@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
     }
     
     // Сохраняем прогресс урока
-    saveLessonProgress(lessonId, lastExerciseEnglish, profileId || undefined);
+    saveLessonProgress(lessonId, lastExerciseEnglish, profileId || undefined, sentenceId);
     
     return NextResponse.json({ success: true });
   } catch (error) {

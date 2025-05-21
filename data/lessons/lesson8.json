@@ -1,0 +1,441 @@
+{
+  "concept": "Уровень А0. Урок 8",
+  "explanation": "-",
+  "source": "-",
+  "subconcepts": [
+    {
+      "concept": "-",
+      "explanation": "-",
+      "formula": "-",
+      "source": "-",
+      "examples": [
+        {
+          "russian": "Мне нужно",
+          "english": "I need",
+          "id": "1a984374-5a32-40ed-9ba1-eaa378d9cdaa",
+          "learn": 0
+        },
+        {
+          "russian": "Мне нужна твоя помощь",
+          "english": "I need your help",
+          "id": "e15c7f5b-825e-44fc-a198-01dc1621ca48",
+          "learn": 0
+        },
+        {
+          "russian": "Мне нужно больше времени",
+          "english": "I need more time",
+          "id": "24cb3e37-8a50-45ad-949d-609aa5d5a74f",
+          "learn": 0
+        },
+        {
+          "russian": "Нам нужно",
+          "english": "We need",
+          "id": "62b63f35-478c-430e-9696-ec3f25031b3c",
+          "learn": 0
+        },
+        {
+          "russian": "Тебе нужно",
+          "english": "You Need",
+          "id": "e62371f2-4f3d-4051-8a71-b035f7d624be",
+          "learn": 0
+        },
+        {
+          "russian": "Им нужно",
+          "english": "They need",
+          "id": "ba773658-f13d-468f-a095-7495c0a06ec1",
+          "learn": 0
+        },
+        {
+          "russian": "Нам нужна помощь",
+          "english": "We need help",
+          "id": "0b95faa8-f8b3-4899-8010-8ad554048746",
+          "learn": 0
+        },
+        {
+          "russian": "Тебе нужно больше практики",
+          "english": "You need more practice",
+          "id": "fb08bcf7-4f0d-4c43-a2a5-8cd6b008b853",
+          "learn": 0
+        },
+        {
+          "russian": "Им нужны деньги",
+          "english": "They need money",
+          "id": "a28dd684-f4e4-4882-a625-551efa5608d4",
+          "learn": 0
+        },
+        {
+          "russian": "Ему нужно",
+          "english": "He needs",
+          "id": "8c1e364f-a133-40af-a51d-81bd0046a948",
+          "learn": 0
+        },
+        {
+          "russian": "Ей нужно",
+          "english": "She needs",
+          "id": "4f9e31e3-602b-4fe6-ab59-9ebf0bd613e0",
+          "learn": 0
+        },
+        {
+          "russian": "Ему нужно больше практики",
+          "english": "He needs more practice",
+          "id": "ac967c10-5250-4b9f-9506-e97c2386836f",
+          "learn": 0
+        },
+        {
+          "russian": "Ей Нужно больше времени",
+          "english": "She needs more time",
+          "id": "1402c760-ce6c-4c56-a49c-d8bce810fde5",
+          "learn": 0
+        },
+        {
+          "russian": "Им не нужно это",
+          "english": "They don't need it",
+          "id": "3f41caa1-2f05-4209-8daa-4aa3677f6b5f",
+          "learn": 0
+        },
+        {
+          "russian": "Мне не нужно это",
+          "english": "I don't need it",
+          "id": "b9290ddf-82fa-46ed-8657-3267ec63119c",
+          "learn": 0
+        },
+        {
+          "russian": "Мне не нужна эта услуга",
+          "english": "I don't need this service",
+          "id": "031e295e-b3ba-4ca1-9027-e2703662d1a2",
+          "learn": 0
+        },
+        {
+          "russian": "Ему не нужно это",
+          "english": "He doesn't need it",
+          "id": "5ec53876-2ff1-4f64-b4c3-ff96c35194db",
+          "learn": 0
+        },
+        {
+          "russian": "Ей не нужно",
+          "english": "She doesn't need",
+          "id": "ca766a19-013c-47ba-b2fa-9845b30f07c1",
+          "learn": 0
+        },
+        {
+          "russian": "Ему не нужна эта вещь",
+          "english": "He doesn't need this thing",
+          "id": "5726ba75-ef06-4ea8-b6ce-8432e394769e",
+          "learn": 0
+        },
+        {
+          "russian": "Ей не нужна наша помощь",
+          "english": "She doesn't need our help",
+          "id": "92259816-991f-44ce-8747-9e6f94f7cb5f",
+          "learn": 0
+        },
+        {
+          "russian": "Другие (множественное число)",
+          "english": "Other",
+          "id": "e636d673-f36e-49c5-a375-737fd7fc067b",
+          "learn": 0
+        },
+        {
+          "russian": "Другой/Другая/Другое (единственное число)",
+          "english": "Another",
+          "id": "b7c3e49d-521f-4a58-abce-2a1ae2a85cd6",
+          "learn": 0
+        },
+        {
+          "russian": "Я хочу жить в другом месте",
+          "english": "I want to live in another place",
+          "id": "807f3bed-5387-415b-a534-d6926c124de4",
+          "learn": 0
+        },
+        {
+          "russian": "У неё другая проблема",
+          "english": "She has another problem",
+          "id": "a05f6a36-fa17-4762-889a-1a37c9023d61",
+          "learn": 0
+        },
+        {
+          "russian": "Я живу в другом месте",
+          "english": "I live in another place",
+          "id": "2feca648-8e78-4d0b-a95b-616805a9dd7d",
+          "learn": 0
+        },
+        {
+          "russian": "Мне также это нравится",
+          "english": "I also like it",
+          "id": "d35ece6d-344d-493e-9926-77c14cc36eec",
+          "learn": 0
+        },
+        {
+          "russian": "Мне нравится это тоже",
+          "english": "I like it to",
+          "id": "7c50c410-7df5-40bd-83e1-39d8a80d28c9",
+          "learn": 0
+        },
+        {
+          "russian": "Я хочу общаться с другими людьми которые говорят по-английски",
+          "english": "I want to communicate with other People who speak English",
+          "id": "14f0ac38-1c9e-4577-b4db-53b930227832",
+          "learn": 0
+        },
+        {
+          "russian": "Я не хожу туда потому что у меня слишком мало свободного времени",
+          "english": "I don't go there Because i have too little free time",
+          "id": "f65ef9c7-12df-4f46-85c4-ae4165cd5aa2",
+          "learn": 0
+        },
+        {
+          "russian": "Я чувствую себя таким счастливым потому что у меня хорошие результаты",
+          "english": "I feel so Happy Because I have good results",
+          "id": "388a8a21-329c-4190-a07d-bf991d979a53",
+          "learn": 0
+        },
+        {
+          "russian": "Он этого не делает потому что у него мало свободного времени",
+          "english": "He doesn't do it because he has Little free time",
+          "id": "4bbcd8a5-2478-43cc-8b1b-d24642b5a5a0",
+          "learn": 0
+        },
+        {
+          "russian": "У меня есть один вопрос",
+          "english": "I have one question",
+          "id": "50d5a482-a2b3-438f-b071-5228278db9e8",
+          "learn": 0
+        },
+        {
+          "russian": "У него есть проблема",
+          "english": "He has a problem",
+          "id": "04b43fdb-e4fc-4af9-8825-b3792c46151d",
+          "learn": 0
+        },
+        {
+          "russian": "У меня вопрос",
+          "english": "I have a question",
+          "id": "39cf2731-485c-498a-b60d-742d8f09545c",
+          "learn": 0
+        },
+        {
+          "russian": "У него есть время",
+          "english": "He has time",
+          "id": "7be2ac39-5a07-4f98-a77c-a23040dd830d",
+          "learn": 0
+        },
+        {
+          "russian": "У неё нет свободного времени",
+          "english": "She doesn't have free time",
+          "id": "7df7f494-be25-4cde-88e7-f2805901dc28",
+          "learn": 0
+        },
+        {
+          "russian": "Сказать что-то",
+          "english": "Say it",
+          "id": "a09aec85-e67a-429b-b52a-91549897e3d5",
+          "learn": 0
+        },
+        {
+          "russian": "Сказать эту вещь",
+          "english": "Say this thing",
+          "id": "5c06d15d-43cd-44a7-aa56-625a1377172d",
+          "learn": 0
+        },
+        {
+          "russian": "Она говорит это снова и снова",
+          "english": "She says it again and again",
+          "id": "a8afca0d-4e5c-46d3-bf2e-3976936dcea1",
+          "learn": 0
+        },
+        {
+          "russian": "Он не говорит мне эту вещь",
+          "english": "He doesn't tell me this thing",
+          "id": "19d4c612-6768-4f09-9e7a-bc712dc3ced0",
+          "learn": 0
+        },
+        {
+          "russian": "Я могу немного говорить по-английски",
+          "english": "I can speak English a little",
+          "id": "06023cc4-4937-47ce-bd6e-4491fc2ff0db",
+          "learn": 0
+        },
+        {
+          "russian": "Я немного говорю по-английски",
+          "english": "I speak English a little",
+          "id": "7b80473b-84de-428c-af91-d2d7086660ef",
+          "learn": 0
+        },
+        {
+          "russian": "чуть-чуть",
+          "english": "A Bit",
+          "id": "84627682-e658-41af-bb28-d57e2faa23af",
+          "learn": 0
+        },
+        {
+          "russian": "Я могу чуть-чуть говорить по-английски",
+          "english": "I can speak English a bit",
+          "id": "97a01149-d962-47c0-959b-dde6adbdc19f",
+          "learn": 0
+        },
+        {
+          "russian": "Я говорю по-английски чуть-чуть",
+          "english": "I speak English a bit",
+          "id": "3ed1c8f0-c1a2-460c-a3a1-c3101c002e35",
+          "learn": 0
+        },
+        {
+          "russian": "чуточку",
+          "english": "A Little Bit",
+          "id": "152af0e5-3405-4497-8402-2e75c391f4b7",
+          "learn": 0
+        },
+        {
+          "russian": "Я могу чуточку говорить по-английски",
+          "english": "I can speak English a little bit",
+          "id": "35727b96-12c1-4369-bfbc-f35698b6e94a",
+          "learn": 0
+        },
+        {
+          "russian": "Я чуточку говорю по-английски",
+          "english": "I speak English a little bit",
+          "id": "e84709ec-da3c-4f25-b3c3-78d0b5b05ee8",
+          "learn": 0
+        },
+        {
+          "russian": "Мы часто говорим об этом",
+          "english": "We often talk about it",
+          "id": "e73f345c-64e2-41ce-ad9c-8416c1eb4116",
+          "learn": 0
+        },
+        {
+          "russian": "Говорить быстро",
+          "english": "Speak Fast",
+          "id": "d2cebd2c-32e8-4a3c-b034-9a9792b285e6",
+          "learn": 0
+        },
+        {
+          "russian": "Говорите медленно",
+          "english": "Speak slowly",
+          "id": "e97cd080-3f30-4940-9c48-755603614509",
+          "learn": 0
+        },
+        {
+          "russian": "Говорите медленно пожалуйста",
+          "english": "Speak slowly please",
+          "id": "48ad5253-96a3-49d5-a14c-2277183aca9c",
+          "learn": 0
+        },
+        {
+          "russian": "Он не говорит по-английски медленно",
+          "english": "He doesn't speak English slowly",
+          "id": "d27a9a14-8c75-4dda-9e18-ad10926a6ffd",
+          "learn": 0
+        },
+        {
+          "russian": "Носители языка говорят по-английски очень быстро",
+          "english": "native speakers speak English very fast",
+          "id": "17dd48d1-716f-4340-9554-587d74f6b936",
+          "learn": 0
+        },
+        {
+          "russian": "Он говорит по-английски очень быстро",
+          "english": "He speaks English very fast",
+          "id": "171641d6-1807-49f4-ab27-257b9dc661ca",
+          "learn": 0
+        },
+        {
+          "russian": "Я хочу говорить по-английски быстро и естественно",
+          "english": "I want to speak English fast and naturally",
+          "id": "2f1d5393-8ed2-445b-8dc7-3a26acbb753c",
+          "learn": 0
+        },
+        {
+          "russian": "Я хочу говорить по-английски лучше",
+          "english": "I want to speak English better",
+          "id": "18ef7501-305f-4847-b488-21e8e95ce14d",
+          "learn": 0
+        },
+        {
+          "russian": "Я хочу говорить по-английски намного лучше",
+          "english": "I want to speak English much better",
+          "id": "395423e7-3ce3-48b6-82ed-dfdcd92d228f",
+          "learn": 0
+        },
+        {
+          "russian": "Я не хочу играть в эту игру",
+          "english": "I don't want to play this game",
+          "id": "6b2d8196-f4ac-4023-81a1-aaf98170ba30",
+          "learn": 0
+        },
+        {
+          "russian": "Я хочу сделать это",
+          "english": "I want to do it",
+          "id": "945a5e7e-f7f8-4ab9-878d-92ee4bc6b501",
+          "learn": 0
+        },
+        {
+          "russian": "Я не хочу делать это",
+          "english": "I don't want to do it",
+          "id": "4a9c63fe-8262-4a64-8f8a-0e121d06bbfb",
+          "learn": 0
+        },
+        {
+          "russian": "У нас нет каких-либо вопросов сейчас",
+          "english": "We don't have any questions now",
+          "id": "f686b858-25a7-4044-b752-19ecc64d0236",
+          "learn": 0
+        },
+        {
+          "russian": "Я вижу что",
+          "english": "I See that",
+          "id": "c897e658-df01-4a6d-acb1-009a43bfe3d6",
+          "learn": 0
+        },
+        {
+          "russian": "Ты не хочешь идти туда",
+          "english": "You don't want to go there",
+          "id": "83b215db-7286-48da-9b12-1d856a15ae74",
+          "learn": 0
+        },
+        {
+          "russian": "Я вижу что ты не хочешь идти туда",
+          "english": "I see that you don't want to go there",
+          "id": "27ed7a6e-2e88-49b7-a351-017d3c04a888",
+          "learn": 0
+        },
+        {
+          "russian": "Они не помнят его имя",
+          "english": "They don't remember his name",
+          "id": "a0748231-a60c-4379-99b8-9b89253c28dd",
+          "learn": 0
+        },
+        {
+          "russian": "Он не чувствует себя счастливым",
+          "english": "He doesn't feel happy",
+          "id": "6da8741a-c8f7-4a41-bfa7-f916e6a0e4f8",
+          "learn": 0
+        },
+        {
+          "russian": "Я чувствую себя счастливым",
+          "english": "I feel happy",
+          "id": "2a4dc94c-5a81-44cd-a8e6-e06d42fded08",
+          "learn": 0
+        },
+        {
+          "russian": "Ей не нравится этот отель",
+          "english": "She doesn't like this hotel",
+          "id": "a9aa91a8-d653-4b52-9405-fbfc1ec4e426",
+          "learn": 0
+        },
+        {
+          "russian": "это не работает",
+          "english": "It doesn't work",
+          "id": "2b8228d4-b9c2-4f55-b8f6-25f396f057d0",
+          "learn": 0
+        },
+        {
+          "russian": "Я вижу что это не работает",
+          "english": "I see that it doesn't work",
+          "id": "659168c3-3866-4281-8ba2-1db6959aaf19",
+          "learn": 0
+        }
+      ]
+    }
+  ]
+}

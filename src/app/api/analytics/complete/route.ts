@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-    
+    console.log(data.lessonId, data.profileId);
     markLessonCompleted(data.lessonId, data.profileId);
     
     return NextResponse.json({ message: 'Lesson marked as completed successfully' });

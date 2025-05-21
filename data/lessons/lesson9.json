@@ -1,0 +1,321 @@
+{
+  "concept": "Уровень А0. Урок 9",
+  "explanation": "-",
+  "source": "-",
+  "subconcepts": [
+    {
+      "concept": "-",
+      "explanation": "-",
+      "formula": "-",
+      "source": "-",
+      "examples": [
+        {
+          "russian": "Ты понимаешь?",
+          "english": "Do you understand?",
+          "id": "62ed634d-9682-4e71-b5df-a03895a16344",
+          "learn": 0
+        },
+        {
+          "russian": "Ты работаешь?",
+          "english": "Do you work?",
+          "id": "a8aede51-6466-48c4-b0a2-1e6b312f78a5",
+          "learn": 0
+        },
+        {
+          "russian": "Ты учишься?",
+          "english": "Do you study?",
+          "id": "d73366bf-4191-4cea-872b-fb4a4ef89824",
+          "learn": 0
+        },
+        {
+          "russian": "Ты согласен?",
+          "english": "Do you agree?",
+          "id": "25545a23-9478-44aa-a72e-923cefb36491",
+          "learn": 0
+        },
+        {
+          "russian": "Ты говоришь по-английски?",
+          "english": "Do you speak English?",
+          "id": "38176749-fe8f-42dc-9691-6073aaa6d0d4",
+          "learn": 0
+        },
+        {
+          "russian": "Вы говорите по-английски?",
+          "english": "Do you speak English?",
+          "id": "c6bdfba3-6039-4a1a-b66f-28487bddfbeb",
+          "learn": 0
+        },
+        {
+          "russian": "Ты понимаешь это?",
+          "english": "Do You understand it?",
+          "id": "3c8609d2-43f0-4241-acf3-bcb4e3a3d860",
+          "learn": 0
+        },
+        {
+          "russian": "Ты хочешь этого?",
+          "english": "Do you want it?",
+          "id": "02a44500-8829-4e6f-9ba8-ed4793d2411e",
+          "learn": 0
+        },
+        {
+          "russian": "Ты согласен с этим?",
+          "english": "Do you agree with it?",
+          "id": "74aa9b33-0050-4e43-86e2-b098461bc98f",
+          "learn": 0
+        },
+        {
+          "russian": "Ты работаешь или учишься?",
+          "english": "Do you work or study?",
+          "id": "815350b3-fe59-4178-9187-d0be57bcd2e5",
+          "learn": 0
+        },
+        {
+          "russian": "Ты учишься или работаешь?",
+          "english": "Do you study or work?",
+          "id": "af9f8974-edba-4d27-a2b4-d4693860bb24",
+          "learn": 0
+        },
+        {
+          "russian": "Я говорю это правильно?",
+          "english": "Do I say it correctly?",
+          "id": "4e8251ae-ce66-4245-a41f-9cc97741d5a9",
+          "learn": 0
+        },
+        {
+          "russian": "Мы делаем это хорошо?",
+          "english": "Do we do it well?",
+          "id": "f4e4c227-1af8-4ca3-ae3b-c0013da63316",
+          "learn": 0
+        },
+        {
+          "russian": "Мы делаем это очень хорошо?",
+          "english": "Do we do it very well?",
+          "id": "3d42e084-da78-4db8-aea1-b8db4c0e46e2",
+          "learn": 0
+        },
+        {
+          "russian": "У тебя есть свободное время сейчас?",
+          "english": "Do you have free time now?",
+          "id": "a73eb0c3-470d-4ee8-936a-8d8262dea857",
+          "learn": 0
+        },
+        {
+          "russian": "Они покупают это онлайн?",
+          "english": "Do they buy it online?",
+          "id": "bad226c4-94f8-4c81-8a45-390896e8df44",
+          "learn": 0
+        },
+        {
+          "russian": "Они поддерживают это?",
+          "english": "Do they support it?",
+          "id": "49934683-c090-4ad2-909d-7c6e583c3f65",
+          "learn": 0
+        },
+        {
+          "russian": "Они поддерживают эту идею?",
+          "english": "Do they support this idea?",
+          "id": "eea5ae9d-888c-4803-aec5-2b60f69afcca",
+          "learn": 0
+        },
+        {
+          "russian": "Ты знаешь как это работает?",
+          "english": "Do you know how it works?",
+          "id": "5241a320-0e6a-43f2-9c1b-b09520cf3b6f",
+          "learn": 0
+        },
+        {
+          "russian": "Ты знаешь почему это происходит?",
+          "english": "Do you know why it happens?",
+          "id": "26d0dcaf-e0f7-4f98-90fd-56a368eac122",
+          "learn": 0
+        },
+        {
+          "russian": "Ты думаешь у тебя хорошие результаты?",
+          "english": "Do you think you have good results?",
+          "id": "a132a229-7856-488c-beaf-b6993dd5adec",
+          "learn": 0
+        },
+        {
+          "russian": "Тебе нравится этот курс?",
+          "english": "Do you like this course?",
+          "id": "cc06d70f-9ede-4c8a-b741-63ccfc1b5c01",
+          "learn": 0
+        },
+        {
+          "russian": "Тебе нравится эта погода?",
+          "english": "Do you like this weather?",
+          "id": "2c99de77-039d-43f6-899f-130dd9498d34",
+          "learn": 0
+        },
+        {
+          "russian": "Тебе нравится этот фильм?",
+          "english": "Do you like this movie?",
+          "id": "2e024944-2b05-48c8-adb8-03cec47e13d5",
+          "learn": 0
+        },
+        {
+          "russian": "Тебе нравится эта игра?",
+          "english": "Do you like this game?",
+          "id": "c85e9994-6843-4038-a199-a58e2ddc0e17",
+          "learn": 0
+        },
+        {
+          "russian": "Ты любишь путешествоват?ь",
+          "english": "Do you like traveling?",
+          "id": "9d6befbf-45f3-43ee-8061-b1867e1cd31e",
+          "learn": 0
+        },
+        {
+          "russian": "Ты любишь танцевать?",
+          "english": "Do you like dancing?",
+          "id": "77df6b73-5ae0-43fc-b455-0e5e9871c3b9",
+          "learn": 0
+        },
+        {
+          "russian": "У тебя есть какие-либо планы?",
+          "english": "Do you have any plans",
+          "id": "2d7c09e8-d4dc-4079-bf99-6b7b2a72cf9e",
+          "learn": 0
+        },
+        {
+          "russian": "У тебя есть какие-либо планы на сегодня?",
+          "english": "Do you have any plans for today?",
+          "id": "f5ffee4d-3ac1-4c29-a13d-bd68c56b0f74",
+          "learn": 0
+        },
+        {
+          "russian": "У тебя есть какие-либо планы на завтра?",
+          "english": "Do you have any plans for tomorrow?",
+          "id": "728c75f5-b89e-4860-8e2a-b63c1000543c",
+          "learn": 0
+        },
+        {
+          "russian": "У тебя есть какие-либо планы на сегодняшний вечер?",
+          "english": "Do you have any plans for tonight?",
+          "id": "9882dfa4-dd07-4166-9a3e-3bf2a0bf6284",
+          "learn": 0
+        },
+        {
+          "russian": "У тебя есть какие-либо братья или сёстры?",
+          "english": "Do you have any brothers or sisters?",
+          "id": "ed09079d-5eb0-4a43-a278-9fd6bf3ea0b2",
+          "learn": 0
+        },
+        {
+          "russian": "Ты часто ходишь туда?",
+          "english": "Do you often go there?",
+          "id": "db1679c5-5b83-4a09-bc75-65e81431c013",
+          "learn": 0
+        },
+        {
+          "russian": "Ты часто путешествуешь?",
+          "english": "Do you often travel?",
+          "id": "b1dd9eed-ed8c-4562-b6ff-e635917e63e9",
+          "learn": 0
+        },
+        {
+          "russian": "Ты обычно покупаешь это онлайн?",
+          "english": "Do you usually buy it online?",
+          "id": "9db6c62b-6c47-4810-aadf-7ee6de1a0055",
+          "learn": 0
+        },
+        {
+          "russian": "Ты обычно делаешь это после работы?",
+          "english": "Do you usually do it after work?",
+          "id": "d9d92420-c47f-4ddb-a1d7-04b255b566a4",
+          "learn": 0
+        },
+        {
+          "russian": "Ты действительно хочешь это?",
+          "english": "Do you really want it?",
+          "id": "ff450a47-5459-4ad8-9c70-413d0ef58436",
+          "learn": 0
+        },
+        {
+          "russian": "Ты хочешь пойти туда?",
+          "english": "Do you want to go there?",
+          "id": "8f6161ca-4662-40a8-9333-cd0e7c2fe2ee",
+          "learn": 0
+        },
+        {
+          "russian": "Ты действительно хочешь это знать?",
+          "english": "Do you really want to know it?",
+          "id": "905415cc-e4f7-4b68-a567-e579969f6355",
+          "learn": 0
+        },
+        {
+          "russian": "У тебя есть брат?",
+          "english": "Do you have a brother?",
+          "id": "fbc46610-075f-4988-a1d8-da7010fb3b9b",
+          "learn": 0
+        },
+        {
+          "russian": "У тебя есть сестра?",
+          "english": "Do you have a sister?",
+          "id": "84b03373-b8c4-45cb-99ac-5e409efa2e27",
+          "learn": 0
+        },
+        {
+          "russian": "У тебя есть машина?",
+          "english": "Do you have a car?",
+          "id": "035c32eb-d612-459c-9726-b39d8c064b4a",
+          "learn": 0
+        },
+        {
+          "russian": "У тебя есть время?",
+          "english": "Do you have time?",
+          "id": "f82b302b-1458-4a06-916b-581af7226b9b",
+          "learn": 0
+        },
+        {
+          "russian": "У тебя есть какие-либо вопросы?",
+          "english": "Do you have any questions?",
+          "id": "52a4c35a-be7a-4f54-aee3-011362237e03",
+          "learn": 0
+        },
+        {
+          "russian": "У тебя есть какие-либо идеи?",
+          "english": "Do you have any ideas?",
+          "id": "9e618acd-7df8-4177-93c5-7841246b1805",
+          "learn": 0
+        },
+        {
+          "russian": "Ты чувствуешь прогресс?",
+          "english": "Do you feel progress?",
+          "id": "70f07cb9-f6d8-48bd-8d9c-1ef55f817510",
+          "learn": 0
+        },
+        {
+          "russian": "Ты чувствуешь какой-либо прогресс?",
+          "english": "Do you feel any progress?",
+          "id": "be5e2283-98e9-4849-ab01-9e88be9d8e7d",
+          "learn": 0
+        },
+        {
+          "russian": "Ты часто ходишь в парк?",
+          "english": "Do you often go to the park?",
+          "id": "66c7b5b6-7cea-4f83-b2bb-c913873ca6be",
+          "learn": 0
+        },
+        {
+          "russian": "Ты часто ходишь в то место?",
+          "english": "Do you often go to that place?",
+          "id": "b4eb681d-5163-42f7-abf6-30a8467f9a75",
+          "learn": 0
+        },
+        {
+          "russian": "Ты читаешь по-английски?",
+          "english": "Do you read in English?",
+          "id": "023ff1b9-7d79-4e8a-9151-22aac85b040e",
+          "learn": 0
+        },
+        {
+          "russian": "Ты хочешь поехать в Соединённые Штаты?",
+          "english": "Do you want to go to the United States?",
+          "id": "bd462e68-3b19-4d4d-883e-dd89a15686d5",
+          "learn": 0
+        }
+      ]
+    }
+  ]
+}

@@ -11,9 +11,12 @@ export async function GET(
     const profileId = searchParams.get('profileId');
     
     // Получаем прогресс урока
-    const lastExerciseEnglish = getLessonProgress(lessonId, profileId || undefined);
+    const progress = getLessonProgress(lessonId, profileId || undefined);
     
-    return NextResponse.json({ lastExerciseEnglish });
+    return NextResponse.json({ 
+      lastExerciseEnglish: progress.lastExerciseEnglish,
+      completedSentences: progress.completedSentences 
+    });
   } catch (error) {
     console.error('Error getting lesson progress:', error);
     return NextResponse.json(

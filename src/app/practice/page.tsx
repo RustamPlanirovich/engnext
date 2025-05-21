@@ -59,15 +59,7 @@ export default function PracticePage() {
   
   return (
     <ClientLayout>
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Повторение сложных предложений
-        </Typography>
-        <Typography variant="body1" paragraph>
-          Здесь собраны предложения, в которых вы допустили больше всего ошибок. Регулярное повторение поможет вам лучше их запомнить.
-        </Typography>
-      </Box>
-
+      
       {loading ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
           <CircularProgress />

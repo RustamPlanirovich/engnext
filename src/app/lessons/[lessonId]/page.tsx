@@ -58,20 +58,15 @@ export default async function LessonPage({ params }: LessonPageProps) {
 
   return (
     <ClientLayout>
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h4" component="h1" gutterBottom>
+      <Box sx={{ mb: 2 }}>
+        <Typography variant="h6" component="h1" gutterBottom>
           {lesson.concept}
         </Typography>
-        <Typography variant="body1" paragraph>
-          {lesson.explanation}
-        </Typography>
+      
       </Box>
 
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h5" component="h2" gutterBottom>
-          Выберите тип упражнения:
-        </Typography>
-
+      <Box sx={{ mb: 1 }}>
+        
         <Grid container spacing={3}>
           {exerciseTypes.map((type) => (
             <Grid item xs={12} sm={6} key={type.id}>

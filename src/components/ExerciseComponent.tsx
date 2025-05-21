@@ -36,7 +36,8 @@ import {
   getActiveProfileId, 
   saveLessonProgress, 
   getLessonProgress,
-  getMostProblematicSentences 
+  getMostProblematicSentences,
+  getBaseUrl 
 } from '@/utils/clientUtils';
 import { fetchProfileSettings } from '@/utils/clientProfileUtils';
 
@@ -166,7 +167,7 @@ export default function ExerciseComponent({
     };
     
     loadErrorIds();
-  }, [lessonId, initialExamples, currentSessionExamples.length]);
+  }, [lessonId, initialExamples, exercisesPerSession]);  // Удалили currentSessionExamples.length из зависимостей, чтобы избежать циклических обновлений
   
   // Разделение урока на части и загрузка прогресса
   useEffect(() => {
@@ -177,31 +178,57 @@ export default function ExerciseComponent({
         // Получаем активный профиль
         const activeProfileId = getActiveProfileId();
         
+        // Проверяем, что examples не пустой массив
+        if (!examples || examples.length === 0) {
+          console.log('No examples available yet, waiting for data');
+          setIsLoading(false);
+          return;
+        }
+        
+        // Получаем прогресс урока с списком пройденных предложений
+        const progress = await getLessonProgress(lessonId, activeProfileId || undefined);
+        console.log(`Lesson progress for ${lessonId}:`, progress);
+        
+        // Фильтруем примеры, исключая уже пройденные предложения
+        let filteredExamples = [...examples];
+        
+        // Если это не режим практики и есть пройденные предложения, фильтруем их
+        if (lessonId !== 'practice' && progress.completedSentences && Array.isArray(progress.completedSentences) && progress.completedSentences.length > 0) {
+          filteredExamples = examples.filter(example => {
+            // Если у примера есть id и он есть в списке пройденных, исключаем его
+            return !('id' in example && example.id && progress.completedSentences.includes(example.id as string));
+          });
+          console.log(`Filtered out ${examples.length - filteredExamples.length} completed sentences`);
+        }
+        
+        // Если все предложения уже пройдены, используем все примеры
+        if (filteredExamples.length === 0) {
+          filteredExamples = [...examples];
+          console.log('All sentences completed, starting a new cycle');
+        }
+        
         // Адаптируем количество упражнений в сессии к фактическому количеству предложений
         let sessionsPerPage = exercisesPerSession;
         
         // Если это не режим практики и предложений меньше, чем стандартное количество в сессии
-        if (lessonId !== 'practice' && examples.length > 0 && examples.length < exercisesPerSession) {
-          sessionsPerPage = examples.length;
+        if (lessonId !== 'practice' && filteredExamples.length > 0 && filteredExamples.length < exercisesPerSession) {
+          sessionsPerPage = filteredExamples.length;
           setExercisesPerSession(sessionsPerPage);
           console.log(`Adapted exercises per session to ${sessionsPerPage} for lesson ${lessonId}`);
         }
         
         // Вычисляем общее количество страниц (частей урока)
-        const calculatedTotalPages = Math.ceil(examples.length / sessionsPerPage);
+        const calculatedTotalPages = Math.ceil(filteredExamples.length / sessionsPerPage);
         setTotalPages(calculatedTotalPages);
-        
-        // Получаем прогресс урока
-        const lastExerciseEnglish = await getLessonProgress(lessonId, activeProfileId || undefined);
         
         let startIndex = 0;
         let initialPage = 1;
         
-        if (lastExerciseEnglish) {
+        if (progress.lastExerciseEnglish) {
           // Находим индекс упражнения по английскому тексту
-          const exerciseIndex = examples.findIndex(ex => ex.english === lastExerciseEnglish);
+          const exerciseIndex = filteredExamples.findIndex(ex => ex.english === progress.lastExerciseEnglish);
           
-          if (exerciseIndex !== -1 && exerciseIndex < examples.length - 1) {
+          if (exerciseIndex !== -1 && exerciseIndex < filteredExamples.length - 1) {
             // Вычисляем страницу и индекс внутри страницы
             initialPage = Math.floor(exerciseIndex / exercisesPerSession) + 1;
             startIndex = (exerciseIndex + 1) % exercisesPerSession; // +1 чтобы начать со следующего упражнения
@@ -214,8 +241,8 @@ export default function ExerciseComponent({
         
         // Получаем примеры для текущей страницы
         const startExampleIndex = (initialPage - 1) * exercisesPerSession;
-        const endExampleIndex = Math.min(startExampleIndex + exercisesPerSession, examples.length);
-        const sessionExamples = examples.slice(startExampleIndex, endExampleIndex);
+        const endExampleIndex = Math.min(startExampleIndex + exercisesPerSession, filteredExamples.length);
+        const sessionExamples = filteredExamples.slice(startExampleIndex, endExampleIndex);
         setCurrentSessionExamples(sessionExamples);
         
         // Устанавливаем индекс текущего упражнения внутри сессии
@@ -342,12 +369,15 @@ export default function ExerciseComponent({
   }, [timeLeft, timerEnabled]);
   
   // Обработчик смены страницы (части урока)
-  const handlePageChange = (event: React.ChangeEvent<unknown>, page: number) => {
-    // Сохраняем прогресс урока перед сменой страницы
-    if (currentExample) {
-      saveLessonProgress(lessonId, currentExample.english).catch(error => {
-        console.error('Error saving lesson progress:', error);
-      });
+  const handlePageChange = async (event: React.ChangeEvent<unknown> | React.MouseEvent<unknown>, page: number) => {
+    // Сохраняем только текущую позицию для возобновления позже, без добавления в completedSentences
+    if (currentExample && lessonId !== 'practice') {
+      try {
+        // Используем функцию saveLessonProgress вместо прямого fetch для согласованности
+        await saveLessonProgress(lessonId, currentExample.english);
+      } catch (error) {
+        console.error('Error saving current position:', error);
+      }
     }
     
     // Вычисляем новые примеры для выбранной страницы
@@ -364,9 +394,14 @@ export default function ExerciseComponent({
 
   // Handle next example
   const handleNext = async () => {
-    // Save progress if not in practice mode
+    // Save only the current position for resuming later, without adding to completedSentences
     if (lessonId !== 'practice' && currentExample) {
-      saveLessonProgress(lessonId, currentExample.english);
+      try {
+        // Используем функцию saveLessonProgress вместо прямого fetch для согласованности
+        await saveLessonProgress(lessonId, currentExample.english);
+      } catch (error) {
+        console.error('Error saving current position:', error);
+      }
     }
     
     // Reset state for next example
@@ -381,7 +416,9 @@ export default function ExerciseComponent({
       // End of session
       if (currentPage < totalPages) {
         // Move to next page/session
-        handlePageChange({} as React.ChangeEvent<unknown>, currentPage + 1);
+        // Create a proper event object instead of using an empty object
+        const dummyEvent = { type: 'change' } as React.MouseEvent<unknown>;
+        handlePageChange(dummyEvent, currentPage + 1);
       } else {
         // End of lesson
         if (lessonId !== 'practice') {
@@ -434,12 +471,19 @@ export default function ExerciseComponent({
         russian: currentExample.russian,
         english: currentExample.english
       }, currentErrorId);
-    } else if (lessonId === 'practice') {
-      // Если ответ правильный и это режим практики, удаляем ошибку из аналитики
-      removeError(lessonId, {
-        russian: currentExample.russian,
-        english: currentExample.english
-      }, currentErrorId);
+    } else {
+      // Если ответ правильный
+      if (lessonId === 'practice') {
+        // Если это режим практики, удаляем ошибку из аналитики
+        removeError(lessonId, {
+          russian: currentExample.russian,
+          english: currentExample.english
+        }, currentErrorId);
+      } else if ('id' in currentExample && currentExample.id) {
+        // Если это не режим практики и у примера есть ID, добавляем его в список пройденных
+        console.log(`Marking sentence as completed: ${String(currentExample.id)}`);
+        saveLessonProgress(lessonId, currentExample.english, currentExample.id);
+      }
     }
     
     // Move to next example after a delay
@@ -467,12 +511,19 @@ export default function ExerciseComponent({
         russian: currentExample.russian,
         english: currentExample.english
       }, currentErrorId);
-    } else if (lessonId === 'practice') {
-      // Если ответ правильный и это режим практики, удаляем ошибку из аналитики
-      removeError(lessonId, {
-        russian: currentExample.russian,
-        english: currentExample.english
-      }, currentErrorId);
+    } else {
+      // Если ответ правильный
+      if (lessonId === 'practice') {
+        // Если это режим практики, удаляем ошибку из аналитики
+        removeError(lessonId, {
+          russian: currentExample.russian,
+          english: currentExample.english
+        }, currentErrorId);
+      } else if ('id' in currentExample && currentExample.id) {
+        // Если это не режим практики и у примера есть ID, добавляем его в список пройденных
+        console.log(`Marking sentence as completed: ${String(currentExample.id)}`);
+        saveLessonProgress(lessonId, currentExample.english, currentExample.id);
+      }
     }
     
     // Move to next example after a delay
@@ -515,7 +566,7 @@ export default function ExerciseComponent({
     addError(lessonId, {
       russian: currentExample.russian,
       english: currentExample.english
-    });
+    }, currentErrorId);  // Добавили currentErrorId для корректной работы с режимом практики
     
     // Move to next example after a delay
     setTimeout(() => {
@@ -529,7 +580,9 @@ export default function ExerciseComponent({
     
     if (currentPage < totalPages) {
       // Если есть еще страницы, переходим к следующей странице
-      handlePageChange({} as React.ChangeEvent<unknown>, currentPage + 1);
+      // Create a proper event object instead of using an empty object
+      const dummyEvent = { type: 'change' } as React.MouseEvent<unknown>;
+      handlePageChange(dummyEvent, currentPage + 1);
     } else {
       // Если урок полностью завершен, возвращаемся к списку уроков
       router.push('/lessons');
@@ -586,13 +639,13 @@ export default function ExerciseComponent({
   }
   
   return (
-    <Box sx={{ p: 3, maxWidth: 800, mx: 'auto' }}>
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h5" gutterBottom>
+    <Box sx={{ p: 1, maxWidth: 900, mx: 'auto' }}>
+      <Box sx={{ mb: 1 }}>
+        <Typography variant="h6" gutterBottom>
           {lessonTitle}
         </Typography>
         
-        <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
           <Box sx={{ flexGrow: 1, mr: 2 }}>
             <LinearProgress 
               variant="determinate" 
@@ -630,13 +683,13 @@ export default function ExerciseComponent({
         )}
       </Box>
       
-      <Box sx={{ mb: 4 }}>
+      <Box sx={{ mb: 1 }}>
         <Card>
           <CardContent>
             <Typography variant="h6" gutterBottom>
               {isEnglishPrompt ? 'Английский' : 'Русский'}
             </Typography>
-            <Typography variant="body1" sx={{ fontSize: '1.2rem', mb: 3 }}>
+            <Typography variant="body1" sx={{ fontSize: '1.2rem', mb: 1 }}>
               {prompt}
             </Typography>
             
@@ -655,7 +708,7 @@ export default function ExerciseComponent({
                 disabled={isCorrect !== null}
                 autoFocus
                 inputRef={inputRef}
-                sx={{ mb: 2 }}
+                sx={{ mb: 1 }}
               />
             )}
             
@@ -665,7 +718,7 @@ export default function ExerciseComponent({
                   elevation={0} 
                   sx={{ 
                     p: 2, 
-                    mb: 2, 
+                    mb: 1, 
                     minHeight: 60, 
                     bgcolor: 'background.paper',
                     border: '1px dashed',
@@ -687,7 +740,7 @@ export default function ExerciseComponent({
                   ))}
                 </Paper>
                 
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap',  }}>
                   {blockWords.map((word, index) => (
                     <Chip
                       key={index}
@@ -704,7 +757,7 @@ export default function ExerciseComponent({
           </CardContent>
         </Card>
         
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 1 }}>
           <Button 
             variant="outlined" 
             color="error" 
@@ -735,7 +788,7 @@ export default function ExerciseComponent({
           sx={{ 
             p: 2, 
             borderRadius: 2, 
-            mb: 4,
+            mb: 2,
             bgcolor: isCorrect ? 'success.dark' : 'error.dark',
             color: 'white'
           }}

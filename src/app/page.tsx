@@ -10,19 +10,10 @@ export default function Home() {
     <Layout>
       <Box sx={{ 
         textAlign: 'center', 
-        my: 4,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        gap: 4
       }}>
-        <Typography variant="h2" component="h1" gutterBottom>
-          English Galaxy
-        </Typography>
-        
-        <Typography variant="h5" component="h2" gutterBottom sx={{ maxWidth: 600, mb: 4 }}>
-          Приложение для тренировки английского языка
-        </Typography>
         
         <Grid container spacing={4} justifyContent="center" maxWidth="lg">
           <Grid item xs={12} sm={6} md={4}>

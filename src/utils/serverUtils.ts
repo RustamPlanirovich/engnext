@@ -105,7 +105,10 @@ export const getAnalytics = (profileId?: string): Analytics => {
       completedLessons: [],
       loadedLessons: [],
       totalExercisesCompleted: 0,
-      lastPracticeDate: 0
+      lastPracticeDate: 0,
+      lessonProgress: [],
+      completedSentences: {},
+      lessonCompletionCounts: {}
     };
     
     // Ensure the directory exists
@@ -242,11 +245,52 @@ export const removeError = (lessonId: string, sentence: { russian: string, engli
 
 // Mark a lesson as completed
 export const markLessonCompleted = (lessonId: string, profileId?: string): void => {
-  const analytics = getAnalytics(profileId);
-  
-  if (!analytics.completedLessons.includes(lessonId)) {
-    analytics.completedLessons.push(lessonId);
-    analytics.lastPracticeDate = Date.now();
+  try {
+    const analytics = getAnalytics(profileId);
+    
+    // Получаем количество пройденных предложений в этом уроке
+    const completedSentencesCount = analytics.completedSentences && 
+                                   analytics.completedSentences[lessonId] ? 
+                                   analytics.completedSentences[lessonId].length : 0;
+    
+    // Если урок уже отмечен как завершенный, увеличиваем счетчик прохождений
+    if (analytics.completedLessons.includes(lessonId)) {
+      // Инициализируем массив счетчиков прохождений, если он не существует
+      if (!analytics.lessonCompletionCounts) {
+        analytics.lessonCompletionCounts = {};
+      }
+      
+      // Увеличиваем счетчик прохождений для этого урока
+      if (!analytics.lessonCompletionCounts[lessonId]) {
+        analytics.lessonCompletionCounts[lessonId] = [1];
+      } else {
+        const currentCount = analytics.lessonCompletionCounts[lessonId].length > 0 ?
+          analytics.lessonCompletionCounts[lessonId][0] : 0;
+        analytics.lessonCompletionCounts[lessonId] = [currentCount + 1];
+      }
+    } else {
+      // Добавляем урок в список завершенных
+      analytics.completedLessons.push(lessonId);
+      console.log(`Added lesson ${lessonId} to completed lessons`);
+      
+      // Инициализируем массив счетчиков прохождений, если он не существует
+      if (!analytics.lessonCompletionCounts) {
+        analytics.lessonCompletionCounts = {};
+      }
+      
+      // Устанавливаем счетчик прохождений для этого урока в 1
+      analytics.lessonCompletionCounts[lessonId] = [1];
+    }
+    
+    // Увеличиваем счетчик выполненных упражнений на количество пройденных предложений
+    analytics.totalExercisesCompleted += completedSentencesCount;
+    console.log(`Updated totalExercisesCompleted to ${analytics.totalExercisesCompleted}`);
+    
+    // Сбрасываем список пройденных предложений для этого урока при завершении урока
+    // Это позволит начать новый цикл прохождения урока
+    if (analytics.completedSentences && analytics.completedSentences[lessonId]) {
+      analytics.completedSentences[lessonId] = [];
+    }
     
     // Удалить прогресс для этого урока, так как он завершен
     if (analytics.lessonProgress) {
@@ -254,11 +298,22 @@ export const markLessonCompleted = (lessonId: string, profileId?: string): void 
     }
     
     saveAnalytics(analytics, profileId);
+    
+    console.log(`Lesson ${lessonId} marked as completed. Completion count: ${analytics.lessonCompletionCounts[lessonId][0]}`);
+  } catch (error) {
+    console.error('Error marking lesson as completed:', error);
   }
 };
 
 // Сохранить прогресс урока
-export const saveLessonProgress = (lessonId: string, lastExerciseEnglish: string, profileId?: string): void => {
+export interface LessonProgress {
+  lessonId: string;
+  lastExerciseEnglish: string;
+  timestamp: number;
+  completedSentences?: string[];
+}
+
+export const saveLessonProgress = (lessonId: string, lastExerciseEnglish: string, profileId?: string, sentenceId?: string): void => {
   try {
     const analytics = getAnalytics(profileId);
     
@@ -272,6 +327,21 @@ export const saveLessonProgress = (lessonId: string, lastExerciseEnglish: string
       analytics.lessonProgress = [];
     }
     
+    // Инициализируем массив пройденных предложений, если он не существует
+    if (!analytics.completedSentences) {
+      analytics.completedSentences = {};
+    }
+    
+    // Инициализируем массив пройденных предложений для текущего урока, если он не существует
+    if (!analytics.completedSentences[lessonId]) {
+      analytics.completedSentences[lessonId] = [];
+    }
+    
+    // Добавляем ID предложения в список пройденных, если оно не уже там и ID был передан
+    if (sentenceId && !analytics.completedSentences[lessonId].includes(sentenceId)) {
+      analytics.completedSentences[lessonId].push(sentenceId);
+    }
+    
     // Проверяем, есть ли уже прогресс для этого урока
     const existingProgressIndex = analytics.lessonProgress.findIndex(p => p.lessonId === lessonId);
     
@@ -280,14 +350,16 @@ export const saveLessonProgress = (lessonId: string, lastExerciseEnglish: string
       analytics.lessonProgress[existingProgressIndex] = {
         lessonId,
         lastExerciseEnglish,
-        timestamp: Date.now()
+        timestamp: Date.now(),
+        completedSentences: analytics.completedSentences[lessonId] || []
       };
     } else {
       // Добавляем новый прогресс
       analytics.lessonProgress.push({
         lessonId,
         lastExerciseEnglish,
-        timestamp: Date.now()
+        timestamp: Date.now(),
+        completedSentences: analytics.completedSentences[lessonId] || []
       });
     }
     
@@ -297,25 +369,43 @@ export const saveLessonProgress = (lessonId: string, lastExerciseEnglish: string
     // Сохраняем аналитику с обновленным прогрессом
     saveAnalytics(analytics, profileId);
     
-    console.log(`Progress saved for lesson ${lessonId}: ${lastExerciseEnglish}`);
+    console.log(`Progress saved for lesson ${lessonId}: ${lastExerciseEnglish}, completed sentences: ${analytics.completedSentences[lessonId]?.length || 0}`);
   } catch (error) {
     console.error('Error saving lesson progress:', error);
   }
 };
 
 // Получить прогресс урока
-export const getLessonProgress = (lessonId: string, profileId?: string): string | null => {
+export const getLessonProgress = (lessonId: string, profileId?: string): { lastExerciseEnglish: string | null, completedSentences: string[] } => {
   const analytics = getAnalytics(profileId);
   
-  // Если урок уже завершен или нет прогресса, возвращаем null
-  if (analytics.completedLessons.includes(lessonId) || !analytics.lessonProgress) {
-    return null;
+  // Если урок уже завершен, возвращаем null для lastExerciseEnglish и пустой массив для completedSentences
+  if (analytics.completedLessons.includes(lessonId)) {
+    return { lastExerciseEnglish: null, completedSentences: [] };
+  }
+  
+  // Инициализируем массив пройденных предложений, если он не существует
+  if (!analytics.completedSentences) {
+    analytics.completedSentences = {};
+  }
+  
+  // Инициализируем массив пройденных предложений для текущего урока, если он не существует
+  if (!analytics.completedSentences[lessonId]) {
+    analytics.completedSentences[lessonId] = [];
+  }
+  
+  // Если нет прогресса, возвращаем null для lastExerciseEnglish и текущий массив completedSentences
+  if (!analytics.lessonProgress) {
+    return { lastExerciseEnglish: null, completedSentences: analytics.completedSentences[lessonId] || [] };
   }
   
   // Находим прогресс для этого урока
   const progress = analytics.lessonProgress.find(p => p.lessonId === lessonId);
   
-  return progress ? progress.lastExerciseEnglish : null;
+  return { 
+    lastExerciseEnglish: progress ? progress.lastExerciseEnglish : null,
+    completedSentences: analytics.completedSentences[lessonId] || []
+  };
 };
 
 // Get most problematic sentences for practice

@@ -89,20 +89,29 @@ export const fetchAnalytics = async (profileId?: string): Promise<{ analytics: A
   return await response.json();
 };
 
-export const addError = async (lessonId: string, sentence: { russian: string, english: string }, profileId?: string): Promise<void> => {
-  const baseUrl = getBaseUrl();
-  const activeProfileId = profileId || getActiveProfileId();
-  
-  const response = await fetch(`${baseUrl}/api/analytics/error`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ lessonId, sentence, profileId: activeProfileId }),
-  });
-  
-  if (!response.ok) {
-    throw new Error('Failed to record error');
+export const addError = async (lessonId: string, sentence: { russian: string, english: string }, errorId?: string, profileId?: string): Promise<void> => {
+  try {
+    const baseUrl = getBaseUrl();
+    const activeProfileId = profileId || getActiveProfileId();
+    
+    const response = await fetch(`${baseUrl}/api/analytics/error`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ 
+        lessonId, 
+        sentence, 
+        errorId, // Added errorId parameter to be passed to the API
+        profileId: activeProfileId 
+      }),
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to record error');
+    }
+  } catch (error) {
+    console.error('Error adding error to analytics:', error);
   }
 };
 
@@ -134,18 +143,20 @@ export const removeError = async (lessonId: string, sentence: { russian: string,
 export const markLessonCompleted = async (lessonId: string, profileId?: string): Promise<void> => {
   try {
     const activeProfileId = profileId || getActiveProfileId();
+    console.log(`Marking lesson ${lessonId} as completed for profile ${activeProfileId}`);
     
     const baseUrl = getBaseUrl();
-    const url = activeProfileId 
-      ? `${baseUrl}/api/analytics/complete?profileId=${encodeURIComponent(activeProfileId)}`
-      : `${baseUrl}/api/analytics/complete`;
+    const url = `${baseUrl}/api/analytics/complete`;
     
     const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ lessonId })
+      body: JSON.stringify({ 
+        lessonId, 
+        profileId: activeProfileId 
+      })
     });
     
     if (!response.ok) {
@@ -156,7 +167,7 @@ export const markLessonCompleted = async (lessonId: string, profileId?: string):
   }
 };
 
-export const saveLessonProgress = async (lessonId: string, lastExerciseEnglish: string, profileId?: string): Promise<void> => {
+export const saveLessonProgress = async (lessonId: string, lastExerciseEnglish: string, sentenceId?: string, profileId?: string): Promise<void> => {
   try {
     const activeProfileId = profileId || getActiveProfileId();
     
@@ -170,7 +181,7 @@ export const saveLessonProgress = async (lessonId: string, lastExerciseEnglish: 
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ lessonId, lastExerciseEnglish })
+      body: JSON.stringify({ lessonId, lastExerciseEnglish, sentenceId })
     });
     
     if (!response.ok) {
@@ -181,7 +192,7 @@ export const saveLessonProgress = async (lessonId: string, lastExerciseEnglish: 
   }
 };
 
-export const getLessonProgress = async (lessonId: string, profileId?: string): Promise<string | null> => {
+export const getLessonProgress = async (lessonId: string, profileId?: string): Promise<{ lastExerciseEnglish: string | null, completedSentences: string[] }> => {
   try {
     const activeProfileId = profileId || getActiveProfileId();
     
@@ -197,10 +208,13 @@ export const getLessonProgress = async (lessonId: string, profileId?: string): P
     }
     
     const data = await response.json();
-    return data.lastExerciseEnglish || null;
+    return {
+      lastExerciseEnglish: data.lastExerciseEnglish || null,
+      completedSentences: data.completedSentences || []
+    };
   } catch (error) {
     console.error('Error getting lesson progress:', error);
-    return null;
+    return { lastExerciseEnglish: null, completedSentences: [] };
   }
 };
 

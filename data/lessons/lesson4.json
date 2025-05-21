@@ -1,393 +1,540 @@
 {
-  "concept": "Практический курс по приложению English Galaxy. Уровень А0. Урок 4",
+  "concept": "Уровень А0. Урок 4",
   "explanation": "",
   "source": "",
-  "subconcepts": 
-      [
-          {"concept": "Использование неопределенного артикля A/An с конструкцией I have",
-  "explanation": "При использовании конструкции I have (или других форм have/has) с исчисляемым существительным в единственном числе, необходимо использовать неопределенный артикль (a или an). Артикль **a** ставится перед существительными, начинающимися на согласный звук. Артикль **an** ставится перед существительными, начинающимися на гласный звук. Неопределенный артикль употребляется только с существительными в **единственном числе**, которые **исчисляемые** (можно посчитать).",
-  "formula": "Subject + have/has + a + singular countable noun (consonant sound) / Subject + have/has + an + singular countable noun (vowel sound)",
-  "source": "",
-  "examples": [
-    
-              
+  "subconcepts": [
+    {
+      "concept": "",
+      "explanation": "",
+      "formula": "",
+      "source": "",
+      "examples": [
         {
           "russian": "У него есть вопрос",
           "english": "He has a question",
-          "source": ""
+          "source": "",
+          "id": "5448dc51-2927-478a-b51a-71c33481e048",
+          "learn": 0
         },
         {
           "russian": "У меня есть брат",
           "english": "I have a brother",
-          "source": ""
+          "source": "",
+          "id": "efadf8d7-8241-48f0-a223-88b81383f720",
+          "learn": 0
         },
         {
           "russian": "У меня один брат",
-          "english": "I have One Brother",
-          "source": ""
+          "english": "I have one brother",
+          "source": "",
+          "id": "a904ce9f-116b-4dc8-ba66-32530f8faf58",
+          "learn": 0
         },
         {
           "russian": "У меня есть сестра",
-          "english": "I have a Sister",
-          "source": ""
+          "english": "I have a sister",
+          "source": "",
+          "id": "bac90e3b-9bdb-428b-b528-52fdd975ccd3",
+          "learn": 0
         },
         {
           "russian": "У меня одна сестра",
-          "english": "I have One Sister",
-          "source": ""
+          "english": "I have one sister",
+          "source": "",
+          "id": "d72e62d5-f078-4491-8c03-3b46b88f6d15",
+          "learn": 0
         },
         {
           "russian": "У меня есть брат и сестра",
-          "english": "I have a brother and a Sister",
-          "source": ""
+          "english": "I have a brother and a sister",
+          "source": "",
+          "id": "f09d2956-96e3-4b6c-8bff-a8f6cc69363c",
+          "learn": 0
         },
         {
           "russian": "У меня один брат и одна сестра",
-          "english": "I have One Brother and One Sister",
-          "source": ""
+          "english": "I have one brother and one sister",
+          "source": "",
+          "id": "90aa2e99-110e-4200-9421-c533864510fe",
+          "learn": 0
         },
         {
           "russian": "У него два брата и сестра",
-          "english": "He has Two brothers and a Sister",
-          "source": ""
+          "english": "He has two brothers and a sister",
+          "source": "",
+          "id": "11dadbec-8dea-45d4-bb7c-dde74be26fb6",
+          "learn": 0
         },
         {
           "russian": "У неё две сестры и брат",
-          "english": "She has Two Sisters and a brother",
-          "source": ""
+          "english": "She has two sisters and a brother",
+          "source": "",
+          "id": "8904dd65-ec8d-4543-8792-4578de35bd11",
+          "learn": 0
         },
         {
           "russian": "У неё две дочери и сын",
-          "english": "She has Two daughters and a Son",
-          "source": ""
+          "english": "She has two daughters and a son",
+          "source": "",
+          "id": "5d63c904-3dc6-494e-895d-16b7063007ea",
+          "learn": 0
         },
         {
           "russian": "У него есть сын и дочь",
-          "english": "He has a Son and a daughter",
-          "source": ""
+          "english": "He has a son and a daughter",
+          "source": "",
+          "id": "dd952241-132b-4506-830a-b6ad0c0403fa",
+          "learn": 0
         },
         {
           "russian": "У него один сын и одна дочь",
-          "english": "He has One Son and One daughter",
-          "source": ""
+          "english": "He has one son and one daughter",
+          "source": "",
+          "id": "68469fda-f536-4a00-8d2f-a48e082ee655",
+          "learn": 0
         },
         {
           "russian": "У него есть ребёнок",
           "english": "He has a child",
-          "source": ""
+          "source": "",
+          "id": "95a76493-4229-4f47-b580-036450db2720",
+          "learn": 0
         },
         {
           "russian": "У неё один ребёнок",
-          "english": "She has One Child",
-          "source": ""
+          "english": "She has one child",
+          "source": "",
+          "id": "4803707f-10b3-4941-ae9d-84057a31f2e6",
+          "learn": 0
         },
         {
           "russian": "У него двое детей",
-          "english": "He has Two Children",
-          "source": ""
+          "english": "He has two children",
+          "source": "",
+          "id": "9c35c6ca-6f90-4e07-a2cc-249134d45712",
+          "learn": 0
         },
         {
           "russian": "У него двое детей (используя Kid)",
-          "english": "He has Two Kids",
-          "source": ""
+          "english": "He has two kids",
+          "source": "",
+          "id": "7bf4bf26-5883-4c3f-ae0f-60a8030c8364",
+          "learn": 0
         },
         {
           "russian": "У него есть ребёнок (используя Kid)",
-          "english": "He has a Kid",
-          "source": ""
+          "english": "He has a kid",
+          "source": "",
+          "id": "bb24b2a4-ebdb-4c55-a916-2f35bd1c12ab",
+          "learn": 0
         },
         {
           "russian": "У неё один ребёнок (используя Kid)",
-          "english": "She has One Kid",
-          "source": ""
+          "english": "She has one kid",
+          "source": "",
+          "id": "95e93075-ea2d-4037-ba1e-b6a37f18971f",
+          "learn": 0
         },
         {
           "russian": "Я вижу этого мужчину",
-          "english": "I See This Man",
-          "source": ""
+          "english": "I see this man",
+          "source": "",
+          "id": "08934e75-8abd-4c9e-9928-301850d03523",
+          "learn": 0
         },
         {
           "russian": "Мы видим двух мужчин",
-          "english": "We see Two men",
-          "source": ""
+          "english": "We see two men",
+          "source": "",
+          "id": "3aac3c84-ef9b-4592-9a8f-9968daca8ea3",
+          "learn": 0
         },
         {
           "russian": "Я вижу трёх женщин",
-          "english": "I See Three Women",
-          "source": ""
+          "english": "I see three women",
+          "source": "",
+          "id": "c04b5356-694d-4389-a800-5e7f3ded1e26",
+          "learn": 0
         },
         {
           "russian": "Я вижу мужчину и двух женщин",
           "english": "I see a man and two women",
-          "source": ""
+          "source": "",
+          "id": "c4707388-66a4-4f6a-87d5-71bfde4a18ca",
+          "learn": 0
         },
         {
           "russian": "Я знаю этого человека",
-          "english": "I know This Person",
-          "source": ""
+          "english": "I know this person",
+          "source": "",
+          "id": "cfafec2c-fc8b-415e-b172-d19816692987",
+          "learn": 0
         },
         {
           "russian": "Я вижу четырёх человек",
-          "english": "I See four people",
-          "source": ""
+          "english": "I see four people",
+          "source": "",
+          "id": "b503bc06-5a55-4adf-be5a-b2afa521c41a",
+          "learn": 0
         },
         {
           "russian": "У неё есть сын",
-          "english": "She has a Son",
-          "source": ""
+          "english": "She has a son",
+          "source": "",
+          "id": "e52d44cc-acbb-449d-a4e2-289542fdaa37",
+          "learn": 0
         },
         {
           "russian": "У неё есть сын (с \"got\")",
-          "english": "She has got a Son",
-          "source": ""
+          "english": "She has got a son",
+          "source": "",
+          "id": "11eee8eb-dbb6-4d03-8eea-b4378d826de5",
+          "learn": 0
         },
         {
           "russian": "Мы видим аэропорт",
-          "english": "We see an Airport",
-          "source": ""
+          "english": "We see an airport",
+          "source": "",
+          "id": "79e102a1-852b-4941-b7fc-be1f6cb9362c",
+          "learn": 0
         },
         {
           "russian": "Мы видим этот аэропорт (в значении конкретный)",
-          "english": "We see the Airport",
-          "source": ""
+          "english": "We see the airport",
+          "source": "",
+          "id": "5321e8f5-71b1-476e-afdd-9e1603e24190",
+          "learn": 0
         },
         {
           "russian": "У меня есть квартира (используя Apartment)",
-          "english": "I have an Apartment",
-          "source": ""
+          "english": "I have an apartment",
+          "source": "",
+          "id": "d257e50f-5e45-4e26-b024-c89c4945c187",
+          "learn": 0
         },
         {
           "russian": "У меня есть квартира (используя Flat)",
-          "english": "I have a Flat",
-          "source": ""
+          "english": "I have a flat",
+          "source": "",
+          "id": "97415dc7-98a4-4ed3-a3bc-ab499e3a495c",
+          "learn": 0
         },
         {
           "russian": "Я вижу поезд",
-          "english": "I See a Train",
-          "source": ""
+          "english": "I see a train",
+          "source": "",
+          "id": "241a67c0-14d4-4c39-8ed2-14c6735b69b6",
+          "learn": 0
         },
         {
           "russian": "Я тренируюсь",
-          "english": "I Train",
-          "source": ""
+          "english": "I train",
+          "source": "",
+          "id": "fad10d32-e5c8-440d-80fb-97c24f4fb6d1",
+          "learn": 0
         },
         {
           "russian": "Я вижу этот/тот поезд (конкретный)",
-          "english": "I See the train",
-          "source": ""
+          "english": "I see the train",
+          "source": "",
+          "id": "d713a0f9-ae29-42a3-be34-c4cf85b584ce",
+          "learn": 0
         },
         {
           "russian": "У меня есть машина",
           "english": "I have a car",
-          "source": ""
+          "source": "",
+          "id": "478b46a3-858e-49c6-86a4-5d74a7cd4ddb",
+          "learn": 0
         },
         {
           "russian": "У меня есть время",
-          "english": "I have Time",
-          "source": ""
+          "english": "I have time",
+          "source": "",
+          "id": "fd08d316-fc18-4f8d-9a4e-14d79bf17b5a",
+          "learn": 0
         },
         {
           "russian": "У меня мало времени",
-          "english": "I have Little Time",
-          "source": ""
+          "english": "I have little time",
+          "source": "",
+          "id": "6339d3c8-4339-4c39-b8dc-c94a3a6cb681",
+          "learn": 0
         },
         {
           "russian": "У меня очень мало времени",
-          "english": "I have very Little Time",
-          "source": ""
+          "english": "I have very little time",
+          "source": "",
+          "id": "78af9013-13ec-41ae-ac77-49b5d25affeb",
+          "learn": 0
         },
         {
           "russian": "У меня есть идеи",
           "english": "I have ideas",
-          "source": ""
+          "source": "",
+          "id": "70d747d0-b168-498f-9d0a-66905cb9b219",
+          "learn": 0
         },
         {
           "russian": "Нам нравятся морепродукты",
           "english": "We like seafood",
-          "source": ""
+          "source": "",
+          "id": "37041fa4-0b12-4298-906a-3284c564992c",
+          "learn": 0
         },
         {
           "russian": "Нам нравятся эти морепродукты (конкретные)",
           "english": "We like the seafood",
-          "source": ""
+          "source": "",
+          "id": "53442d22-8d7a-431a-a343-a58e661e179a",
+          "learn": 0
         },
         {
           "russian": "Мне нравится шоколад",
           "english": "I like chocolate",
-          "source": ""
+          "source": "",
+          "id": "9bd61262-3dcc-4db0-83a4-4deb26538f41",
+          "learn": 0
         },
         {
           "russian": "Мне нравится этот/тот шоколад (конкретный)",
-          "english": "I like The Chocolate",
-          "source": ""
+          "english": "I like the chocolate",
+          "source": "",
+          "id": "658f5d1e-560e-4ba1-9112-5c0b207f2489",
+          "learn": 0
         },
         {
           "russian": "Я больше путешествую",
-          "english": "I Travel More",
-          "source": ""
+          "english": "I travel more",
+          "source": "",
+          "id": "4721e9a3-c904-45f4-b0c2-16db152fafb0",
+          "learn": 0
         },
         {
           "russian": "Он больше ест",
-          "english": "He eats More",
-          "source": ""
+          "english": "He eats more",
+          "source": "",
+          "id": "80b1aee5-6464-4609-9792-e51e35f23b84",
+          "learn": 0
         },
         {
           "russian": "Мне больше это нравится",
-          "english": "I like it More",
-          "source": ""
+          "english": "I like it more",
+          "source": "",
+          "id": "4d636036-5a33-481e-993a-ba35026ef466",
+          "learn": 0
         },
         {
           "russian": "Мне намного больше это нравится",
-          "english": "I like it much More",
-          "source": ""
+          "english": "I like it much more",
+          "source": "",
+          "id": "5f7ac4da-3bf0-43a4-961e-9a6a79af9ed5",
+          "learn": 0
         },
         {
           "russian": "Это часто происходит",
           "english": "It often happens",
-          "source": ""
+          "source": "",
+          "id": "aba87089-85fe-45e3-8f84-aef24c66fce2",
+          "learn": 0
         },
         {
           "russian": "Это происходит очень часто",
           "english": "It happens very often",
-          "source": ""
+          "source": "",
+          "id": "9f482e72-eddf-4a67-873e-4327290133ee",
+          "learn": 0
         },
         {
           "russian": "Мне нравится плавать",
           "english": "I like swimming",
-          "source": ""
+          "source": "",
+          "id": "f2ffa626-08c8-4b40-8717-78a0a0a65cc2",
+          "learn": 0
         },
         {
           "russian": "Мне нравится плавать (как привычка)",
-          "english": "I like to Swim",
-          "source": ""
+          "english": "I like to swim",
+          "source": "",
+          "id": "af0079a6-2d3a-4224-8ecc-67693f1b2fe8",
+          "learn": 0
         },
         {
           "russian": "Я смотрю фильмы",
           "english": "I watch movies",
-          "source": ""
+          "source": "",
+          "id": "aff64ac2-33b9-419d-85e6-c422c3da05c8",
+          "learn": 0
         },
         {
           "russian": "Я играю в футбол",
           "english": "I play football",
-          "source": ""
+          "source": "",
+          "id": "f629995b-0f2a-477b-b060-78135e1587fa",
+          "learn": 0
         },
         {
           "russian": "Я читаю книги",
           "english": "I read books",
-          "source": ""
+          "source": "",
+          "id": "55b14f1c-b572-4704-bfa7-10639b3f7809",
+          "learn": 0
         },
         {
           "russian": "Я смотрю разные фильмы",
           "english": "I watch different movies",
-          "source": ""
+          "source": "",
+          "id": "6211a71d-8190-48f3-bf22-0a1895969a17",
+          "learn": 0
         },
         {
           "russian": "Я смотрю разные английские фильмы",
           "english": "I watch different English movies",
-          "source": ""
+          "source": "",
+          "id": "964ce80d-e5b1-4e72-94dd-4918759b47d7",
+          "learn": 0
         },
         {
           "russian": "Я смотрю разные английские видео",
           "english": "I watch different English videos",
-          "source": ""
+          "source": "",
+          "id": "fba1c228-3495-43a3-8fd4-a887ae2231f5",
+          "learn": 0
         },
         {
           "russian": "Я читаю английские книги",
           "english": "I read English books",
-          "source": ""
+          "source": "",
+          "id": "bb0f2290-954d-4db4-b5ba-ad6dcabbe285",
+          "learn": 0
         },
         {
           "russian": "Я читаю разные английские книги",
           "english": "I read different English books",
-          "source": ""
+          "source": "",
+          "id": "4f5edc78-93d6-4072-9edf-0195d6b44d5c",
+          "learn": 0
         },
         {
           "russian": "Я часто смотрю разные фильмы на английском",
           "english": "I often watch different movies in English",
-          "source": ""
+          "source": "",
+          "id": "96d49095-6aa1-4148-89d8-25a9e8cbaac8",
+          "learn": 0
         },
         {
           "russian": "Я иногда смотрю видео на английском",
           "english": "I sometimes watch videos in English",
-          "source": ""
+          "source": "",
+          "id": "bc20625a-8cb6-45dc-8899-4b1ecbafa261",
+          "learn": 0
         },
         {
           "russian": "Я часто играю в футбол с друзьями",
-          "english": "I often play football With My friends",
-          "source": ""
+          "english": "I often play football with my friends",
+          "source": "",
+          "id": "7d8746c5-367b-4055-a990-b0a3c047eecd",
+          "learn": 0
         },
         {
           "russian": "Я читаю на английском",
           "english": "I read in English",
-          "source": ""
+          "source": "",
+          "id": "6425becb-540b-484a-9808-f76ad9914e6b",
+          "learn": 0
         },
         {
           "russian": "Я пишу по-английски",
-          "english": "I Write in English",
-          "source": ""
+          "english": "I write in English",
+          "source": "",
+          "id": "4262e1be-144f-43e8-a6cd-d6dd696811d2",
+          "learn": 0
         },
         {
           "russian": "Я читаю книги на английском",
           "english": "I read books in English",
-          "source": ""
+          "source": "",
+          "id": "2c666972-f1c2-4e5d-a661-915ece400d4f",
+          "learn": 0
         },
         {
           "russian": "Я вижу у тебя есть вопрос",
           "english": "I see you have a question",
-          "source": ""
+          "source": "",
+          "id": "3aae0afa-bd30-4d71-9901-c5e96ca818d9",
+          "learn": 0
         },
         {
           "russian": "Я вижу, что у тебя мало свободного времени",
-          "english": "I see that you have Little Free Time",
-          "source": ""
+          "english": "I see that you have little free time",
+          "source": "",
+          "id": "3bb1f7f2-5302-40ff-b071-df3835dc5806",
+          "learn": 0
         },
         {
           "russian": "Я играю в футбол со своими друзьями, и я делаю это очень часто",
-          "english": "I play football With My friends And I Do It very often",
-          "source": ""
+          "english": "I play football with my friends and i do it very often",
+          "source": "",
+          "id": "530acd5a-eb2a-433c-8e92-f3d3ad62300b",
+          "learn": 0
         },
         {
           "russian": "Мне нравится играть в футбол с друзьями",
-          "english": "I like playing football With My friends",
-          "source": ""
+          "english": "I like playing football with my friends",
+          "source": "",
+          "id": "42684f4b-2a74-49a8-aac3-3a475b9a6f24",
+          "learn": 0
         },
         {
           "russian": "Мне это так сильно нравится",
           "english": "I like it so much",
-          "source": ""
+          "source": "",
+          "id": "d83e57b3-723c-42dc-bca5-a863e7a57a48",
+          "learn": 0
         },
         {
           "russian": "Мне это очень сильно нравится (вариант 1)",
           "english": "I like it very much",
-          "source": ""
+          "source": "",
+          "id": "520d5bf8-1a72-4601-8ab3-2218436ba45a",
+          "learn": 0
         },
         {
           "russian": "Мне реально/действительно/очень нравится это",
           "english": "I really like it",
-          "source": ""
+          "source": "",
+          "id": "037cdec1-8106-4052-a9fa-2cb6571af001",
+          "learn": 0
         },
         {
           "russian": "Мне это сильно нравится (вариант с a lot)",
           "english": "I like it a lot",
-          "source": ""
+          "source": "",
+          "id": "cecad8e9-bed0-42d2-b408-c1e2d1ab71ae",
+          "learn": 0
         },
         {
           "russian": "Мне нравится смотреть фильмы",
           "english": "I like watching movies",
-          "source": ""
+          "source": "",
+          "id": "4f45d819-c6fa-48cc-ae5c-465b18bc132f",
+          "learn": 0
         },
         {
           "russian": "Мне это очень нравится",
           "english": "I really like it",
-          "source": ""
+          "source": "",
+          "id": "6bb7c6c4-b5ce-4ab7-b140-99d4bb6968e0",
+          "learn": 0
         },
         {
           "russian": "Я делаю это каждый день",
           "english": "I do it every day",
-          "source": ""
+          "source": "",
+          "id": "fe06436f-df94-4b3f-a960-e80b87d62974",
+          "learn": 0
         }
       ]
     }
   ]
-  }
-  
+}

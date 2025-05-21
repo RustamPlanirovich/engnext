@@ -36,6 +36,7 @@ export interface LessonProgress {
   lessonId: string;
   lastExerciseEnglish: string; // Английский текст последнего упражнения
   timestamp: number;
+  completedSentences?: string[]; // ID пройденных предложений в текущем уроке
 }
 
 export interface Analytics {
@@ -45,6 +46,8 @@ export interface Analytics {
   totalExercisesCompleted: number;
   lastPracticeDate: number;
   lessonProgress?: LessonProgress[]; // Прогресс по незавершенным урокам
+  completedSentences?: { [lessonId: string]: string[] }; // ID пройденных предложений по урокам
+  lessonCompletionCounts?: { [lessonId: string]: number[] }; // Счетчики прохождений уроков
 }
 
 export interface ExerciseType {

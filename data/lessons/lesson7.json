@@ -1,0 +1,281 @@
+{
+  "concept": "Уровень А0. Урок 7",
+  "explanation": "-",
+  "source": "-",
+  "subconcepts": [
+    {
+      "concept": "-",
+      "explanation": "-",
+      "formula": "-",
+      "source": "-",
+      "examples": [
+        {
+          "russian": "Я не думаю об этом",
+          "english": "I don't think about it",
+          "source": "",
+          "id": "c92bad16-ee1c-4313-b240-4c6fe3fa66f5",
+          "learn": 0
+        },
+        {
+          "russian": "Мы не знаем",
+          "english": "We don't know",
+          "source": "",
+          "id": "9a5da63a-32cf-45e4-9b28-7f0d3a56928d",
+          "learn": 0
+        },
+        {
+          "russian": "Он не работает",
+          "english": "He doesn't work",
+          "source": "",
+          "id": "678fc8a4-c58d-4c02-8832-484c7abf7bf7",
+          "learn": 0
+        },
+        {
+          "russian": "Она не понимает это",
+          "english": "Do understand it",
+          "source": "",
+          "id": "c70c449f-b1a2-48c9-9aab-55701c852103",
+          "learn": 0
+        },
+        {
+          "russian": "Это мне не помогает",
+          "english": "Do help me",
+          "source": "",
+          "id": "d6f81ebb-d3f5-44f3-9817-97489270a754",
+          "learn": 0
+        },
+        {
+          "russian": "Это не работает",
+          "english": "It doesn't work",
+          "source": "",
+          "id": "2199f6da-8748-4da7-9ab0-bf73c8304ed0",
+          "learn": 0
+        },
+        {
+          "russian": "Мне не нравится эта идея",
+          "english": "I don't like this idea",
+          "source": "",
+          "id": "95190e17-766e-4399-9a5b-a4947df6d718",
+          "learn": 0
+        },
+        {
+          "russian": "Им не нравится это",
+          "english": "They don't like it",
+          "source": "",
+          "id": "fd843b41-805f-483c-9f2e-762e8ce48b44",
+          "learn": 0
+        },
+        {
+          "russian": "Ему не нравится эта еда",
+          "english": "he doesn't like this Food",
+          "source": "",
+          "id": "4a3e4775-f8ce-4ae9-9817-37a9257da709",
+          "learn": 0
+        },
+        {
+          "russian": "Ей не нравится эта музыка",
+          "english": "She doesn't like this music",
+          "source": "",
+          "id": "e822fb84-bc8a-4c49-a8a7-97943c61d0f6",
+          "learn": 0
+        },
+        {
+          "russian": "У меня есть немного денег",
+          "english": "I have some money",
+          "source": "",
+          "id": "63e890aa-439f-4a97-9441-b5f67b15ae68",
+          "learn": 0
+        },
+        {
+          "russian": "У меня есть немного времени",
+          "english": "I have some time",
+          "source": "",
+          "id": "5e67f019-4f5a-43c5-b436-80051f4530c1",
+          "learn": 0
+        },
+        {
+          "russian": "у него есть некоторые проблемы",
+          "english": "he has some problems",
+          "source": "",
+          "id": "8f2c53ad-9404-4741-a26b-394e5ca89450",
+          "learn": 0
+        },
+        {
+          "russian": "У меня есть некоторые идеи",
+          "english": "I have some ideas",
+          "source": "",
+          "id": "164de529-77b2-4dea-a51c-7531bd3da910",
+          "learn": 0
+        },
+        {
+          "russian": "У меня нет каких-либо идей",
+          "english": "I have any ideas",
+          "source": "",
+          "id": "56066efe-1060-4abe-90fa-c7f8098df574",
+          "learn": 0
+        },
+        {
+          "russian": "У меня нет каких-либо вопросов",
+          "english": "I have any questions",
+          "source": "",
+          "id": "0a9eaf9d-1663-42c7-a72c-5010cd0d0949",
+          "learn": 0
+        },
+        {
+          "russian": "У меня нет каких-либо планов",
+          "english": "I don't have any plans",
+          "source": "",
+          "id": "f498025e-bfb0-4388-aab7-dce151591921",
+          "learn": 0
+        },
+        {
+          "russian": "У него нет каких-либо вопросов",
+          "english": "He doesn't have any questions",
+          "source": "",
+          "id": "742d7cef-16a3-416a-bdd5-176d0150e17f",
+          "learn": 0
+        },
+        {
+          "russian": "Я часто пользуюсь интернетом",
+          "english": "I often use the internet",
+          "source": "",
+          "id": "5bd40d7e-68af-4c66-a198-d7f3d7a39849",
+          "learn": 0
+        },
+        {
+          "russian": "Я пользуюсь интернетом каждый день",
+          "english": "I use the internet everyday",
+          "source": "",
+          "id": "4040a01e-03bd-4d86-b49b-8dc89f1d7f8e",
+          "learn": 0
+        },
+        {
+          "russian": "Я пользуюсь интернетом почти каждый день",
+          "english": "I use the internet almost every day",
+          "source": "",
+          "id": "d9b8fe3e-26b2-43a3-b5f3-93934f499c78",
+          "learn": 0
+        },
+        {
+          "russian": "Я пользуюсь интернетом очень часто",
+          "english": "I use the intern often",
+          "source": "",
+          "id": "f08e148a-d14f-4bbe-8af8-fc52624d407c",
+          "learn": 0
+        },
+        {
+          "russian": "Я так думаю",
+          "english": "I think so",
+          "source": "",
+          "id": "53f64613-13c7-48c6-8f60-20b95f7cf7d5",
+          "learn": 0
+        },
+        {
+          "russian": "Я так не думаю",
+          "english": "I don't Think so",
+          "source": "",
+          "id": "0bc514d1-5bb2-452b-95b3-6dd5e54a8407",
+          "learn": 0
+        },
+        {
+          "russian": "Он так не думает",
+          "english": "He doesn't think so",
+          "source": "",
+          "id": "004d5d17-df86-445b-a898-434e70cd85b2",
+          "learn": 0
+        },
+        {
+          "russian": "Я не думаю что это помогает",
+          "english": "I don't think that it helps",
+          "source": "",
+          "id": "488f4595-c9b6-4baa-8e78-9581b75e3253",
+          "learn": 0
+        },
+        {
+          "russian": "Я не думаю что это действительно помогает мне",
+          "english": "I dont think that it really helps me",
+          "source": "",
+          "id": "21f83eeb-8eba-4e85-8818-3af39922c355",
+          "learn": 0
+        },
+        {
+          "russian": "Я понимаю как это работает",
+          "english": "I understand how it works",
+          "source": "",
+          "id": "71e50985-bd61-4dba-9140-33109d7426d8",
+          "learn": 0
+        },
+        {
+          "russian": "Я думаю что это не работает",
+          "english": "I think that work",
+          "source": "",
+          "id": "d902416c-1821-4096-b9cb-9c241d6d5a37",
+          "learn": 0
+        },
+        {
+          "russian": "Я не понимаю почему это происходит",
+          "english": "I don't understand why it's happening",
+          "source": "",
+          "id": "06a8d059-56d5-4059-8c3f-72e762beb81b",
+          "learn": 0
+        },
+        {
+          "russian": "Это не интересует Меня",
+          "english": "it doesn't interest me",
+          "source": "",
+          "id": "a2becf82-bf31-468e-a57e-3786989b4707",
+          "learn": 0
+        },
+        {
+          "russian": "Это не интересует их",
+          "english": "it doesn't interest them",
+          "source": "",
+          "id": "e8006e1f-db20-47fa-be66-919bc7645697",
+          "learn": 0
+        },
+        {
+          "russian": "Я не вижу их друзей",
+          "english": "I don't see their friends",
+          "source": "",
+          "id": "570b38df-9101-428c-9266-e3d7f7cb15b1",
+          "learn": 0
+        },
+        {
+          "russian": "это не помогает нам",
+          "english": "it doesn't help us",
+          "source": "",
+          "id": "91ed191e-4682-4581-9f33-f2db97b5a02e",
+          "learn": 0
+        },
+        {
+          "russian": "У него нет собаки",
+          "english": "He doesn't have a dog",
+          "source": "",
+          "id": "70e88fd0-b564-412f-9163-8fb81373fb26",
+          "learn": 0
+        },
+        {
+          "russian": "У него есть кошка",
+          "english": "He has cat",
+          "source": "",
+          "id": "a67f1063-9380-4c66-9ab1-69cf981d46e6",
+          "learn": 0
+        },
+        {
+          "russian": "У неё нет кошки",
+          "english": "Do have a cat",
+          "source": "",
+          "id": "e1adc2b1-1fcf-4736-aaee-bff1d36cab8c",
+          "learn": 0
+        },
+        {
+          "russian": "У неё есть собака",
+          "english": "She has a dog",
+          "source": "",
+          "id": "92e0a809-c00c-49ea-9146-6e403aaca4f6",
+          "learn": 0
+        }
+      ]
+    }
+  ]
+}
