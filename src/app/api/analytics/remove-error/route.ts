@@ -11,11 +11,11 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-    
+    console.log("Rustam", JSON.stringify(data, null, 2));
     removeError(data.lessonId, {
       russian: data.sentence.russian,
       english: data.sentence.english
-    }, data.errorId, data.profileId);
+    }, data.id, data.profileId);
     
     return NextResponse.json({ message: 'Error removed successfully' });
   } catch (error) {

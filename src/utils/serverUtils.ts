@@ -191,52 +191,92 @@ export const removeError = (lessonId: string, sentence: { russian: string, engli
     const analytics = getAnalytics(profileId);
     console.log(`Current errors count: ${analytics.errors.length}`);
     
-    let errorIndex = -1;
+    // Log all errors for debugging before removal
+    console.log('Current errors before removal:');
+    analytics.errors.forEach((error, index) => {
+      console.log(`${index}: ${error.id} - "${error.sentence.english}" (${error.lessonId})`);
+    });
     
-    if (errorId) {
-      // Find the error by ID if provided
-      errorIndex = analytics.errors.findIndex(error => error.id === errorId);
-      console.log(`Searching by ID ${errorId}, found at index: ${errorIndex}`);
-    } else {
-      // Fallback to finding by content (for backward compatibility)
-      errorIndex = analytics.errors.findIndex(
-        error => error.lessonId === lessonId && 
-                 error.sentence.russian === sentence.russian && 
-                 error.sentence.english === sentence.english
-      );
-      console.log(`Searching by content, found at index: ${errorIndex}`);
-      
-      // If not found by exact match, try case-insensitive match
-      if (errorIndex === -1) {
-        errorIndex = analytics.errors.findIndex(
-          error => error.lessonId === lessonId && 
-                  error.sentence.russian.toLowerCase() === sentence.russian.toLowerCase() && 
-                  error.sentence.english.toLowerCase() === sentence.english.toLowerCase()
-        );
-        console.log(`Searching by case-insensitive content, found at index: ${errorIndex}`);
+    // Normalize the input sentence for comparison
+    const normalizedRussian = sentence.russian.trim().toLowerCase();
+    const normalizedEnglish = sentence.english.trim().toLowerCase();
+    
+    // Find all matching errors (there could be multiple entries for the same sentence)
+    const matchingErrors = analytics.errors.filter(error => {
+      // Match by ID if provided
+      if (errorId && error.id === errorId) {
+        return true;
       }
-    }
-    
-    if (errorIndex !== -1) {
-      // Log the error being removed
-      const errorToRemove = analytics.errors[errorIndex];
-      console.log(`Removing error: ${JSON.stringify(errorToRemove)}`);
       
-      // Remove the error from the list
-      analytics.errors.splice(errorIndex, 1);
+      // Normalize the error sentence for comparison
+      const errorRussian = error.sentence.russian.trim().toLowerCase();
+      const errorEnglish = error.sentence.english.trim().toLowerCase();
+      
+      // Если lessonId равен 'practice', игнорируем проверку lessonId
+      // и ищем ошибки только по содержимому предложения
+      if (lessonId === 'practice') {
+        return errorRussian === normalizedRussian || errorEnglish === normalizedEnglish;
+      }
+      
+      // В противном случае, проверяем и lessonId, и содержимое
+      return error.lessonId === lessonId && 
+             (errorRussian === normalizedRussian || errorEnglish === normalizedEnglish);
+    });
+    
+    console.log(`Found ${matchingErrors.length} matching errors to remove`);
+    
+    if (matchingErrors.length > 0) {
+      // Log the errors being removed
+      matchingErrors.forEach(error => {
+        console.log(`Removing error: ${JSON.stringify(error)}`);
+      });
+      
+      // Get the IDs of errors to remove
+      const errorIdsToRemove = matchingErrors.map(error => error.id);
+      
+      // Filter out all matching errors by ID
+      analytics.errors = analytics.errors.filter(error => !errorIdsToRemove.includes(error.id));
+      
       console.log(`Errors after removal: ${analytics.errors.length}`);
       
       // Save updated analytics
       saveAnalytics(analytics, profileId);
       console.log('Analytics saved successfully after error removal');
     } else {
-      console.log(`No matching error found to remove for "${sentence.english}"`);
-      
-      // Log all errors for debugging
-      console.log('Current errors:');
-      analytics.errors.forEach((error, index) => {
-        console.log(`${index}: ${error.id} - "${error.sentence.english}" (${error.lessonId})`);
+      // Try a more lenient approach - match by just the English text
+      const lenientMatches = analytics.errors.filter(error => {
+        const errorEnglish = error.sentence.english.trim().toLowerCase();
+        return error.lessonId === lessonId && errorEnglish === normalizedEnglish;
       });
+      
+      if (lenientMatches.length > 0) {
+        console.log(`Found ${lenientMatches.length} lenient matches by English text only`);
+        
+        // Log the errors being removed
+        lenientMatches.forEach(error => {
+          console.log(`Removing error (lenient match): ${JSON.stringify(error)}`);
+        });
+        
+        // Get the IDs of errors to remove
+        const errorIdsToRemove = lenientMatches.map(error => error.id);
+        
+        // Filter out all matching errors by ID
+        analytics.errors = analytics.errors.filter(error => !errorIdsToRemove.includes(error.id));
+        
+        console.log(`Errors after lenient removal: ${analytics.errors.length}`);
+        
+        // Save updated analytics
+        saveAnalytics(analytics, profileId);
+        console.log('Analytics saved successfully after lenient error removal');
+      } else {
+        console.log(`No matching error found to remove for "${sentence.english}"`);
+        
+        // Log all errors for debugging
+        console.log('Current errors:');
+        analytics.errors.forEach((error, index) => {
+          console.log(`${index}: ${error.id} - "${error.sentence.english}" (${error.lessonId})`);
+        });
+      }
     }
   } catch (error) {
     console.error('Error removing error from analytics:', error);

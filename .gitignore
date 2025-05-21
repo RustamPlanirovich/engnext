@@ -8,6 +8,7 @@ node_modules
 
 # next.js
 /.next/
+/data
 /out/
 
 # production
@@ -32,3 +33,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+data/analytics/1b27a5cd-231a-40cb-872a-9334344d442a.json
+data/analytics/c0f484fc-5c62-4ddf-afcf-825c5e3bb037.json
+data/lessons/lesson1.json
+data/profiles/profiles.json

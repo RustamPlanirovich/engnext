@@ -13,21 +13,602 @@
           "russian": "Я вижу",
           "english": "I See",
           "source": "",
-          "id": "7e0a0d56-a754-4e3d-bda3-197bfbd72ccf",
-          "learn": 0
-        },{
+          "id": "763642fa-eea3-49e5-9781-50c17c50615a"
+        },
+        {
+          "russian": "Я работаю",
+          "english": "I Work",
+          "source": "",
+          "id": "7574a9c4-c6dd-4e76-b4d2-78c04c5b755e"
+        },
+        {
+          "russian": "Мы понимаем",
+          "english": "We understand",
+          "source": "",
+          "id": "c5ea696d-334b-4c68-8742-d128ebaea960"
+        },
+        {
+          "russian": "Ты знаешь",
+          "english": "You know",
+          "source": "",
+          "note": "Буква 'k' в слове 'know' не читается. 'You' может переводиться как ты или вы.",
+          "id": "bdea4168-4495-4d17-8d39-d3ddf75c5b90"
+        },
+        {
+          "russian": "Они видят",
+          "english": "They see",
+          "source": "",
+          "id": "893390ed-4325-47aa-b1d3-f1d21f0117cc"
+        },
+        {
+          "russian": "Я живу в Нью-Йорке",
+          "english": "I live in New York",
+          "source": "",
+          "id": "1b0cd7da-727b-4eaa-b53d-fe2bf583e584"
+        },
+        {
+          "russian": "Я понимаю тебя",
+          "english": "I understand you",
+          "source": "",
+          "note": "'You' может переводиться как тебя или вас.",
+          "id": "a52217df-5cee-4459-bfa4-8f6aa6104ebe"
+        },
+        {
+          "russian": "Ты знаешь это",
+          "english": "You know it",
+          "source": "",
+          "note": "'Это' по умолчанию переводится как 'it', но также можно использовать 'this' или 'that'.",
+          "id": "11bd966e-d9db-4ee2-8be0-e85d03e2e23b"
+        },
+        {
+          "russian": "Мы путешествуем каждый год",
+          "english": "We travel every year",
+          "source": "",
+          "id": "3459155a-a5ea-4c6a-ade5-4bee977fc75e"
+        },
+        {
+          "russian": "Они живут здесь",
+          "english": "They live here",
+          "source": "",
+          "id": "3d283e6b-3415-4766-9d01-745959d02cb5"
+        },
+        {
+          "russian": "Я живу здесь",
+          "english": "I live here",
+          "source": "",
+          "id": "c57acd18-cfa7-460b-bb19-a6ac7966d702"
+        },
+        {
+          "russian": "Я работаю там",
+          "english": "I Work there",
+          "source": "",
+          "id": "36829bf5-b333-4555-8cca-df050330a26b"
+        },
+        {
+          "russian": "Я вижу тебя",
+          "english": "I See you",
+          "source": "",
+          "note": "'You' в данном случае переводится как 'тебя'.",
+          "id": "9d8bb552-00ec-40e7-b020-cb041bd07426"
+        },
+        {
+          "russian": "Я работаю и учусь",
+          "english": "I work and study",
+          "source": "",
+          "id": "3145b073-5508-4d2e-9f5c-848f9ad98263"
+        },
+        {
+          "russian": "Я учусь и работаю",
+          "english": "I study and work",
+          "source": "",
+          "id": "e1db855d-6c30-4649-bc1b-dfa65cfad457"
+        },
+        {
+          "russian": "Ходить на работу",
+          "english": "Go to work",
+          "source": "",
+          "id": "bbd16164-df71-4339-bc61-1b9877e8beff"
+        },
+        {
+          "russian": "Ходить в школу",
+          "english": "Go to school",
+          "source": "",
+          "id": "71bb3fdc-27a2-43fd-871a-da7922083155"
+        },
+        {
+          "russian": "Ходить в университет",
+          "english": "Go to University",
+          "source": "",
+          "id": "7953502a-4f15-4140-ac92-6104beebb9af"
+        },
+        {
+          "russian": "Ходить в колледж",
+          "english": "Go to college",
+          "source": "",
+          "id": "ab10357e-4fd9-4d25-95fd-20635d54cc01"
+        },
+        {
+          "russian": "Я хожу на работу",
+          "english": "I go to work",
+          "source": "",
+          "id": "f7a471ec-9aa6-465c-adc9-ac7b9867defc"
+        },
+        {
+          "russian": "Я хожу в школу",
+          "english": "I go to school",
+          "source": "",
+          "id": "47957b80-aa09-415c-a8ff-f31f325584ce"
+        },
+        {
+          "russian": "Я хожу в университет",
+          "english": "I go to university",
+          "source": "",
+          "id": "037d4c1c-3699-4827-8402-7e8f45cb65ea"
+        },
+        {
+          "russian": "Я хожу в колледж",
+          "english": "I go to college",
+          "source": "",
+          "id": "da14d95b-ce74-4a58-8c69-d3d712ccaf02"
+        },
+        {
+          "russian": "Я также хожу в университет",
+          "english": "I also go to university",
+          "source": "",
+          "id": "df9afd46-baaa-4e5c-961a-a51e53ba829d"
+        },
+        {
+          "russian": "Идти домой",
+          "english": "Go home",
+          "source": "",
+          "id": "2fe00f08-fbd7-45f1-8a35-1652d5149916"
+        },
+        {
+          "russian": "Идти назад",
+          "english": "Go back",
+          "source": "",
+          "id": "a38cc5a3-fdf3-4eef-a77e-c36a3bad3fbb"
+        },
+        {
+          "russian": "Возвращаться",
+          "english": "Go back",
+          "source": "",
+          "id": "d292d715-901d-4876-8729-1c63b7e7030f"
+        },
+        {
+          "russian": "Идти сюда",
+          "english": "Go here",
+          "source": "",
+          "id": "c953421d-50e2-4afe-b7fc-a19b9e78d46c"
+        },
+        {
+          "russian": "Идти туда",
+          "english": "Go there",
+          "source": "",
+          "id": "d1d50da7-7d1d-4a67-99ec-48289f1eddb4"
+        },
+        {
+          "russian": "Ездить туда",
+          "english": "Go there",
+          "source": "",
+          "id": "f941430a-f6be-4f2a-9318-4fe3f6fd4f3c"
+        },
+        {
+          "russian": "Я хожу туда",
+          "english": "I go there",
+          "source": "",
+          "id": "d6b8fcdf-6588-4cfb-9c0e-1969f827ec4a"
+        },
+        {
+          "russian": "Я говорю по-английски",
+          "english": "I speak English",
+          "source": "",
+          "note": "Для обозначения говорения на языке используется фраза 'speak English', предлог 'по' не переводится.",
+          "id": "7733a879-90d6-46d5-902e-324b2c51e1fb"
+        },
+        {
+          "russian": "Я играю в футбол",
+          "english": "I play football",
+          "source": "",
+          "note": "При названии спорта предлог 'в' не используется.",
+          "id": "d351d0c9-8730-42c6-98f9-c3679f98e1fe"
+        },
+        {
+          "russian": "Я так думаю",
+          "english": "I think so",
+          "source": "",
+          "id": "706b70a1-133a-400c-9c83-3483b0e55fd7"
+        },
+        {
+          "russian": "Мы так думаем",
+          "english": "We think so",
+          "source": "",
+          "id": "26c2f8a7-c21c-4d07-be4f-45ace8eaa0df"
+        },
+        {
+          "russian": "Я люблю тебя",
+          "english": "I love you",
+          "source": "",
+          "note": "Важно произношение слова 'love' ('любить'), отличное от 'laugh' ('смеяться').",
+          "id": "f149b897-ce17-4d4a-860f-defc03da62e6"
+        },
+        {
+          "russian": "Я учусь",
+          "english": "I study",
+          "source": "",
+          "note": "Обычно используется, когда глагол 'учиться' употребляется сам по себе или при обучении в учебном заведении.",
+          "id": "2dcb79d7-6c9b-47c9-9a04-fa5673979de7"
+        },
+        {
+          "russian": "Мы учимся",
+          "english": "We study",
+          "source": "",
+          "id": "0e3dcf6d-ffe7-4585-8e5f-73722aa3c86f"
+        },
+        {
+          "russian": "Я изучаю английский",
+          "english": "I learn English",
+          "source": "",
+          "note": "Обычно используется для изучения языка в целом (онлайн, самостоятельно).",
+          "id": "1c0199ad-d018-4916-828e-7105ce5c4bdf"
+        },
+        {
+          "russian": "Я изучаю английский онлайн",
+          "english": "I learn English online",
+          "source": "",
+          "id": "e1ee2a6b-400c-4331-adea-f140476dc02d"
+        },
+        {
+          "russian": "Я изучаю английский здесь",
+          "english": "I learn English here",
+          "source": "",
+          "id": "37612dcc-3cbf-4d0b-a4fb-7af042eb6d95"
+        },
+        {
+          "russian": "Я могу говорить по-английски",
+          "english": "I can speak English",
+          "source": "",
+          "note": "'Can' переводится как 'могу' или 'умею'.",
+          "id": "06d5a1bd-fe48-47f3-88f9-090bd0fb3ac6"
+        },
+        {
+          "russian": "Я могу помочь тебе",
+          "english": "I can help you",
+          "source": "",
+          "note": "'You' в данном случае переводится как 'тебе'.",
+          "id": "423df6a2-7327-47af-8839-04ded4be361e"
+        },
+        {
+          "russian": "Мне нравится это",
+          "english": "I like it",
+          "source": "",
+          "note": "'Мне нравится' переводится как 'I like'. Порядок слов в английском: Кто нравится (I) + like + Что нравится (it).",
+          "id": "822212d8-85be-4035-b4d8-fbae32ca436f"
+        },
+        {
+          "russian": "Мне нравится музыка",
+          "english": "I like music",
+          "source": "",
+          "id": "340e241e-a833-47d1-8a60-ce9f149d5a01"
+        },
+        {
+          "russian": "Мне нравится спорт",
+          "english": "I like sport",
+          "source": "",
+          "id": "781c4a4a-451f-45d1-81f1-97c3b6aee767"
+        },
+        {
+          "russian": "Мне нравится музыка и спорт",
+          "english": "I like music and sport",
+          "source": "",
+          "id": "92b4e65b-f2b6-41bf-b9db-24b3719bb68d"
+        },
+        {
+          "russian": "Нам нравится этот язык",
+          "english": "we like this language",
+          "source": "",
+          "note": "'Нам нравится' переводится как 'we like'. 'Этот язык' – 'this language' (this + существительное в ед.ч.).",
+          "id": "0266bbaf-8310-4848-8a93-efd6d8a2dc29"
+        },
+        {
+          "russian": "Им нравится это место",
+          "english": "they like this place",
+          "source": "",
+          "note": "'Им нравится' переводится как 'they like'. 'Это место' – 'this place' (this + существительное в ед.ч.).",
+          "id": "33d3495d-c373-42b3-b779-d80191439504"
+        },
+        {
+          "russian": "Мне нравится эта идея",
+          "english": "I like this idea",
+          "source": "",
+          "note": "'Эта идея' – 'this idea' (this + существительное в ед.ч.).",
+          "id": "ec6ed874-f20c-40cb-9d95-8706eeb60846"
+        },
+        {
+          "russian": "Мне нравится эта вещь",
+          "english": "I like this thing",
+          "source": "",
+          "note": "'Эта вещь' – 'this thing' (this + существительное в ед.ч.).",
+          "id": "07322a17-b5c2-49cf-8774-ac08aedb7637"
+        },
+        {
+          "russian": "Мне нравятся эти вещи",
+          "english": "I like these things",
+          "source": "",
+          "note": "'Эти вещи' – 'these things' (these + существительное во мн.ч.).",
+          "id": "5c8f51ba-3d59-400e-941d-7f08d215fc3e"
+        },
+        {
+          "russian": "Мне нравится английский",
+          "english": "I like English",
+          "source": "",
+          "id": "b9ec903d-04f4-44ff-8a96-fa04c825975a"
+        },
+        {
+          "russian": "Мне нравится путешествовать",
+          "english": "I like traveling",
+          "source": "",
+          "note": "Предпочтительный вариант, если действие действительно очень нравится. Глагол с окончанием '-ing'.",
+          "id": "13be1371-af80-49da-93cf-d0108173399f"
+        },
+        {
+          "russian": "Мне нравится проводить время со своими друзьями",
+          "english": "I like spending time with my friends",
+          "source": "",
+          "note": "'Проводить время' – 'spend time'. 'Со своими друзьями' при подлежащем 'I' переводится как 'with my friends'. Используется глагол с окончанием '-ing'.",
+          "id": "bf81739f-1a57-46fc-bd6e-5e27333b4a91"
+        },
+        {
+          "russian": "Мне нравится путешествовать",
+          "english": "I like to travel",
+          "source": "",
+          "note": "Альтернативный вариант, может подразумевать привычку.",
+          "id": "9c9c6a57-7991-427e-83fe-7e70f797603c"
+        },
+        {
+          "russian": "Мне нравится проводить время со своими друзьями",
+          "english": "I like to spend time with my friends",
+          "source": "",
+          "note": "'Проводить время' – 'spend time'. 'Со своими друзьями' при подлежащем 'I' переводится как 'with my friends'. Используется инфинитив с 'to'.",
+          "id": "f8486efd-fa07-4eb8-877c-c9efac29f950"
+        },
+        {
+          "russian": "Ты знаешь это",
+          "english": "You know it",
+          "source": "",
+          "note": "'Это' по умолчанию переводится как 'it', но также возможны варианты 'this' или 'that'.",
+          "id": "200953a2-cd05-4c60-8617-cfa4af9cae54"
+        },
+        {
+          "russian": "Я знаю это",
+          "english": "I know it",
+          "source": "",
+          "note": "Также возможен вариант 'I know this'.",
+          "id": "80d20f31-2873-409c-ae2b-6e96a690ae25"
+        },
+        {
+          "russian": "Я понимаю это",
+          "english": "I understand it",
+          "source": "",
+          "note": "Также возможен вариант 'I understand this'.",
+          "id": "c064c021-0c32-4084-882a-1f64a7debae3"
+        },
+        {
+          "russian": "Мне нравится это место",
+          "english": "I like this place",
+          "source": "",
+          "note": "Используется 'this', так как 'это' относится к существительному 'место' (ед.ч.).",
+          "id": "018eae13-9116-48d1-b87c-89cb1ec833f1"
+        },
+        {
+          "russian": "Я вижу эту проблему",
+          "english": "I see this problem",
+          "source": "",
+          "note": "'Эту проблему' – 'this problem' (this + существительное в ед.ч.).",
+          "id": "1eb492f0-cd8e-4faf-ab4e-be79d0fd22ea"
+        },
+        {
+          "russian": "Мне нравится эта идея",
+          "english": "I like this idea",
+          "source": "",
+          "note": "'Эта идея' – 'this idea' (this + существительное в ед.ч.).",
+          "id": "c99a38a3-2a4b-4152-a04f-78b87f5a2b52"
+        },
+        {
+          "russian": "Мне нравится эта вещь",
+          "english": "I like this thing",
+          "source": "",
+          "note": "'Эта вещь' – 'this thing' (this + существительное в ед.ч.).",
+          "id": "cce5c927-b454-4017-a68d-08e2390dd201"
+        },
+        {
+          "russian": "Я часто думаю об этом",
+          "english": "I often think about it",
+          "source": "",
+          "note": "'Об этом' переводится как 'about it'. Также возможны варианты 'about this' или 'about that'.",
+          "id": "ac4e3f6a-1eff-4997-b5ef-5cc5a0b0f485"
+        },
+        {
+          "russian": "Я вижу эту проблему",
+          "english": "I see this problem",
+          "source": "",
+          "note": "'This' используется с существительным в единственном числе ('problem'). Произносится с кратким звуком 'и' и 'с' на конце.",
+          "id": "96923422-a261-4399-9a9d-a651033dfa40"
+        },
+        {
+          "russian": "Мне нравятся эти видео",
+          "english": "I like these videos",
+          "source": "",
+          "note": "'These' используется с существительным во множественном числе ('videos'). Произносится с долгим звуком 'и' и 'з' на конце.",
+          "id": "6bd5c8d7-c1d5-49c8-a0eb-39c4be142068"
+        },
+        {
+          "russian": "Мне нравится эта идея",
+          "english": "I like this idea",
+          "source": "",
+          "note": "'This' с существительным в ед.ч. ('idea').",
+          "id": "25d62d1b-79a3-42c8-b466-d5326575af72"
+        },
+        {
           "russian": "Я смотрю различные видео",
           "english": "I watch different videos",
           "source": "",
-          "id": "5321d3e9-c34f-48a0-8a2e-eee7ad9871ff",
-          "learn": 0
+          "note": "'Videos' – существительное во множественном числе. Используется глагол 'watch' для просмотра видео.",
+          "id": "0c4ea9a9-281b-46f9-a132-30e1f8423d07"
+        },
+        {
+          "russian": "Мне нравится эта вещь",
+          "english": "I like this thing",
+          "source": "",
+          "note": "'This' с существительным в ед.ч. ('thing').",
+          "id": "ed885e42-5f70-465d-9c97-d98b34a8684e"
+        },
+        {
+          "russian": "Мне нравятся эти вещи",
+          "english": "I like these things",
+          "source": "",
+          "note": "'These' с существительным во мн.ч. ('things').",
+          "id": "4cab5760-14cb-496a-b315-e6140e524763"
+        },
+        {
+          "russian": "Я обычно делаю это утром",
+          "english": "I usually do it in the morning",
+          "source": "",
+          "id": "59c7a9a2-f719-4d66-8c62-7340b246c05d"
+        },
+        {
+          "russian": "Я часто хожу туда",
+          "english": "I often go there",
+          "source": "",
+          "id": "833ff332-cbb0-48a8-8c3a-364e9d473bd0"
+        },
+        {
+          "russian": "Я часто путешествую",
+          "english": "I often travel",
+          "source": "",
+          "id": "c8f8ceb0-a9f8-4e7b-8788-f7c7d13e9057"
+        },
+        {
+          "russian": "Я часто думаю об этом",
+          "english": "I often think about it",
+          "source": "",
+          "note": "'Об этом' переводится как 'about it'.",
+          "id": "63b2803a-a7a0-47a1-8fa8-b861a5eba352"
+        },
+        {
+          "russian": "Я иногда делаю это",
+          "english": "I sometimes do it",
+          "source": "",
+          "id": "ba5f18b3-e21f-4b49-b204-b7606fde1e43"
+        },
+        {
+          "russian": "Иногда я делаю Это",
+          "english": "Sometimes i do it",
+          "source": "",
+          "id": "5fcf2156-a859-420c-9c39-5c937fd48a8b"
+        },
+        {
+          "russian": "Я делаю Это иногда",
+          "english": "I do it sometimes",
+          "source": "",
+          "id": "a1f3b369-d1fd-463e-a837-a3e1df0c8b5d"
+        },
+        {
+          "russian": "Ты очень хорошо говоришь по-английски",
+          "english": "You speak english very well",
+          "source": "",
+          "note": "Порядок слов в английском предложении отличается от русского: Ты говоришь по-английски очень хорошо.",
+          "id": "4aa98110-4ffa-4d89-a51a-d43d09f39b33"
+        },
+        {
+          "russian": "Я очень сильно тебя люблю",
+          "english": "I love you very much",
+          "source": "",
+          "id": "824fdf8f-803d-4d09-8920-ab609e8f5a40"
+        },
+        {
+          "russian": "Я так сильно тебя люблю",
+          "english": "I love you so much",
+          "source": "",
+          "note": "'So much' дословно означает 'так много'.",
+          "id": "9fa27a91-35c5-48a0-992d-34eb7f6459ed"
+        },
+        {
+          "russian": "Я делаю Это каждый день",
+          "english": "I do it every day",
+          "source": "",
+          "id": "30af619a-9361-43ae-8167-7cec4129818a"
+        },
+        {
+          "russian": "Я езжу туда каждый год",
+          "english": "I go there every year",
+          "source": "",
+          "id": "8e34126b-c339-48df-a6e7-886b4569fa21"
+        },
+        {
+          "russian": "Я путешествую каждый год",
+          "english": "I travel every year",
+          "source": "",
+          "id": "9e973bc3-5df7-4be0-b9ab-a634e242349b"
+        },
+        {
+          "russian": "Я тоже так думаю",
+          "english": "I also think so",
+          "source": "",
+          "id": "d70f1b97-5d65-4ed3-8101-954cd6aeb675"
+        },
+        {
+          "russian": "Я очень хочу этого",
+          "english": "I really want it",
+          "source": "",
+          "id": "8b8460f4-f4d7-4e7e-93e5-b25781655a11"
+        },
+        {
+          "russian": "Мне очень нравится это место",
+          "english": "I really like this place",
+          "source": "",
+          "note": "'Очень нравится' переводится как 'really like'. 'Это место' – 'this place'.",
+          "id": "60a0e548-de78-4d05-b168-df755b36c53a"
+        },
+        {
+          "russian": "Ты реально помогаешь мне",
+          "english": "You really help me",
+          "source": "",
+          "note": "'Really' может переводиться как 'реально', 'действительно' или 'очень'.",
+          "id": "384c5f67-e234-45b4-be3d-0c34b0ec7b98"
+        },
+        {
+          "russian": "Ты очень помогаешь мне",
+          "english": "You really help me",
+          "source": "",
+          "note": "'Really' может переводиться как 'реально', 'действительно' или 'очень'.",
+          "id": "38924d69-4bfe-4416-addd-121f48e57ee7"
+        },
+        {
+          "russian": "Я вижу свой результат",
+          "english": "I see my result",
+          "source": "",
+          "note": "'Свой' при подлежащем 'I' переводится как 'my'.",
+          "id": "5ef79113-d588-4725-83fb-0baad200f77b"
+        },
+        {
+          "russian": "Я вижу свой прогресс",
+          "english": "I see my progress",
+          "source": "",
+          "note": "'Свой' при подлежащем 'I' переводится как 'my'.",
+          "id": "1ffce3dd-9029-4d1a-b972-9874df80d9fe"
+        },
+        {
+          "russian": "Я смотрю различные видео",
+          "english": "I watch different videos",
+          "source": "",
+          "id": "349a07ac-7f9f-42a1-a7d2-c6ddc1d662fe"
         },
         {
           "russian": "Я смотрю видео",
           "english": "I watch videos",
           "source": "",
-          "id": "0205aa07-f6b9-4c44-9859-1f6d390f540d",
-          "learn": 0
+          "id": "c040e364-c23b-48a1-b671-3be285726ab8"
         }
       ]
     }

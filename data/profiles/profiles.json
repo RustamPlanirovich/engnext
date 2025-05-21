@@ -1,10 +1,10 @@
 {
   "profiles": [
     {
-      "id": "1b27a5cd-231a-40cb-872a-9334344d442a",
-      "name": "Папа",
-      "createdAt": 1747842631434,
-      "lastActiveAt": 1747842636766,
+      "id": "7ff0063b-fee7-42ed-abac-1bbd4e61b045",
+      "name": "Father",
+      "createdAt": 1747846034290,
+      "lastActiveAt": 1747846035251,
       "isAdmin": true,
       "settings": {
         "timerEnabled": false,
