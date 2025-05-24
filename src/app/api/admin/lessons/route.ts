@@ -18,26 +18,80 @@ export async function POST(request: NextRequest) {
     
     const data = await request.json();
     
-    if (!data.fileName || !data.lessonData) {
-      return NextResponse.json(
-        { error: 'Отсутствуют обязательные поля: fileName, lessonData' },
-        { status: 400 }
-      );
+    // Проверяем, есть ли несколько файлов или один
+    if (data.files && Array.isArray(data.files)) {
+      // Обработка нескольких файлов
+      if (data.files.length === 0) {
+        return NextResponse.json(
+          { error: 'Не переданы файлы для загрузки' },
+          { status: 400 }
+        );
+      }
+      
+      const results = [];
+      let hasErrors = false;
+      
+      // Обрабатываем каждый файл
+      for (const file of data.files) {
+        if (!file.fileName || !file.lessonData) {
+          results.push({
+            fileName: file.fileName || 'Неизвестный файл',
+            success: false,
+            message: 'Отсутствуют обязательные поля: fileName, lessonData'
+          });
+          hasErrors = true;
+          continue;
+        }
+        
+        try {
+          const result = await saveLesson(file.fileName, file.lessonData);
+          results.push({
+            fileName: file.fileName,
+            success: result.success,
+            message: result.message
+          });
+          
+          if (!result.success) {
+            hasErrors = true;
+          }
+        } catch (error) {
+          results.push({
+            fileName: file.fileName,
+            success: false,
+            message: 'Ошибка при сохранении файла'
+          });
+          hasErrors = true;
+        }
+      }
+      
+      return NextResponse.json({ 
+        success: !hasErrors,
+        results,
+        message: hasErrors ? 'Некоторые файлы не были загружены' : 'Все файлы успешно загружены'
+      });
+    } else {
+      // Обработка одного файла (старый формат для обратной совместимости)
+      if (!data.fileName || !data.lessonData) {
+        return NextResponse.json(
+          { error: 'Отсутствуют обязательные поля: fileName, lessonData' },
+          { status: 400 }
+        );
+      }
+      
+      const result = await saveLesson(data.fileName, data.lessonData);
+      
+      if (!result.success) {
+        return NextResponse.json(
+          { error: result.message },
+          { status: 400 }
+        );
+      }
+      
+      return NextResponse.json({ 
+        success: true,
+        message: result.message
+      });
     }
-    
-    const result = await saveLesson(data.fileName, data.lessonData);
-    
-    if (!result.success) {
-      return NextResponse.json(
-        { error: result.message },
-        { status: 400 }
-      );
-    }
-    
-    return NextResponse.json({ 
-      success: true,
-      message: result.message
-    });
   } catch (error) {
     console.error('Error saving lesson:', error);
     return NextResponse.json(

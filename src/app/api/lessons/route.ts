@@ -17,14 +17,23 @@ export async function GET() {
       lessonIds.unshift('lesson1');
     }
     
+    // Преобразуем ID в объекты с дополнительным полем для сортировки
     const lessons = lessonIds.map(id => {
       const lessonData = getLesson(id);
+      // Извлекаем числовой номер урока для правильной сортировки
+      const lessonNumber = parseInt(id.replace(/\D/g, '')) || 0;
+      
       return {
         id,
         title: lessonData?.concept || `Урок ${id}`,
         description: lessonData?.explanation?.substring(0, 150) + '...' || 'Описание отсутствует',
+        sortOrder: lessonNumber // Добавляем поле для сортировки
       };
-    });
+    })
+    // Сортируем по числовому порядку
+    .sort((a, b) => a.sortOrder - b.sortOrder)
+    // Удаляем вспомогательное поле из результата
+    .map(({ sortOrder, ...rest }) => rest);
     
     return NextResponse.json({ lessons }, {
       headers: {

@@ -101,7 +101,8 @@ export default function Layout({ children }: LayoutProps) {
   const menuItems = [
     { text: 'Главная', href: '/', icon: <HomeIcon /> },
     { text: 'Уроки', href: '/lessons', icon: <BookIcon /> },
-    { text: 'Повторение', href: '/practice', icon: <PracticeIcon /> },
+    { text: 'Практика', href: '/practice', icon: <PracticeIcon /> },
+    { text: 'Интервальное повторение', href: '/review', icon: <PracticeIcon /> },
     { text: 'Аналитика', href: '/analytics', icon: <AnalyticsIcon /> },
     { text: 'Настройки', href: '/settings', icon: <SettingsIcon /> },
   ];

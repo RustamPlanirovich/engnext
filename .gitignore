@@ -9,6 +9,9 @@ node_modules
 # next.js
 /.next/
 /data
+/data/lessons
+/data/profiles
+/data/analytics
 /out/
 
 # production
@@ -37,3 +40,42 @@ data/analytics/1b27a5cd-231a-40cb-872a-9334344d442a.json
 data/analytics/c0f484fc-5c62-4ddf-afcf-825c5e3bb037.json
 data/lessons/lesson1.json
 data/profiles/profiles.json
+lessons/lesson21.json
+lessons/lesson22.json
+lessons/lesson23.json
+lessons/lesson24.json
+lessons/lesson25.json
+lessons/lesson26.json
+lessons/lesson27.json
+lessons/lesson28.json
+lessons/lesson29.json
+lessons/lesson30.json
+lessons/lesson31.json
+lessons/lesson32.json
+lessons/lesson33.json
+lessons/lesson34.json
+lessons/lesson35.json
+lessons/lesson36.json
+lessons/lesson37.json
+lessons/lesson38.json
+lessons/lesson39.json
+lessons/lesson40.json
+lessons/lesson41.json
+lessons/lesson42.json
+lessons/lesson43.json
+lessons/lesson44.json
+lessons/lesson45.json
+lessons/lesson46.json
+lessons/lesson47.json
+lessons/lesson48.json
+lessons/lesson49.json
+lessons/lesson50.json
+data/lessons/lesson1.json
+data/lessons/lesson2.json
+data/lessons/lesson3.json
+data/lessons/lesson4.json
+data/lessons/lesson5.json
+data/lessons/lesson6.json
+data/lessons/lesson7.json
+data/lessons/lesson8.json
+data/lessons/lesson9.json

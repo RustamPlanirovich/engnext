@@ -1,288 +1,210 @@
 {
-  "concept": "Уровень А0. Урок 6",
-  "explanation": "-",
-  "source": "-",
-  "subconcepts": [
-    {
-      "concept": "-",
-      "explanation": "-",
-      "formula": "-",
-      "source": "-",
-      "examples": [
-        {
-          "russian": "Я не понимаю",
-          "english": "I don't understand",
-          "source": "",
-          "id": "dbdd842c-df80-44c4-99ca-31810d132bdb",
-          "learn": 0
-        },
-        {
-          "russian": "Простите я не понимаю",
-          "english": "Sorry i don't understand",
-          "source": "",
-          "id": "f3247db0-d54b-415a-b641-ed8ee197fb2c",
-          "learn": 0
-        },
-        {
-          "russian": "Я не знаю",
-          "english": "I don't know",
-          "source": "",
-          "id": "35af5cc9-f03f-41e8-80fd-0ac30112e410",
-          "learn": 0
-        },
-        {
-          "russian": "У нас нет времени",
-          "english": "We don't have time",
-          "source": "",
-          "id": "0fe5afb2-fe86-4cc5-828e-5977715bebac",
-          "learn": 0
-        },
-        {
-          "russian": "у них нет денег",
-          "english": "They don't have money",
-          "source": "",
-          "id": "0c93229c-d6c1-43d0-af63-e54e87d02b03",
-          "learn": 0
-        },
-        {
-          "russian": "Я не работаю",
-          "english": "I don't work",
-          "source": "",
-          "id": "fde8c208-1982-4dd7-a098-d4fe1a04c167",
-          "learn": 0
-        },
-        {
-          "russian": "Я учусь",
-          "english": "I study",
-          "source": "",
-          "id": "b129aba9-4813-4b42-8721-09ab94f1785e",
-          "learn": 0
-        },
-        {
-          "russian": "я не учусь",
-          "english": "I don't study",
-          "source": "",
-          "id": "4ccfcad9-e7d1-4e33-bc69-4d44f005e04c",
-          "learn": 0
-        },
-        {
-          "russian": "Я работаю",
-          "english": "I Work",
-          "source": "",
-          "id": "f6133f8d-cbd9-4f1d-bf7a-05cd78722ec8",
-          "learn": 0
-        },
-        {
-          "russian": "я не пью чай",
-          "english": "I don't drink tea",
-          "source": "",
-          "id": "2f892d5d-10f9-4f46-960f-faceadab9f0f",
-          "learn": 0
-        },
-        {
-          "russian": "Я пью кофе",
-          "english": "I drink coffee",
-          "source": "",
-          "id": "3dc11425-90c3-4cc5-b2a2-ed0578cded59",
-          "learn": 0
-        },
-        {
-          "russian": "Я не пью кофе",
-          "english": "I don't drink coffee",
-          "source": "",
-          "id": "aa5672b9-476d-49a7-9802-627233ee716f",
-          "learn": 0
-        },
-        {
-          "russian": "Я предпочитаю чай",
-          "english": "I prefer tea",
-          "source": "",
-          "id": "b8572aa7-c5c5-4424-8717-f7d3bc14aa90",
-          "learn": 0
-        },
-        {
-          "russian": "Я не делаю те упражнения",
-          "english": "I don't do those exercises",
-          "source": "",
-          "id": "c02ca0a4-4060-47af-829c-af0653bf2792",
-          "learn": 0
-        },
-        {
-          "russian": "я делаю эти упражнения",
-          "english": "I do these exercises",
-          "source": "",
-          "id": "2c7a8948-cca9-44df-9225-0f4b5d11f756",
-          "learn": 0
-        },
-        {
-          "russian": "я не хочу тратить деньги на это",
-          "english": "I don't want to spend money on it",
-          "source": "",
-          "id": "46fb69ba-80ef-4a16-a6ce-a6d038613bb6",
-          "learn": 0
-        },
-        {
-          "russian": "они не хотят жить в этой стране",
-          "english": "They don't want to live in this country",
-          "source": "",
-          "id": "2face667-9235-4048-82c7-fbb860397b2b",
-          "learn": 0
-        },
-        {
-          "russian": "я плачу за это",
-          "english": "I pay for it",
-          "source": "",
-          "id": "ba365170-b743-4cbf-8456-bfd0c6c30674",
-          "learn": 0
-        },
-        {
-          "russian": "я плачу за этот курс",
-          "english": "I pay for this course",
-          "source": "",
-          "id": "d6b3646c-c947-46d4-853e-8c736466d4ef",
-          "learn": 0
-        },
-        {
-          "russian": "Я не плачу за этот курс",
-          "english": "I don't pay for this course",
-          "source": "",
-          "id": "1e9ebdd0-4d70-4623-b945-b8b01651dbdc",
-          "learn": 0
-        },
-        {
-          "russian": "они не говорят Это",
-          "english": "They don't say it",
-          "source": "",
-          "id": "42de8d6d-da22-40cf-9e33-745bbffda57f",
-          "learn": 0
-        },
-        {
-          "russian": "они не говорят эту вещь",
-          "english": "They don't say this thing",
-          "source": "",
-          "id": "8163d064-bc1c-474b-82a3-38643a9921a5",
-          "learn": 0
-        },
-        {
-          "russian": "мы говорим о разных вещах",
-          "english": "We talk about different things",
-          "source": "",
-          "id": "aa7e27a4-89ef-4b67-86a4-bf2617bd39b3",
-          "learn": 0
-        },
-        {
-          "russian": "Я не хочу говорить об этом",
-          "english": "I don't want to talk about it",
-          "source": "",
-          "id": "601ede89-076b-4043-a5a2-e930713645ca",
-          "learn": 0
-        },
-        {
-          "russian": "Я не хочу обсуждать это",
-          "english": "I don't want to discuss it",
-          "source": "",
-          "id": "de86ebca-51bf-47d6-abce-de65ce74d79d",
-          "learn": 0
-        },
-        {
-          "russian": "Я не хочу говорить о политике",
-          "english": "I don't want to talk about politics",
-          "source": "",
-          "id": "9e185255-b79e-4f7f-8713-e4d189fb734e",
-          "learn": 0
-        },
-        {
-          "russian": "я не Занимаюсь бизнесом",
-          "english": "I don't do business",
-          "source": "",
-          "id": "8cf2f6f6-ae77-4e6d-ba80-e291d15c6d52",
-          "learn": 0
-        },
-        {
-          "russian": "я делаю ошибки",
-          "english": "I make mistakes",
-          "source": "",
-          "id": "8451f3c9-e785-43b3-8ff6-074f2781f8ab",
-          "learn": 0
-        },
-        {
-          "russian": "я не делаю ошибок",
-          "english": "I don't make mistakes",
-          "source": "",
-          "id": "fd1a9043-1088-4eae-83ca-9ecf67828848",
-          "learn": 0
-        },
-        {
-          "russian": "я не хочу быть бизнесменом",
-          "english": "I don't want to be a businessman",
-          "source": "",
-          "id": "a3d0ca30-feaf-49d2-a5d6-b1d8e407e43b",
-          "learn": 0
-        },
-        {
-          "russian": "Я хочу быть менеджером",
-          "english": "I want to be a manager",
-          "source": "",
-          "id": "013835fd-36cc-4caa-9578-cff94b7b2a74",
-          "learn": 0
-        },
-        {
-          "russian": "Я не хочу жить в том месте",
-          "english": "I don't want to live in that place",
-          "source": "",
-          "id": "0fd55c36-4cb7-43a6-9303-4a152f3a8b43",
-          "learn": 0
-        },
-        {
-          "russian": "Я хочу жить в этом месте",
-          "english": "I want to live in this place",
-          "source": "",
-          "id": "31e604a3-5e22-4b76-b5a7-efe8d9e48b7c",
-          "learn": 0
-        },
-        {
-          "russian": "Я хочу здесь жить",
-          "english": "I want to live here",
-          "source": "",
-          "id": "58e7e84a-6e84-4b9d-835a-a19559cf8918",
-          "learn": 0
-        },
-        {
-          "russian": "Я хочу жить в другом месте",
-          "english": "I want to live in another place",
-          "source": "",
-          "id": "6db03913-9f04-48e5-83bd-1e4c8bfa406c",
-          "learn": 0
-        },
-        {
-          "russian": "Он хочет жить в другой стране",
-          "english": "He wants to live in another country",
-          "source": "",
-          "id": "f01b45ef-3d30-40b3-a4bb-3c5ca31e9ac7",
-          "learn": 0
-        },
-        {
-          "russian": "Я хочу пойти в другое место",
-          "english": "I want to go to another place",
-          "source": "",
-          "id": "f81bf53d-2f39-4e80-86a0-d1d0d7667ab3",
-          "learn": 0
-        },
-        {
-          "russian": "Я хочу посетить другие страны и города",
-          "english": "I want to visit other countries and cities",
-          "source": "",
-          "id": "724a1360-db50-4a07-a42e-8eed911ee211",
-          "learn": 0
-        },
-        {
-          "russian": "Я хотел бы посетить другие страны и города",
-          "english": "I'd like to visit other countries and cities",
-          "source": "",
-          "id": "62ffb9ab-dfc6-4e51-805d-bb9f6eb4f105",
-          "learn": 0
-        }
-      ]
-    }
-  ]
-}
+    "concept": "Уровень А0. Урок 6",
+    "explanation": "-",
+    "source": "-",
+    "subconcepts": [
+      {
+        "concept": "-",
+        "explanation": "-",
+        "formula": "-",
+        "source": "-",
+        "examples":[
+          {
+            "russian": "Я не понимаю",
+            "english": "I don't understand",
+            "source": ""
+          },
+          {
+            "russian": "Простите я не понимаю",
+            "english": "Sorry i don't understand",
+            "source": ""
+          },
+          {
+            "russian": "Я не знаю",
+            "english": "I don't know",
+            "source": ""
+          },
+          {
+            "russian": "У нас нет времени",
+            "english": "We don't have time",
+            "source": ""
+          },
+          {
+            "russian": "у них нет денег",
+            "english": "They don't have money",
+            "source": ""
+          },
+          {
+            "russian": "Я не работаю",
+            "english": "I don't work",
+            "source": ""
+          },
+          {
+            "russian": "Я учусь",
+            "english": "I study",
+            "source": ""
+          },
+          {
+            "russian": "я не учусь",
+            "english": "I don't study",
+            "source": ""
+          },
+          {
+            "russian": "Я работаю",
+            "english": "I Work",
+            "source": ""
+          },
+          {
+            "russian": "я не пью чай",
+            "english": "I don't drink tea",
+            "source": ""
+          },
+          {
+            "russian": "Я пью кофе",
+            "english": "I drink coffee",
+            "source": ""
+          },
+          {
+            "russian": "Я не пью кофе",
+            "english": "I don't drink coffee",
+            "source": ""
+          },
+          {
+            "russian": "Я предпочитаю чай",
+            "english": "I prefer tea",
+            "source": ""
+          },
+          {
+            "russian": "Я не делаю те упражнения",
+            "english": "I don't do those exercises",
+            "source": ""
+          },
+          {
+            "russian": "я делаю эти упражнения",
+            "english": "I do these exercises",
+            "source": ""
+          },
+          {
+            "russian": "я не хочу тратить деньги на это",
+            "english": "I don't want to spend money on it",
+            "source": ""
+          },
+          {
+            "russian": "они не хотят жить в этой стране",
+            "english": "They don't want to live in this country",
+            "source": ""
+          },
+          {
+            "russian": "я плачу за это",
+            "english": "I pay for it",
+            "source": ""
+          },
+          {
+            "russian": "я плачу за этот курс",
+            "english": "I pay for this course",
+            "source": ""
+          },
+          {
+            "russian": "Я не плачу за этот курс",
+            "english": "I don't pay for this course",
+            "source": ""
+          },
+          {
+            "russian": "они не говорят Это",
+            "english": "They don't say it",
+            "source": ""
+          },
+          {
+            "russian": "они не говорят эту вещь",
+            "english": "They don't say this thing",
+            "source": ""
+          },
+          {
+            "russian": "мы говорим о разных вещах",
+            "english": "We talk about different things",
+            "source": ""
+          },
+          {
+            "russian": "Я не хочу говорить об этом",
+            "english": "I don't want to talk about it",
+            "source": ""
+          },
+          {
+            "russian": "Я не хочу обсуждать это",
+            "english": "I don't want to discuss it",
+            "source": ""
+          },
+          {
+            "russian": "Я не хочу говорить о политике",
+            "english": "I don't want to talk about politics",
+            "source": ""
+          },
+          {
+            "russian": "я не Занимаюсь бизнесом",
+            "english": "I don't do business",
+            "source": ""
+          },
+          {
+            "russian": "я делаю ошибки",
+            "english": "I make mistakes",
+            "source": ""
+          },
+          {
+            "russian": "я не делаю ошибок",
+            "english": "I don't make mistakes",
+            "source": ""
+          },
+          {
+            "russian": "я не хочу быть бизнесменом",
+            "english": "I don't want to be a businessman",
+            "source": ""
+          },
+          {
+            "russian": "Я хочу быть менеджером",
+            "english": "I want to be a manager",
+            "source": ""
+          },
+          {
+            "russian": "Я не хочу жить в том месте",
+            "english": "I don't want to live in that place",
+            "source": ""
+          },
+          {
+            "russian": "Я хочу жить в этом месте",
+            "english": "I want to live in this place",
+            "source": ""
+          },
+          {
+            "russian": "Я хочу здесь жить",
+            "english": "I want to live here",
+            "source": ""
+          },
+          {
+            "russian": "Я хочу жить в другом месте",
+            "english": "I want to live in another place",
+            "source": ""
+          },
+          {
+            "russian": "Он хочет жить в другой стране",
+            "english": "He wants to live in another country",
+            "source": ""
+          },
+          {
+            "russian": "Я хочу пойти в другое место",
+            "english": "I want to go to another place",
+            "source": ""
+          },
+          {
+            "russian": "Я хочу посетить другие страны и города",
+            "english": "I want to visit other countries and cities",
+            "source": ""
+          },
+          {
+            "russian": "Я хотел бы посетить другие страны и города",
+            "english": "I'd like to visit other countries and cities",
+            "source": ""
+          }
+        ]
+      }
+    ]
+  }

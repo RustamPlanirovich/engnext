@@ -39,6 +39,51 @@ export interface LessonProgress {
   completedSentences?: string[]; // ID пройденных предложений в текущем уроке
 }
 
+// Статус урока в системе интервального повторения
+export enum LessonStatus {
+  NotStarted = 'not_started',   // Не начат
+  InProgress = 'in_progress',   // В процессе изучения
+  Completed = 'completed',      // Завершен
+  Hidden = 'hidden',           // Скрыт пользователем
+  DueForReview = 'due_review'   // Нужно повторить
+}
+
+// Информация о повторении урока по кривой забывания
+export interface SpacedRepetitionInfo {
+  lessonId: string;             // ID урока
+  status: LessonStatus;         // Текущий статус
+  completionDates: number[];    // Даты завершения (в миллисекундах)
+  repetitionLevel: number;      // Текущий уровень повторения (0-5)
+  nextReviewDate: number;       // Дата следующего повторения (в миллисекундах)
+  isHidden: boolean;           // Скрыт ли урок
+  lastErrorCount?: number;     // Количество ошибок при последнем прохождении
+}
+
+// Тип для загрузки файла урока
+export interface LessonFile {
+  fileName: string;            // Имя файла урока
+  lessonData: string;          // Содержимое файла урока в формате JSON
+}
+
+// Результат загрузки файла урока
+export interface UploadResult {
+  fileName: string;            // Имя файла урока
+  success: boolean;            // Успешна ли загрузка
+  message: string;             // Сообщение о результате загрузки
+}
+
+/**
+ * Интерфейс для хранения приоритетных предложений для повторения
+ */
+export interface PrioritySentence {
+  id: string;           // Уникальный идентификатор предложения
+  russian: string;      // Русский текст
+  english: string;      // Английский текст
+  priority: number;     // Приоритет (чем выше, тем важнее)
+  errorCount: number;   // Количество ошибок при изучении
+  source: string;       // Источник предложения
+}
+
 export interface Analytics {
   errors: AnalyticsItem[];
   completedLessons: string[];
@@ -48,6 +93,8 @@ export interface Analytics {
   lessonProgress?: LessonProgress[]; // Прогресс по незавершенным урокам
   completedSentences?: { [lessonId: string]: string[] }; // ID пройденных предложений по урокам
   lessonCompletionCounts?: { [lessonId: string]: number[] }; // Счетчики прохождений уроков
+  spacedRepetition?: SpacedRepetitionInfo[]; // Информация о повторении уроков
+  prioritySentences?: { [lessonId: string]: PrioritySentence[] }; // Приоритетные предложения для повторения
 }
 
 export interface ExerciseType {

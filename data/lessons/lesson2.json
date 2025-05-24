@@ -10,1134 +10,832 @@
       "source": "",
       "examples": [
         {
-          "russian": "Он работает?",
-          "english": "He Works",
-          "source": "",
-          "id": "af79ee91-ba90-40a9-8c66-5244a4a78a62",
-          "learn": 0
-        },
-        {
-          "russian": "Она понимает?",
-          "english": "She understands",
-          "source": "",
-          "id": "f7fae245-da5d-4934-bf45-cfcf7677b44d",
-          "learn": 0
-        },
-        {
-          "russian": "Это помогает?",
-          "english": "it helps",
-          "source": "",
-          "id": "e4b31553-e77d-48bb-aa42-f5d044b1905f",
-          "learn": 0
-        },
-        {
           "russian": "Он работает",
           "english": "He Works",
-          "source": "",
-          "id": "df33641d-50c9-4d2c-93e1-86b38fb91351",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Она понимает",
           "english": "She understands",
-          "source": "",
-          "id": "aca8f0e6-9b7c-4848-83f1-59d10cf83320",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Это помогает",
           "english": "it helps",
-          "source": "",
-          "id": "a9ff506c-5148-497c-8e72-bcfa87eed580",
-          "learn": 0
+          "source": ""
         },
         {
-          "russian": "Это стоит 10 долларов?",
-          "english": "it costs 10 dollars",
-          "source": "",
-          "note": "Глагол 'cost' получает окончание -s потому что подлежащее 'it', 'dollars' во множественном числе.",
-          "id": "7c22ace2-9c95-4d90-b090-37a757156de6",
-          "learn": 0
+          "russian": "Он работает",
+          "english": "He Works",
+          "source": ""
+        },
+        {
+          "russian": "Она понимает",
+          "english": "She understands",
+          "source": ""
+        },
+        {
+          "russian": "Это помогает",
+          "english": "it helps",
+          "source": ""
         },
         {
           "russian": "Это стоит 10 долларов",
           "english": "it costs 10 dollars",
           "source": "",
-          "id": "53f738b3-955d-4358-b9c1-b7ae1dce493d",
-          "learn": 0
+          "note": "Глагол 'cost' получает окончание -s потому что подлежащее 'it', 'dollars' во множественном числе."
+        },
+        {
+          "russian": "Это стоит 10 долларов",
+          "english": "it costs 10 dollars",
+          "source": ""
         },
         {
           "russian": "Это стоит 20 долларов",
           "english": "it costs 20 dollars",
-          "source": "",
-          "id": "dec5872e-6f88-40ff-b8fe-ddaf7a3a95a6",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Он много знает",
           "english": "He knows a lot",
           "source": "",
-          "note": "Глагол 'know' получает окончание -s потому что подлежащее 'He'.",
-          "id": "45af4a6a-5fa3-45fe-90df-ed5167445a02",
-          "learn": 0
+          "note": "Глагол 'know' получает окончание -s потому что подлежащее 'He'."
         },
         {
           "russian": "Он много знает",
           "english": "He knows a lot",
-          "source": "",
-          "id": "e7a4c89a-2971-4626-9811-827bd2e0357f",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Ему нравится",
           "english": "He likes",
           "source": "",
-          "note": "По-русски 'ему', по-английски 'He' + 'likes'.",
-          "id": "5c7a35e9-282a-4c77-b87e-658ebf5bc7ac",
-          "learn": 0
+          "note": "По-русски 'ему', по-английски 'He' + 'likes'."
         },
         {
           "russian": "Ей нравится",
           "english": "She likes",
           "source": "",
-          "note": "По-русски 'ей', по-английски 'She' + 'likes'.",
-          "id": "ccf3e247-53f4-43f8-a7ef-52ffba9e131a",
-          "learn": 0
+          "note": "По-русски 'ей', по-английски 'She' + 'likes'."
         },
         {
           "russian": "Ему это нравится",
           "english": "He likes it",
-          "source": "",
-          "id": "a73c648e-934b-4e08-bcb4-00a739b1682f",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Ей это нравится",
           "english": "She likes it",
-          "source": "",
-          "id": "d49000de-1d7b-4d91-a410-f21a46f3c25a",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Ей нравится эта музыка",
           "english": "She likes this Music",
-          "source": "",
-          "id": "9f4013d2-c6bd-4cf0-86ce-c6d3034a09a7",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Он часто делает это",
           "english": "He often does it",
           "source": "",
-          "note": "Глагол 'do' заканчивается на 'o', добавляется -es.",
-          "id": "e4bf8aba-fcbf-4640-b3ca-8b5534f25a13",
-          "learn": 0
+          "note": "Глагол 'do' заканчивается на 'o', добавляется -es."
         },
         {
           "russian": "Он ходит на работу",
           "english": "He goes to work",
           "source": "",
-          "note": "Глагол 'go' заканчивается на 'o', добавляется -es.",
-          "id": "a878af1f-64e8-4e58-bf48-3b5027a1e994",
-          "learn": 0
+          "note": "Глагол 'go' заканчивается на 'o', добавляется -es."
         },
         {
           "russian": "Она смотрит эти видео",
           "english": "She watches these videos",
           "source": "",
-          "note": "Глагол 'watch' заканчивается на 'ch', добавляется -es.",
-          "id": "6b48b7df-d6e4-4ded-9686-78f989def26b",
-          "learn": 0
+          "note": "Глагол 'watch' заканчивается на 'ch', добавляется -es."
         },
         {
           "russian": "Она учится",
           "english": "She studies",
           "source": "",
-          "note": "Глагол 'study' заканчивается на согласную + Y, Y меняется на I, добавляется -es.",
-          "id": "43d38114-3db1-4d1e-b213-5e2b76e2ae82",
-          "learn": 0
+          "note": "Глагол 'study' заканчивается на согласную + Y, Y меняется на I, добавляется -es."
         },
         {
           "russian": "Она учится",
           "english": "She studies",
-          "source": "",
-          "id": "df4667b4-4653-47db-87c8-22f00eb9a5f1",
-          "learn": 0
+          "source": ""
         },
         {
-          "russian": "Она работает (звук /s/)",
+          "russian": "Она работает",
           "english": "She Works",
-          "source": "",
-          "id": "ca91136e-d3ce-48b9-8cde-c1663277bd76",
-          "learn": 0
+          "source": ""
         },
         {
-          "russian": "Это помогает (звук /s/)",
+          "russian": "Это помогает",
           "english": "It helps",
-          "source": "",
-          "id": "a75b1731-6cdc-4815-ac40-1c27847a0064",
-          "learn": 0
+          "source": ""
         },
         {
-          "russian": "Она понимает (звук /z/)",
+          "russian": "Она понимает",
           "english": "She understands",
-          "source": "",
-          "id": "87054ead-72ef-41c5-8b8a-0c9488326bc0",
-          "learn": 0
+          "source": ""
         },
         {
-          "russian": "Она живет здесь (звук /z/)",
+          "russian": "Она живет здесь",
           "english": "She lives here",
-          "source": "",
-          "id": "69bfbf0d-37ee-4c50-9233-03f2b8f2d9d6",
-          "learn": 0
+          "source": ""
         },
         {
-          "russian": "Он чувствует себя лучше (звук /z/)",
+          "russian": "Он чувствует себя лучше",
           "english": "He feels better",
-          "source": "",
-          "id": "4777ce09-c203-486e-9b53-1e5286d3e45b",
-          "learn": 0
-        },
-        {
-          "russian": "Она делает ошибки (звук /s/)",
-          "english": "She makes mistakes",
-          "source": "",
-          "id": "0c46ba01-c4fe-4985-8931-551f90bdfa67",
-          "learn": 0
-        },
-        {
-          "russian": "Он видит эту проблему (звук /z/)",
-          "english": "He sees this problem",
-          "source": "",
-          "id": "9c45f2c7-19a9-4ad4-bc33-101271562acb",
-          "learn": 0
-        },
-        {
-          "russian": "Он смотрит различные фильмы (звук /ɪz/)",
-          "english": "He watches different movies",
-          "source": "",
-          "id": "053b2be5-a9ab-40c8-a9b9-a2e5d55e990b",
-          "learn": 0
-        },
-        {
-          "russian": "Он делает это (звук /dəz/)",
-          "english": "He does it",
-          "source": "",
-          "id": "6e7f72d6-ffea-4286-b93b-687c8037c3b4",
-          "learn": 0
-        },
-        {
-          "russian": "Делать ошибки",
-          "english": "Make mistakes",
-          "source": "",
-          "id": "787869ff-735d-4675-840c-85174c45f8a3",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Она делает ошибки",
           "english": "She makes mistakes",
-          "source": "",
-          "id": "74895818-2b78-4a72-b5cf-73f0191253d3",
-          "learn": 0
+          "source": ""
         },
         {
-          "russian": "Он иногда делает ошибки",
-          "english": "He sometimes makes mistakes",
-          "source": "",
-          "id": "0aca7530-b221-46f2-b2e4-8da76abe9df6",
-          "learn": 0
+          "russian": "Он видит эту проблему",
+          "english": "He sees this problem",
+          "source": ""
         },
         {
-          "russian": "Он часто делает ошибки",
-          "english": "He often makes mistakes",
-          "source": "",
-          "id": "1c6c361d-0619-4e6f-9097-1ae90e171b04",
-          "learn": 0
-        },
-        {
-          "russian": "Делать это",
-          "english": "Do it",
-          "source": "",
-          "id": "cc65dca4-a264-4dbe-b4f3-ebaafdf00408",
-          "learn": 0
-        },
-        {
-          "russian": "Я делаю это",
-          "english": "I do it",
-          "source": "",
-          "id": "7b6a64e3-f5e8-411e-8445-b4ee494b026b",
-          "learn": 0
+          "russian": "Он смотрит различные фильмы",
+          "english": "He watches different movies",
+          "source": ""
         },
         {
           "russian": "Он делает это",
           "english": "He does it",
-          "source": "",
-          "id": "0b6e499e-d2e0-438b-8935-26c69e3e4883",
-          "learn": 0
+          "source": ""
+        },
+        {
+          "russian": "Делать ошибки",
+          "english": "Make mistakes",
+          "source": ""
+        },
+        {
+          "russian": "Она делает ошибки",
+          "english": "She makes mistakes",
+          "source": ""
+        },
+        {
+          "russian": "Он иногда делает ошибки",
+          "english": "He sometimes makes mistakes",
+          "source": ""
+        },
+        {
+          "russian": "Он часто делает ошибки",
+          "english": "He often makes mistakes",
+          "source": ""
+        },
+        {
+          "russian": "Делать это",
+          "english": "Do it",
+          "source": ""
+        },
+        {
+          "russian": "Я делаю это",
+          "english": "I do it",
+          "source": ""
+        },
+        {
+          "russian": "Он делает это",
+          "english": "He does it",
+          "source": ""
         },
         {
           "russian": "Он часто делает это",
           "english": "He often does it",
-          "source": "",
-          "id": "28caab8a-449d-459b-90fa-1a5f7b8bbc7a",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Да",
           "english": "Yes",
-          "source": "",
-          "id": "47c50861-2098-44be-9a86-bce4d8ca6be7",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Верно",
           "english": "Right",
-          "source": "",
-          "id": "d2145c96-de70-48be-abd9-7c945bc73be1",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Правильно",
           "english": "Right",
-          "source": "",
-          "id": "b21c2964-f42e-4abf-9fb5-755f938dc47a",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Это верно",
           "english": "That's right",
-          "source": "",
-          "id": "f6de50ee-fce2-469a-854d-8c85d67c349f",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Это правильно",
           "english": "That's right",
-          "source": "",
-          "id": "ef62379a-f15f-4a17-920e-39929ea29843",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я согласен",
           "english": "I agree",
-          "source": "",
-          "id": "bc231d89-f8b0-428f-80ce-5c4728da11f4",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я согласен с тобой",
           "english": "I agree with you",
-          "source": "",
-          "id": "9abd8585-b8d4-49a5-af4c-7bcba02dd4e1",
-          "learn": 0
+          "source": ""
         },
         {
-          "russian": "Я полностью согласен / Я абсолютно согласен",
+          "russian": "Я полностью согласен",
           "english": "I absolutely agree",
-          "source": "",
-          "id": "d53b839b-ebc5-4e49-b6c5-da688e652542",
-          "learn": 0
+          "source": ""
         },
         {
-          "russian": "Я полностью согласен с тобой / Я абсолютно согласен с тобой",
+          "russian": "Я абсолютно согласен",
+          "english": "I absolutely agree",
+          "source": ""
+        },
+        {
+          "russian": "Я полностью согласен с тобой",
           "english": "I absolutely agree with you",
-          "source": "",
-          "id": "b375e7d2-a539-448a-baea-4d946b0f5ef0",
-          "learn": 0
+          "source": ""
+        },
+        {
+          "russian": "Я абсолютно согласен с тобой",
+          "english": "I absolutely agree with you",
+          "source": ""
         },
         {
           "russian": "Говорить по-английски",
           "english": "Speak English",
-          "source": "",
-          "id": "c6da26da-a95a-45dc-a78b-f21c8e86f172",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я говорю по-английски",
           "english": "I speak English",
-          "source": "",
-          "id": "8404847c-e9d9-46e3-a665-c5016463ebde",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я могу говорить по-английски",
           "english": "I can speak English",
-          "source": "",
-          "id": "f69cc27b-496b-41f7-9848-57fcc888344e",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Говорить по-английски быстро",
           "english": "Speak English fast",
-          "source": "",
-          "id": "48d8ead1-4063-4c79-8d8b-a9b072f5ee60",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я могу говорить по-английски быстро",
           "english": "I can speak English fast",
-          "source": "",
-          "id": "5a0170a0-b662-45b4-92de-03fb54043c37",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Сказать это",
           "english": "Say it",
-          "source": "",
-          "id": "5f566322-8eec-4d91-9369-bdbbb0cda9ef",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Сказать эту вещь",
           "english": "Say this thing",
-          "source": "",
-          "id": "2b3131ad-58a1-4eba-a635-1655cd4cd6c6",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Они часто говорят это",
           "english": "They often say it",
-          "source": "",
-          "id": "4a9600a2-4674-4425-b0b3-0681e1d68368",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Он часто говорит это",
           "english": "He often says it",
-          "source": "",
-          "id": "1eb34fe3-d320-4398-a014-cff04a4a4a4b",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Она часто говорит эту вещь",
           "english": "She often says this thing",
-          "source": "",
-          "id": "ccdc616f-ad5a-4b79-ace1-34b023faca9f",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Скажи мне",
           "english": "Tell me",
-          "source": "",
-          "id": "cd718025-086c-4aee-adc8-ca1cd4e15031",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Скажи мне пожалуйста",
           "english": "Tell me please",
-          "source": "",
-          "id": "238a6e10-cecb-4f90-a87a-aa5998f6c207",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Он часто говорит мне эту вещь",
           "english": "he often tells me This Thing",
-          "source": "",
-          "id": "ea5833f7-947d-4379-9d09-16339da72848",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "В этом городе",
           "english": "In this city",
           "source": "",
-          "note": "'This' для ед.ч.",
-          "id": "df3528a6-4464-4f93-ba8b-b42c3046b6ad",
-          "learn": 0
+          "note": "'This' для ед.ч."
         },
         {
           "russian": "Она живёт в этом городе",
           "english": "She lives in this city",
-          "source": "",
-          "id": "8ba04f40-60e0-4db8-aae9-b473cdc27f83",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Того человека",
           "english": "That person",
           "source": "",
-          "note": "'That' для ед.ч.",
-          "id": "472fcb2c-8067-472e-a555-13b8f652ea90",
-          "learn": 0
+          "note": "'That' для ед.ч."
         },
         {
           "russian": "Он понимает того человека",
           "english": "He understand that person",
-          "source": "",
-          "id": "0c7701f0-a8d0-4028-8ff6-5195771b06bb",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Эта идея",
           "english": "This idea",
           "source": "",
-          "note": "'This' для ед.ч.",
-          "id": "2ee7dfe6-8a5f-4317-ad85-586d52c146cf",
-          "learn": 0
+          "note": "'This' для ед.ч."
         },
         {
           "russian": "Мне нравится эта идея",
           "english": "I like this idea",
-          "source": "",
-          "id": "a95de597-0cdc-453a-bc83-49dc3ef3da0f",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я знаю того человека",
           "english": "I know that person",
           "source": "",
-          "note": "'That' для ед.ч.",
-          "id": "072754fb-6e75-4359-9f6b-5b4ad101019a",
-          "learn": 0
+          "note": "'That' для ед.ч."
         },
         {
           "russian": "Эти ошибки",
           "english": "These mistakes",
           "source": "",
-          "note": "'These' для мн.ч.",
-          "id": "266b7677-761e-4dc7-8dff-486bcd840116",
-          "learn": 0
+          "note": "'These' для мн.ч."
         },
         {
           "russian": "Они делают эти ошибки",
           "english": "They make these mistakes",
-          "source": "",
-          "id": "58d65b50-8966-447c-b51b-841206be7aa0",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Этих людей",
           "english": "These people",
           "source": "",
-          "note": "'These' для мн.ч.",
-          "id": "d8f36487-7a2b-425e-ab96-be65262ae640",
-          "learn": 0
+          "note": "'These' для мн.ч."
         },
         {
           "russian": "Я понимаю этих людей",
           "english": "I understand these people",
-          "source": "",
-          "id": "0b3c7587-e122-4724-9ca6-7c695a96a93d",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Тех людей",
           "english": "Those people",
           "source": "",
-          "note": "'Those' для мн.ч.",
-          "id": "f518e072-bc8b-4cc3-b9ca-b87d9b789393",
-          "learn": 0
+          "note": "'Those' для мн.ч."
         },
         {
           "russian": "Я понимаю тех людей",
           "english": "I understand those people",
-          "source": "",
-          "id": "3b866fb3-961d-4aee-8e19-fa184446bd16",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Она смотрит эти видео",
           "english": "She watches these videos",
           "source": "",
-          "note": "'These' для мн.ч.",
-          "id": "f644daf8-e3c8-44b6-91f2-117097239256",
-          "learn": 0
+          "note": "'These' для мн.ч."
         },
         {
           "russian": "Он видит эту проблему",
           "english": "He sees this problem",
           "source": "",
-          "note": "'This' для ед.ч.",
-          "id": "5e976d91-db15-404f-84ad-e9f6ea649cad",
-          "learn": 0
+          "note": "'This' для ед.ч."
         },
         {
           "russian": "Я живу рядом с этим местом",
           "english": "I live near this place",
           "source": "",
-          "note": "'This' для ед.ч.",
-          "id": "e8af6d14-92f8-4a6c-8899-85f7112ae8f7",
-          "learn": 0
+          "note": "'This' для ед.ч."
         },
         {
           "russian": "Я думаю что.",
           "english": "I think that",
-          "source": "",
-          "id": "45760229-f256-480e-aadf-469f9dc99acd",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я думаю что ты делаешь это очень хорошо",
           "english": "I think that you do it very well",
-          "source": "",
-          "id": "f07df93c-af95-4f77-b9d1-8121dd453a87",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я думаю ты делаешь это очень хорошо",
           "english": "I think you do it very well",
           "source": "",
-          "note": "'that' опущено.",
-          "id": "3e0fed0f-2a16-4672-b209-cbfabe4140eb",
-          "learn": 0
+          "note": "'that' опущено."
         },
         {
           "russian": "Я думаю это работает лучше",
           "english": "I think it works better",
-          "source": "",
-          "id": "26cb814f-9200-4518-97df-b7d2ebd896bf",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я знаю как это работает",
           "english": "I know how it works",
-          "source": "",
-          "id": "417df6b6-96b8-46a3-a6c1-f976c204dcca",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я думаю что он нас понимает",
           "english": "I think that he understands US",
-          "source": "",
-          "id": "25e6de89-52d4-40f1-ab86-ea2d7525252a",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Так много",
           "english": "So much",
-          "source": "",
-          "id": "6f0dfcd4-2459-4a72-8ebe-e9612dfa8103",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Он работает так много",
           "english": "He works so much",
-          "source": "",
-          "id": "b50304da-a3d8-4e88-8b1b-47032890c477",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Много",
           "english": "A lot",
-          "source": "",
-          "id": "d886ab0c-c4e1-402c-8e87-10b17ebd946c",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я работаю много",
           "english": "I work a lot",
           "source": "",
-          "note": "'a lot' ставится в конце.",
-          "id": "b2a00178-1861-4573-b839-52f456d18cc9",
-          "learn": 0
+          "note": "'a lot' ставится в конце."
         },
         {
           "russian": "Я много работаю",
           "english": "I work a lot",
           "source": "",
-          "note": "'a lot' ставится в конце.",
-          "id": "cf851a7d-97cd-4a08-b591-617d30ccab18",
-          "learn": 0
+          "note": "'a lot' ставится в конце."
         },
         {
           "russian": "Ты много работаешь",
           "english": "You work a lot",
-          "source": "",
-          "id": "418b7ccd-91a8-4506-832c-9ae48499ed59",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Он много знает",
           "english": "He knows a lot",
-          "source": "",
-          "id": "c6420129-3cdd-4cd6-9d46-965425177b6d",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Очень много",
           "english": "Very much",
-          "source": "",
-          "id": "addc2fb5-4b4b-46fb-a45a-fc4712e4dd6a",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Очень сильно",
           "english": "Very much",
-          "source": "",
-          "id": "817dc132-d848-46c8-9ca4-e8c33df40f81",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Он очень много работает",
           "english": "He works very much",
-          "source": "",
-          "id": "7ffb8cb3-3d0e-4928-aa6a-9c29369c1d19",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Ты так много работаешь",
           "english": "You work so much",
-          "source": "",
-          "id": "6d543753-ed7d-44c3-8b9d-20a978db807e",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я очень сильно тебя люблю",
           "english": "I love you very much",
-          "source": "",
-          "id": "442781fa-d4e1-4630-841f-6cd780ee2318",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я так сильно тебя люблю",
           "english": "I love you so much",
-          "source": "",
-          "id": "025190c6-c5d6-49d1-96ad-4abefb7a0acf",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "По телевизору (кратко)",
           "english": "On TV",
-          "source": "",
-          "id": "faed56cc-e165-4b5d-8f43-38d4bf9307e1",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "По телевизору (полная форма)",
           "english": "On television",
-          "source": "",
-          "id": "b6acd22a-3666-4de5-add6-2d0aa0da0866",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Мы часто слышим это по телевизору",
           "english": "We often hear it on TV",
-          "source": "",
-          "id": "98fc2ab2-06bd-456d-9fee-613924b4645b",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Мне",
           "english": "Me",
-          "source": "",
-          "id": "ae253dd2-51dc-4b04-8aaf-1509d49dd9d9",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Меня",
           "english": "Me",
-          "source": "",
-          "id": "9108e8b9-5e9d-496c-8955-da7f92a74d6c",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Он часто звонит мне",
           "english": "He often calls me",
-          "source": "",
-          "id": "e91ced3c-60ce-450a-be9f-8b751167a83d",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Она знает меня",
           "english": "She knows me",
-          "source": "",
-          "id": "dfefdd43-8fb2-464c-bd90-6a89c1ab7353",
-          "learn": 0
+          "source": ""
         },
         {
-          "russian": "Тебя / Тебе / Вас / Вам",
+          "russian": "Тебя",
           "english": "You",
           "source": "",
-          "note": "Используется для ед.ч. и мн.ч.",
-          "id": "51cebde8-a577-45ab-aced-1361405439ff",
-          "learn": 0
+          "note": "Используется для ед.ч. и мн.ч."
         },
         {
           "russian": "Тебе",
           "english": "You",
           "source": "",
-          "note": "Используется для ед.ч. и мн.ч.",
-          "id": "08e2b303-1293-4613-917e-9276b19e3a50",
-          "learn": 0
+          "note": "Используется для ед.ч. и мн.ч."
         },
         {
           "russian": "Вас",
           "english": "You",
           "source": "",
-          "note": "Используется для ед.ч. и мн.ч.",
-          "id": "8f069ec0-0bc6-44d3-9fa9-2e312f1f3612",
-          "learn": 0
+          "note": "Используется для ед.ч. и мн.ч."
         },
         {
           "russian": "Вам",
           "english": "You",
           "source": "",
-          "note": "Используется для ед.ч. и мн.ч.",
-          "id": "4a48f07b-3c55-45c5-9525-463482b3aa56",
-          "learn": 0
+          "note": "Используется для ед.ч. и мн.ч."
         },
         {
-          "russian": "Я слышу тебя / вас",
+          "russian": "Я слышу тебя",
           "english": "I hear you",
-          "source": "",
-          "id": "fe50b4b0-7d66-4c01-857f-714b6f1551df",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я слышу вас",
           "english": "I hear you",
-          "source": "",
-          "id": "6b47b11f-9958-4cb0-81e6-e7ebe658f2a5",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Он часто звонит тебе",
           "english": "He often calls you",
-          "source": "",
-          "id": "e138243b-2ea6-484d-b4fa-f3b8d867be63",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Ее",
           "english": "her",
-          "source": "",
-          "id": "4480b271-65e3-4e25-b8f4-bd9a32bbab39",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я знаю ее",
           "english": "I know her",
-          "source": "",
-          "id": "fcebaf70-0ddc-4eae-80ec-f90b77847c81",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Его",
           "english": "Him",
           "source": "",
-          "note": "Используется, когда 'его' или 'ему' выступает как самостоятельное слово.",
-          "id": "e2b88adf-9028-44ca-8d48-0fce83cce653",
-          "learn": 0
+          "note": "Используется, когда 'его' или 'ему' выступает как самостоятельное слово."
         },
         {
           "russian": "Ему",
           "english": "Him",
           "source": "",
-          "note": "Используется, когда 'его' или 'ему' выступает как самостоятельное слово.",
-          "id": "29b91004-8bde-4e29-bee3-97d21f73f9c5",
-          "learn": 0
+          "note": "Используется, когда 'его' или 'ему' выступает как самостоятельное слово."
         },
         {
           "russian": "Я вижу его",
           "english": "I see him",
-          "source": "",
-          "id": "a4714e98-36cf-4f33-81fd-9921d91d70a1",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я помогаю ему",
           "english": "I help him",
-          "source": "",
-          "id": "14068ddf-eeef-4ce7-91a9-db309caae32c",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Нас",
           "english": "Us",
-          "source": "",
-          "id": "2645f89d-1f33-4c5e-9c90-99a80bbacf4e",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Нам",
           "english": "Us",
-          "source": "",
-          "id": "0c99909b-91bc-4e59-91d6-21c31e5ebede",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Он нас понимает",
           "english": "He understands us",
-          "source": "",
-          "id": "2087ce80-9e91-4f6a-87e8-69b740d59b03",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Это действительно помогает нам / Это реально помогает нам / Это очень помогает нам",
           "english": "it really helps us",
           "source": "",
-          "note": "'really' используется вместо 'very' перед глаголом.",
-          "id": "0f69dd5c-932e-49f0-882a-14fc2efe8376",
-          "learn": 0
+          "note": "'really' используется вместо 'very' перед глаголом."
         },
         {
           "russian": "Это реально помогает нам",
           "english": "it really helps us",
           "source": "",
-          "note": "'really' используется вместо 'very' перед глаголом.",
-          "id": "38e90e44-f3bc-4445-9a7b-58032c78a626",
-          "learn": 0
+          "note": "'really' используется вместо 'very' перед глаголом."
         },
         {
           "russian": "Это очень помогает нам",
           "english": "it really helps us",
           "source": "",
-          "note": "'really' используется вместо 'very' перед глаголом.",
-          "id": "df70ecb7-0a72-4f68-89e1-cc3b538179a2",
-          "learn": 0
+          "note": "'really' используется вместо 'very' перед глаголом."
         },
         {
           "russian": "Их",
           "english": "Them",
-          "source": "",
-          "id": "bbc9136a-162f-463e-afba-b0266d5c7819",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Она помогает им",
           "english": "She helps them",
-          "source": "",
-          "id": "83abb0c5-36a5-4577-a73d-7c5f5591b893",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я слышу их",
           "english": "I hear them",
-          "source": "",
-          "id": "befd2ee1-d004-42cc-8c19-ace003727adf",
-          "learn": 0
+          "source": ""
         },
         {
-          "russian": "Его (чей-то)",
+          "russian": "Его",
           "english": "His",
           "source": "",
-          "note": "Используется перед существительным, например 'его друг'.",
-          "id": "b3a2a9d0-6b5b-46b9-8d67-50525298592e",
-          "learn": 0
+          "note": "Используется перед существительным, например 'его друг'."
         },
         {
           "russian": "Я вижу его друга",
           "english": "I See his friend",
-          "source": "",
-          "id": "eaba2fbc-09d0-4230-aca6-7408db6f8e39",
-          "learn": 0
+          "source": ""
         },
         {
-          "russian": "Их (чей-то)",
+          "russian": "Их",
           "english": "Their",
           "source": "",
-          "note": "Используется перед существительным, например 'их друзья'.",
-          "id": "0fdf0103-b9c8-4505-b782-18db77fb7d0b",
-          "learn": 0
+          "note": "Используется перед существительным, например 'их друзья'."
         },
         {
           "russian": "Их друзей",
           "english": "Their friends",
-          "source": "",
-          "id": "819dbb8f-496c-422d-8989-05efb9019f3a",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я вижу их друзей",
           "english": "I see their friends",
-          "source": "",
-          "id": "055f7ced-536a-42c4-baed-3b4e088684a5",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Рядом",
           "english": "Near",
-          "source": "",
-          "id": "da27aa4d-0bf9-4b48-bfe8-45016ff5f58d",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Рядом с этим местом",
           "english": "Near this place",
-          "source": "",
-          "id": "0ba304d0-19f9-46ac-b880-35e9042bf73e",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я живу рядом с этим местом",
           "english": "I live near this place",
-          "source": "",
-          "id": "1eb54be0-50a7-423a-bd82-bb1aa97c44b0",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Далеко",
           "english": "Far",
-          "source": "",
-          "id": "ffd3ca26-e109-42ec-8ee0-9f82a07756b3",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Очень далеко",
           "english": "Very far",
-          "source": "",
-          "id": "fba9e883-001d-4c7a-9729-ffeb591f990b",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "он живёт очень далеко",
           "english": "He lives very far",
-          "source": "",
-          "id": "83c621b2-9c3a-48a9-98ed-8013b6bd03bb",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Дороже",
           "english": "More",
-          "source": "",
-          "id": "9c80d635-6147-4423-8f6c-3d49637b2a5a",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Больше",
           "english": "More",
-          "source": "",
-          "id": "406e5431-2fbe-4047-a4ac-967082401782",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Намного больше",
           "english": "Much more",
-          "source": "",
-          "id": "d8ec1e70-894f-41a9-8e8c-a0a082b9fc75",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Намного дороже",
           "english": "Much more",
-          "source": "",
-          "id": "5a983175-9a0c-4e5f-a5f9-d17fe9b6409b",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Это стоит дороже",
           "english": "It costs more",
-          "source": "",
-          "id": "79cd8562-5721-41aa-893b-7c7a1082d9e5",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Это стоит намного дороже",
           "english": "It costs much more",
-          "source": "",
-          "id": "e045827c-9c90-468a-9597-e10c0dd8fd55",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Меньше",
           "english": "Less",
-          "source": "",
-          "id": "41ca8d24-9ae2-4062-9510-6dda808e23ad",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Дешевле",
           "english": "Less",
-          "source": "",
-          "id": "b64cd1ce-bfea-4bcd-99de-c679efa3cb25",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Намного меньше",
           "english": "Much less",
-          "source": "",
-          "id": "da9a416a-bf9d-4b96-98a3-b9224be45e30",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Намного дешевле",
           "english": "Much less",
-          "source": "",
-          "id": "f2260418-4c86-4aab-abbd-78d51b9e58ab",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Это стоит дешевле",
           "english": "It costs less",
-          "source": "",
-          "id": "70dac784-6c7e-4158-84d9-cff32aa74d1c",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Это стоит намного меньше",
           "english": "It costs much less",
-          "source": "",
-          "id": "ad765547-ad1c-4616-8162-740624a453f4",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Один доллар",
           "english": "One dollar",
-          "source": "",
-          "id": "06ad8cd7-9cb9-4604-bbed-14a9319d45a6",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "10 долларов",
           "english": "10 dollars",
           "source": "",
-          "note": "К 'dollar' добавлено -s.",
-          "id": "51d5ffad-58f5-41f1-8a0e-7068370bb065",
-          "learn": 0
+          "note": "К 'dollar' добавлено -s."
         },
         {
           "russian": "20 долларов",
           "english": "20 dollars",
-          "source": "",
-          "id": "3e23f2e6-0f06-4549-82ee-6fb7750e961d",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Мне нравится это",
           "english": "I like it",
-          "source": "",
-          "id": "2a9d1fee-34e3-4c93-855d-30dbebcebd35",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Мне это очень нравится / Мне реально нравится / Мне действительно нравится",
           "english": "I really like it",
           "source": "",
-          "note": "'really' используется перед глаголом для усиления.",
-          "id": "1f6f5e85-b197-4ff6-8ba3-018b8f8d1b52",
-          "learn": 0
+          "note": "'really' используется перед глаголом для усиления."
         },
         {
           "russian": "Мне реально нравится",
           "english": "I really like it",
           "source": "",
-          "note": "'really' используется перед глаголом для усиления.",
-          "id": "df86ee39-70fd-4190-8c75-24c61eccb5c8",
-          "learn": 0
+          "note": "'really' используется перед глаголом для усиления."
         },
         {
           "russian": "Мне действительно нравится",
           "english": "I really like it",
           "source": "",
-          "note": "'really' используется перед глаголом для усиления.",
-          "id": "627b0e6d-8709-412c-945e-b28b6e670407",
-          "learn": 0
+          "note": "'really' используется перед глаголом для усиления."
         },
         {
           "russian": "Мне это так сильно нравится",
           "english": "I like it so much",
           "source": "",
-          "note": "'so much' ставится в конце.",
-          "id": "c5ace616-c75a-4d57-b087-ac2d16a73b25",
-          "learn": 0
+          "note": "'so much' ставится в конце."
         },
         {
           "russian": "Мне это очень сильно нравится",
           "english": "I like it very much",
           "source": "",
-          "note": "'very much' ставится в конце.",
-          "id": "8b8e2f8f-9f38-42bf-856a-7815e9cc15ea",
-          "learn": 0
+          "note": "'very much' ставится в конце."
         }
       ]
     }

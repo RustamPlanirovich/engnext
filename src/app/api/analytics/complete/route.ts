@@ -1,24 +1,53 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { markLessonCompleted } from '@/utils/serverUtils';
+import { markLessonCompleted, toggleLessonVisibility, getLessonSpacedRepetitionInfo } from '@/utils/serverUtils';
 
 export async function POST(request: NextRequest) {
   try {
     const data = await request.json();
+    const { lessonId, profileId, action, isHidden } = data;
     
-    if (!data.lessonId) {
+    if (!lessonId) {
       return NextResponse.json(
         { error: 'Missing required field: lessonId' },
         { status: 400 }
       );
     }
-    console.log(data.lessonId, data.profileId);
-    markLessonCompleted(data.lessonId, data.profileId);
     
-    return NextResponse.json({ message: 'Lesson marked as completed successfully' });
+    // Обработка различных действий
+    if (action === 'toggle-visibility' && isHidden !== undefined) {
+      // Изменение видимости урока
+      console.log(`Toggling visibility for lesson ${lessonId}, isHidden: ${isHidden}`);
+      const repetitionInfo = toggleLessonVisibility(lessonId, isHidden, profileId);
+      
+      if (!repetitionInfo) {
+        return NextResponse.json(
+          { error: 'Failed to toggle lesson visibility' },
+          { status: 404 }
+        );
+      }
+      
+      return NextResponse.json({ 
+        success: true, 
+        repetitionInfo 
+      });
+    } else {
+      // По умолчанию отмечаем урок как завершенный
+      console.log(`Marking lesson ${lessonId} as completed for profile ${profileId}`);
+      markLessonCompleted(lessonId, profileId);
+      
+      // Получаем обновленную информацию о повторении
+      const repetitionInfo = getLessonSpacedRepetitionInfo(lessonId, profileId);
+      
+      return NextResponse.json({ 
+        success: true, 
+        message: 'Lesson marked as completed successfully',
+        repetitionInfo
+      });
+    }
   } catch (error) {
-    console.error('Error marking lesson as completed:', error);
+    console.error('Error processing lesson action:', error);
     return NextResponse.json(
-      { error: 'Failed to mark lesson as completed' },
+      { error: 'Failed to process lesson action' },
       { status: 500 }
     );
   }

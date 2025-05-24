@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { materialDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import { 
   Typography, 
   Box, 
@@ -30,17 +32,21 @@ import {
   FormControl,
   InputLabel,
   Tab,
-  Tabs
+  Tabs,
+  Paper,
+  FormHelperText
 } from '@mui/material';
 import { 
   Delete as DeleteIcon, 
   Backup as BackupIcon,
   CloudUpload as UploadIcon,
   Save as SaveIcon,
-  Settings as SettingsIcon
+  Settings as SettingsIcon,
+  Edit as EditIcon,
+  Code as CodeIcon
 } from '@mui/icons-material';
 import ClientLayout from '@/components/ClientLayout';
-import { fetchLessons, uploadLesson, deleteLesson, createAnalyticsBackup } from '@/utils/clientUtils';
+import { fetchLessons, uploadLesson, deleteLesson, createAnalyticsBackup, fetchLessonForEditing, updateLesson, uploadMultipleLessons } from '@/utils/clientUtils';
 import { fetchProfileSettings, updateProfileSettings, isAdmin } from '@/utils/clientProfileUtils';
 import { getActiveProfileId } from '@/utils/clientUtils';
 import { UserSettings, ExerciseMode } from '@/types/lesson';
@@ -88,6 +94,16 @@ export default function SettingsPage() {
   const [fileName, setFileName] = useState('');
   const [fileContent, setFileContent] = useState('');
   const [lessons, setLessons] = useState<{id: string, title: string}[]>([]);
+  const [selectedFiles, setSelectedFiles] = useState<{fileName: string, lessonData: string}[]>([]);
+  const [uploadResults, setUploadResults] = useState<{fileName: string, success: boolean, message: string}[]>([]);
+  const [showUploadResults, setShowUploadResults] = useState(false);
+  
+  // Состояние для редактора JSON
+  const [selectedLesson, setSelectedLesson] = useState<string>('');
+  const [jsonContent, setJsonContent] = useState<string>('');
+  const [jsonError, setJsonError] = useState<string>('');
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [useHighlighter, setUseHighlighter] = useState<boolean>(true); // Флаг для переключения между подсветкой и обычным редактором
   
   // Состояние для UI
   const [loading, setLoading] = useState(true);
@@ -160,7 +176,7 @@ export default function SettingsPage() {
     }
   }, [isAdminUser]);
   
-  // Обработчик загрузки файла урока
+  // Обработчик загрузки файла урока (один файл)
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
@@ -175,7 +191,28 @@ export default function SettingsPage() {
     reader.readAsText(file);
   };
   
-  // Сохранение урока
+  // Обработчик загрузки нескольких файлов уроков
+  const handleMultipleFilesUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (!files || files.length === 0) return;
+    
+    // Сбрасываем предыдущие результаты
+    setSelectedFiles([]);
+    setUploadResults([]);
+    setShowUploadResults(false);
+    
+    // Обрабатываем каждый файл
+    Array.from(files).forEach(file => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const content = e.target?.result as string;
+        setSelectedFiles(prev => [...prev, { fileName: file.name, lessonData: content }]);
+      };
+      reader.readAsText(file);
+    });
+  };
+  
+  // Сохранение одного урока
   const handleSaveLesson = async () => {
     try {
       const result = await uploadLesson(fileName, fileContent);
@@ -200,6 +237,49 @@ export default function SettingsPage() {
         message: 'Не удалось сохранить урок',
         severity: 'error'
       });
+    }
+  };
+  
+  // Сохранение нескольких уроков
+  const handleSaveMultipleLessons = async () => {
+    if (selectedFiles.length === 0) {
+      setSnackbar({
+        open: true,
+        message: 'Нет файлов для загрузки',
+        severity: 'error' // Изменено с 'warning' на 'error', так как тип принимает только 'success' | 'error'
+      });
+      return;
+    }
+    
+    try {
+      setLoading(true);
+      const result = await uploadMultipleLessons(selectedFiles);
+      
+      // Показываем результаты загрузки
+      setUploadResults(result.results);
+      setShowUploadResults(true);
+      
+      setSnackbar({
+        open: true,
+        message: result.message,
+        severity: result.success ? 'success' : 'error' // Изменено с 'warning' на 'error', так как тип принимает только 'success' | 'error'
+      });
+      
+      // Обновляем список уроков
+      const data = await fetchLessons();
+      setLessons(data.lessons);
+      
+      // Сбрасываем поля
+      setSelectedFiles([]);
+    } catch (error) {
+      console.error('Error saving multiple lessons:', error);
+      setSnackbar({
+        open: true,
+        message: 'Не удалось сохранить уроки',
+        severity: 'error'
+      });
+    } finally {
+      setLoading(false);
     }
   };
   
@@ -326,6 +406,7 @@ export default function SettingsPage() {
               <Tabs value={tabValue} onChange={handleTabChange} aria-label="settings tabs">
                 <Tab label="Настройки профиля" />
                 {isAdminUser && <Tab label="Управление уроками" />}
+                {isAdminUser && <Tab label="Редактор уроков" />}
                 {isAdminUser && <Tab label="Аналитика" />}
               </Tabs>
             </Box>
@@ -436,36 +517,104 @@ export default function SettingsPage() {
                           Добавить урок
                         </Typography>
                         
-                        <Button
-                          variant="contained"
-                          component="label"
-                          startIcon={<UploadIcon />}
-                          sx={{ mb: 2 }}
-                        >
-                          Выбрать файл
-                          <input
-                            type="file"
-                            hidden
-                            accept=".json"
-                            onChange={handleFileUpload}
-                          />
-                        </Button>
-                        
-                        {fileName && (
-                          <Typography variant="body2" sx={{ mb: 2 }}>
-                            Выбранный файл: {fileName}
-                          </Typography>
-                        )}
-                        
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          onClick={handleSaveLesson}
-                          disabled={!fileContent || !fileName}
-                          sx={{ mt: 2 }}
-                        >
-                          Сохранить урок
-                        </Button>
+                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                          {/* Загрузка одного файла */}
+                          <Box>
+                            <Button
+                              variant="contained"
+                              component="label"
+                              startIcon={<UploadIcon />}
+                              sx={{ mb: 1 }}
+                            >
+                              Выбрать файл
+                              <input
+                                type="file"
+                                hidden
+                                accept=".json"
+                                onChange={handleFileUpload}
+                              />
+                            </Button>
+                            
+                            {fileName && (
+                              <Typography variant="body2" sx={{ mb: 1 }}>
+                                Выбранный файл: {fileName}
+                              </Typography>
+                            )}
+                            
+                            <Button
+                              variant="contained"
+                              color="primary"
+                              onClick={handleSaveLesson}
+                              disabled={!fileContent || !fileName}
+                              sx={{ mt: 1 }}
+                            >
+                              Сохранить урок
+                            </Button>
+                          </Box>
+                          
+                          <Divider sx={{ my: 2 }}>ИЛИ</Divider>
+                          
+                          {/* Загрузка нескольких файлов */}
+                          <Box>
+                            <Button
+                              variant="contained"
+                              component="label"
+                              startIcon={<UploadIcon />}
+                              sx={{ mb: 1 }}
+                              color="secondary"
+                            >
+                              Выбрать несколько файлов
+                              <input
+                                type="file"
+                                hidden
+                                accept=".json"
+                                multiple
+                                onChange={handleMultipleFilesUpload}
+                              />
+                            </Button>
+                            
+                            {selectedFiles.length > 0 && (
+                              <Typography variant="body2" sx={{ mb: 1 }}>
+                                Выбрано файлов: {selectedFiles.length}
+                              </Typography>
+                            )}
+                            
+                            <Button
+                              variant="contained"
+                              color="secondary"
+                              onClick={handleSaveMultipleLessons}
+                              disabled={selectedFiles.length === 0}
+                              sx={{ mt: 1 }}
+                            >
+                              Загрузить все файлы
+                            </Button>
+                          </Box>
+                          
+                          {/* Результаты загрузки */}
+                          {showUploadResults && uploadResults.length > 0 && (
+                            <Box sx={{ mt: 2 }}>
+                              <Typography variant="subtitle2" gutterBottom>
+                                Результаты загрузки:
+                              </Typography>
+                              <Box sx={{ maxHeight: 150, overflow: 'auto', border: '1px solid #eee', borderRadius: 1, p: 1 }}>
+                                <List dense>
+                                  {uploadResults.map((result, index) => (
+                                    <ListItem key={index}>
+                                      <ListItemText 
+                                        primary={result.fileName}
+                                        secondary={result.message}
+                                        primaryTypographyProps={{ 
+                                          color: result.success ? 'primary' : 'error',
+                                          variant: 'body2'
+                                        }}
+                                      />
+                                    </ListItem>
+                                  ))}
+                                </List>
+                              </Box>
+                            </Box>
+                          )}
+                        </Box>
                       </CardContent>
                     </Card>
                   </Grid>
@@ -477,27 +626,29 @@ export default function SettingsPage() {
                           Список уроков
                         </Typography>
                         
-                        <List>
-                          {lessons.map((lesson) => (
-                            <ListItem
-                              key={lesson.id}
-                              secondaryAction={
-                                <IconButton
-                                  edge="end"
-                                  aria-label="delete"
-                                  onClick={() => handleDeleteClick(lesson.id)}
-                                >
-                                  <DeleteIcon />
-                                </IconButton>
-                              }
-                            >
-                              <ListItemText
-                                primary={lesson.title}
-                                secondary={`ID: ${lesson.id}`}
-                              />
-                            </ListItem>
-                          ))}
-                        </List>
+                        <Box sx={{ maxHeight: 400, overflow: 'auto', border: '1px solid #eee', borderRadius: 1 }}>
+                          <List>
+                            {lessons.map((lesson) => (
+                              <ListItem
+                                key={lesson.id}
+                                secondaryAction={
+                                  <IconButton
+                                    edge="end"
+                                    aria-label="delete"
+                                    onClick={() => handleDeleteClick(lesson.id)}
+                                  >
+                                    <DeleteIcon />
+                                  </IconButton>
+                                }
+                              >
+                                <ListItemText
+                                  primary={lesson.title}
+                                  secondary={`ID: ${lesson.id}`}
+                                />
+                              </ListItem>
+                            ))}
+                          </List>
+                        </Box>
                       </CardContent>
                     </Card>
                   </Grid>
@@ -505,9 +656,263 @@ export default function SettingsPage() {
               </TabPanel>
             )}
             
-            {/* Вкладка аналитики (только для администратора) */}
+            {/* Вкладка редактора уроков (только для администратора) */}
             {isAdminUser && (
               <TabPanel value={tabValue} index={2}>
+                <Card sx={{ mb: 3 }}>
+                  <CardContent>
+                    <Typography variant="h6" gutterBottom>
+                      Редактор JSON файлов уроков
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" paragraph>
+                      Выберите урок из списка для редактирования. Вы можете изменить содержимое JSON файла и сохранить изменения.
+                    </Typography>
+                    
+                    <FormControl fullWidth sx={{ mb: 3 }}>
+                      <InputLabel id="lesson-select-label">Выберите урок</InputLabel>
+                      <Select
+                        labelId="lesson-select-label"
+                        value={selectedLesson}
+                        onChange={(e) => {
+                          setSelectedLesson(e.target.value as string);
+                          setJsonContent('');
+                          setJsonError('');
+                          setIsEditing(false);
+                        }}
+                        label="Выберите урок"
+                      >
+                        <MenuItem value="">Выберите урок</MenuItem>
+                        {lessons.map((lesson) => (
+                          <MenuItem key={lesson.id} value={lesson.id}>
+                            {lesson.title} (ID: {lesson.id})
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                    
+                    {selectedLesson && !isEditing && (
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={async () => {
+                          try {
+                            setLoading(true);
+                            const result = await fetchLessonForEditing(selectedLesson);
+                            if (result.success) {
+                              try {
+                                // Форматируем JSON для лучшей читаемости
+                                const formattedJson = JSON.stringify(JSON.parse(result.lessonContent), null, 2);
+                                setJsonContent(formattedJson);
+                                setJsonError('');
+                                setIsEditing(true);
+                              } catch (e) {
+                                setJsonContent(result.lessonContent);
+                                setJsonError('Предупреждение: Невалидный JSON формат');
+                                setIsEditing(true);
+                              }
+                            }
+                          } catch (error) {
+                            console.error('Error fetching lesson:', error);
+                            setSnackbar({
+                              open: true,
+                              message: 'Не удалось загрузить урок для редактирования',
+                              severity: 'error'
+                            });
+                          } finally {
+                            setLoading(false);
+                          }
+                        }}
+                        startIcon={<EditIcon />}
+                      >
+                        Редактировать урок
+                      </Button>
+                    )}
+                  </CardContent>
+                </Card>
+                
+                {isEditing && (
+                  <Card>
+                    <CardContent>
+                      <Typography variant="h6" gutterBottom>
+                        Редактирование урока: {lessons.find(l => l.id === selectedLesson)?.title}
+                      </Typography>
+                      
+                      {jsonError && (
+                        <Alert severity="warning" sx={{ mb: 2 }}>
+                          {jsonError}
+                        </Alert>
+                      )}
+                      
+                      <FormControlLabel
+                        control={
+                          <Switch
+                            checked={useHighlighter}
+                            onChange={(e) => setUseHighlighter(e.target.checked)}
+                            name="useHighlighter"
+                            color="primary"
+                          />
+                        }
+                        label="Использовать подсветку синтаксиса"
+                        sx={{ mb: 2 }}
+                      />
+                      
+                      {useHighlighter ? (
+                        <Box 
+                          sx={{ 
+                            border: (theme) => `1px solid ${jsonError ? theme.palette.error.main : theme.palette.divider}`,
+                            borderRadius: 1,
+                            mb: 2,
+                            overflow: 'auto',
+                            maxHeight: '500px',
+                            '&:hover': {
+                              border: (theme) => `1px solid ${jsonError ? theme.palette.error.main : theme.palette.primary.main}`,
+                            },
+                            position: 'relative'
+                          }}
+                        >
+                          <Box sx={{ position: 'absolute', top: 0, right: 0, zIndex: 1 }}>
+                            <Button 
+                              size="small" 
+                              onClick={() => setUseHighlighter(false)}
+                              sx={{ m: 1 }}
+                            >
+                              Перейти в режим редактирования
+                            </Button>
+                          </Box>
+                          <SyntaxHighlighter
+                            language="json"
+                            style={materialDark}
+                            customStyle={{ margin: 0, minHeight: '500px' }}
+                            wrapLongLines={true}
+                            showLineNumbers={true}
+                          >
+                            {jsonContent}
+                          </SyntaxHighlighter>
+                          <TextField
+                            fullWidth
+                            multiline
+                            rows={20}
+                            variant="outlined"
+                            value={jsonContent}
+                            onChange={(e) => {
+                              setJsonContent(e.target.value);
+                              // Проверяем валидность JSON при каждом изменении
+                              try {
+                                JSON.parse(e.target.value);
+                                setJsonError('');
+                              } catch (e) {
+                                setJsonError('Невалидный JSON формат');
+                              }
+                            }}
+                            sx={{ 
+                              position: 'absolute', 
+                              top: 0, 
+                              left: 0, 
+                              width: '100%', 
+                              height: '100%', 
+                              opacity: 0,
+                              zIndex: 0
+                            }}
+                          />
+                          {jsonError && (
+                            <FormHelperText error sx={{ mx: 2, mb: 1 }}>
+                              {jsonError}
+                            </FormHelperText>
+                          )}
+                        </Box>
+                      ) : (
+                        <TextField
+                          fullWidth
+                          multiline
+                          rows={20}
+                          variant="outlined"
+                          value={jsonContent}
+                          onChange={(e) => {
+                            setJsonContent(e.target.value);
+                            // Проверяем валидность JSON при каждом изменении
+                            try {
+                              JSON.parse(e.target.value);
+                              setJsonError('');
+                            } catch (e) {
+                              setJsonError('Невалидный JSON формат');
+                            }
+                          }}
+                          error={!!jsonError}
+                          helperText={jsonError}
+                          sx={{ fontFamily: 'monospace', mb: 2 }}
+                        />
+                      )}
+                      
+                      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <Button
+                          variant="outlined"
+                          onClick={() => {
+                            setIsEditing(false);
+                            setJsonContent('');
+                            setJsonError('');
+                          }}
+                        >
+                          Отмена
+                        </Button>
+                        
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={async () => {
+                            try {
+                              // Проверяем валидность JSON перед сохранением
+                              try {
+                                JSON.parse(jsonContent);
+                              } catch (e) {
+                                setSnackbar({
+                                  open: true,
+                                  message: 'Невалидный JSON формат. Исправьте ошибки перед сохранением.',
+                                  severity: 'error'
+                                });
+                                return;
+                              }
+                              
+                              setLoading(true);
+                              const result = await updateLesson(selectedLesson, jsonContent);
+                              
+                              if (result.success) {
+                                setSnackbar({
+                                  open: true,
+                                  message: result.message || 'Урок успешно обновлен',
+                                  severity: 'success'
+                                });
+                                
+                                // Сбрасываем состояние редактора
+                                setIsEditing(false);
+                                setJsonContent('');
+                                setSelectedLesson('');
+                              }
+                            } catch (error) {
+                              console.error('Error updating lesson:', error);
+                              setSnackbar({
+                                open: true,
+                                message: 'Не удалось обновить урок',
+                                severity: 'error'
+                              });
+                            } finally {
+                              setLoading(false);
+                            }
+                          }}
+                          disabled={!!jsonError}
+                          startIcon={<SaveIcon />}
+                        >
+                          Сохранить изменения
+                        </Button>
+                      </Box>
+                    </CardContent>
+                  </Card>
+                )}
+              </TabPanel>
+            )}
+            
+            {/* Вкладка аналитики (только для администратора) */}
+            {isAdminUser && (
+              <TabPanel value={tabValue} index={3}>
                 <Card>
                   <CardContent>
                     <Typography variant="h6" gutterBottom>

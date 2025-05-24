@@ -8,1423 +8,1057 @@
       "explanation": "",
       "formula": " ",
       "source": "",
-      "examples": [
+      "subconcepts": [
         {
           "russian": "У меня есть машина",
           "english": "I have a car",
           "source": "",
-          "note": "Слово 'Car' (машина) - единственное число, исчисляемое, начинается на согласный звук /k/. Поэтому ставится артикль **a**. Без артикля это грамматически неверно.",
-          "id": "dd6897a3-b951-435a-b48d-746d38a1f337",
-          "learn": 0
+          "note": "Слово 'Car' (машина) - единственное число, исчисляемое, начинается на согласный звук /k/. Поэтому ставится артикль **a**. Без артикля это грамматически неверно."
         },
         {
           "russian": "У меня проблема",
           "english": "I have a problem",
           "source": "",
-          "note": "Слово 'Problem' (проблема) - единственное число, исчисляемое, начинается на согласный звук /p/. Поэтому ставится артикль **a**.",
-          "id": "c6c76193-0f76-46d2-8afb-a41ddfb138a3",
-          "learn": 0
+          "note": "Слово 'Problem' (проблема) - единственное число, исчисляемое, начинается на согласный звук /p/. Поэтому ставится артикль **a**."
         },
         {
           "russian": "У них есть компьютер",
           "english": "They have a computer",
           "source": "",
-          "note": "Слово 'Computer' (компьютер) - единственное число, исчисляемое, начинается на согласный звук /k/. Правило использования a/an действует для всех субъектов (I, We, You, They, He, She, It).",
-          "id": "be459464-29a5-449f-981b-d696912f53e9",
-          "learn": 0
+          "note": "Слово 'Computer' (компьютер) - единственное число, исчисляемое, начинается на согласный звук /k/. Правило использования a/an действует для всех субъектов (I, We, You, They, He, She, It)."
         },
         {
           "russian": "У меня есть идея",
           "english": "I have an idea",
           "source": "",
-          "note": "Слово 'idea' (идея) - единственное число, исчисляемое. Начинается на гласный звук /aɪ/. Поэтому ставится артикль **an**.",
-          "id": "7ac4167b-223d-4aa1-b791-ad1666ef11dc",
-          "learn": 0
+          "note": "Слово 'idea' (идея) - единственное число, исчисляемое. Начинается на гласный звук /aɪ/. Поэтому ставится артикль **an**."
         },
         {
           "russian": "Я вижу отель",
           "english": "I see a hotel",
           "source": "",
-          "note": "Слово 'hotel' (отель) - единственное число, исчисляемое. Начинается на согласный звук /h/. Поэтому ставится артикль **a**. Произносится /hoʊˈtel/ с ударением на второй слог.",
-          "id": "eb7155cd-e85c-4121-be56-0476fdea2864",
-          "learn": 0
+          "note": "Слово 'hotel' (отель) - единственное число, исчисляемое. Начинается на согласный звук /h/. Поэтому ставится артикль **a**. Произносится /hoʊˈtel/ с ударением на второй слог."
         },
         {
           "russian": "Мы видим такси",
           "english": "We see a taxi",
           "source": "",
-          "note": "Слово 'taxi' (такси) - единственное число, исчисляемое. Начинается на согласный звук /t/. Поэтому ставится артикль **a**. Без артикля сказать нельзя.",
-          "id": "99a1b9fb-bb90-4441-a1f8-b0a4036cf5e8",
-          "learn": 0
+          "note": "Слово 'taxi' (такси) - единственное число, исчисляемое. Начинается на согласный звук /t/. Поэтому ставится артикль **a**. Без артикля сказать нельзя."
         },
         {
           "russian": "Я вижу университет",
           "english": "I see a university",
           "source": "",
-          "note": "Слово 'university' (университет) - единственное число, исчисляемое. Начинается на **согласный** звук /j/, поэтому ставится артикль **a**.",
-          "id": "2b691874-314c-48b2-ab17-0e3ae5c261a1",
-          "learn": 0
+          "note": "Слово 'university' (университет) - единственное число, исчисляемое. Начинается на **согласный** звук /j/, поэтому ставится артикль **a**."
         },
         {
           "russian": "Мы видим университет",
           "english": "We see a university",
           "source": "",
-          "note": "Слово 'university' (университет) - единственное число, исчисляемое, начинается на согласный звук /j/.",
-          "id": "e4cacf95-4be1-46b4-b150-cc0d9a2b172e",
-          "learn": 0
+          "note": "Слово 'university' (университет) - единственное число, исчисляемое, начинается на согласный звук /j/."
         },
         {
           "russian": "Я вижу банк",
           "english": "I see a bank",
           "source": "",
-          "note": "Слово 'bank' (банк) - единственное число, исчисляемое, начинается на согласный звук. В значении 'какой-то банк'.",
-          "id": "0dfdcc82-301d-42e8-a5cc-9254224ba397",
-          "learn": 0
+          "note": "Слово 'bank' (банк) - единственное число, исчисляемое, начинается на согласный звук. В значении 'какой-то банк'."
         },
         {
           "russian": "Я пью чай",
           "english": "I drink tea",
           "source": "",
-          "note": "Слово 'tea' (чай) - неисчисляемое. Мы не говорим 'один чай, два чая'.",
-          "id": "faa43bc1-bf65-4b4b-8fb4-f474fc94e23c",
-          "learn": 0
+          "note": "Слово 'tea' (чай) - неисчисляемое. Мы не говорим 'один чай, два чая'."
         },
         {
           "russian": "Она пьёт кофе",
           "english": "She drinks coffee",
           "source": "",
-          "note": "Слово 'coffee' (кофе) - неисчисляемое. Мы не говорим 'один кофе, два кофе'. Для подлежащего 'She' к глаголу добавляется окончание -s.",
-          "id": "cada0f94-3712-4ec5-950b-265c9ff0a5bf",
-          "learn": 0
+          "note": "Слово 'coffee' (кофе) - неисчисляемое. Мы не говорим 'один кофе, два кофе'. Для подлежащего 'She' к глаголу добавляется окончание -s."
         },
         {
           "russian": "Я ем рыбу",
           "english": "I eat fish",
           "source": "",
-          "note": "Слово 'fish' (рыба) в значении еды - неисчисляемое. Если речь идет о рыбе, которая плавает (например, в речке), она может быть исчисляемой ('a fish').",
-          "id": "3a25bba6-c9cc-44bf-a552-2c3a154f3273",
-          "learn": 0
+          "note": "Слово 'fish' (рыба) в значении еды - неисчисляемое. Если речь идет о рыбе, которая плавает (например, в речке), она может быть исчисляемой ('a fish')."
         },
         {
           "russian": "У меня есть деньги",
           "english": "I have money",
           "source": "",
-          "note": "Слово 'money' (деньги) - неисчисляемое в английском. Хотя мы можем посчитать доллары или рубли, само понятие 'money' считается неисчисляемым.",
-          "id": "f9e055ec-f658-44dd-b001-6784eadf12ab",
-          "learn": 0
+          "note": "Слово 'money' (деньги) - неисчисляемое в английском. Хотя мы можем посчитать доллары или рубли, само понятие 'money' считается неисчисляемым."
         },
         {
           "russian": "У меня есть время",
           "english": "I have time",
           "source": "",
-          "note": "Слово 'time' (время) - неисчисляемое в английском.",
-          "id": "2cd0bddf-03e8-4762-84e0-d9e3a125bb65",
-          "learn": 0
+          "note": "Слово 'time' (время) - неисчисляемое в английском."
         },
         {
           "russian": "У них есть деньги",
           "english": "They have money",
           "source": "",
-          "note": "Money - неисчисляемое.",
-          "id": "123f2a38-fb74-41e1-bc1a-f99129143031",
-          "learn": 0
+          "note": "Money - неисчисляемое."
         },
         {
           "russian": "У него есть деньги",
           "english": "He has money",
           "source": "",
-          "note": "Money - неисчисляемое. Для подлежащего 'He' используется 'has'.",
-          "id": "65f92807-8c90-4142-b9a3-9b715e45ae14",
-          "learn": 0
+          "note": "Money - неисчисляемое. Для подлежащего 'He' используется 'has'."
         },
         {
           "russian": "Я люблю спорт",
           "english": "I love sport",
           "source": "",
-          "note": "Слово 'Sport' (спорт) - неисчисляемое.",
-          "id": "9eeecd6b-8d81-4b99-b624-2208d17bca2b",
-          "learn": 0
+          "note": "Слово 'Sport' (спорт) - неисчисляемое."
         },
         {
           "russian": "Я люблю музыку",
           "english": "I love music",
           "source": "",
-          "note": "Слово 'music' (музыка) - неисчисляемое.",
-          "id": "674e532e-3501-4865-8f03-ee69e6e076e7",
-          "learn": 0
+          "note": "Слово 'music' (музыка) - неисчисляемое."
         },
         {
           "russian": "У меня есть работа",
           "english": "I have work",
           "source": "",
-          "note": "Слово 'work' (работа) в значении общей занятости или деятельности - неисчисляемое, артикль не ставится. В значении конкретной профессии используется 'job' (исчисляемое).",
-          "id": "2843021e-7c3a-4374-bdc7-7dbb316337f5",
-          "learn": 0
+          "note": "Слово 'work' (работа) в значении общей занятости или деятельности - неисчисляемое, артикль не ставится. В значении конкретной профессии используется 'job' (исчисляемое)."
         },
         {
           "russian": "Я работаю так много",
           "english": "I work so much",
           "source": "",
-          "note": "Здесь 'work' - глагол 'работать'.",
-          "id": "62cda24e-f259-4233-8c31-161ba4b19e60",
-          "learn": 0
+          "note": "Здесь 'work' - глагол 'работать'."
         },
         {
           "russian": "Я делаю разные упражнения",
           "english": "I do different exercises",
           "source": "",
-          "note": "Слово 'exercises' (упражнения) - множественное число.",
-          "id": "6a6ce7c5-e674-4fbe-9d44-1b83c31e13e9",
-          "learn": 0
+          "note": "Слово 'exercises' (упражнения) - множественное число."
         },
         {
           "russian": "Я вижу двух студентов",
           "english": "I see two students",
           "source": "",
-          "note": "Слово 'students' (студенты) - множественное число. Также здесь есть цифра 'two', что является дополнительной причиной отсутствия артикля.",
-          "id": "9827edda-9ddc-45eb-9696-a050696e6933",
-          "learn": 0
+          "note": "Слово 'students' (студенты) - множественное число. Также здесь есть цифра 'two', что является дополнительной причиной отсутствия артикля."
         },
         {
           "russian": "У меня есть результаты",
           "english": "I have results",
           "source": "",
-          "note": "Слово 'results' (результаты) - множественное число.",
-          "id": "357f484a-cea0-46e1-b50c-086196722734",
-          "learn": 0
+          "note": "Слово 'results' (результаты) - множественное число."
         },
         {
           "russian": "У меня есть некоторые идеи",
           "english": "I have some ideas",
           "source": "",
-          "note": "Слово 'ideas' (идеи) - множественное число. Здесь используется слово 'some'.",
-          "id": "a5ec06a0-ec7b-4dde-a2c7-5172e5a4b23d",
-          "learn": 0
+          "note": "Слово 'ideas' (идеи) - множественное число. Здесь используется слово 'some'."
         },
         {
           "russian": "Я вижу этот отель",
           "english": "I see this hotel",
           "source": "",
-          "note": "Используется 'this hotel', артикль отсутствует после this.",
-          "id": "10bef592-47e3-47b9-867f-9d262c667fb9",
-          "learn": 0
+          "note": "Используется 'this hotel', артикль отсутствует после this."
         },
         {
           "russian": "Мы видим это такси",
           "english": "We see this taxi",
           "source": "",
-          "note": "Используется 'this taxi', артикль отсутствует после this.",
-          "id": "e97dcf0c-a2d5-4f7f-863e-34b4c72663ef",
-          "learn": 0
+          "note": "Используется 'this taxi', артикль отсутствует после this."
         },
         {
           "russian": "Я вижу этот банк",
           "english": "I see this bank",
           "source": "",
-          "note": "Используется 'this bank', артикль отсутствует после this.",
-          "id": "1b166163-044a-4fa6-831f-9b933e8db56e",
-          "learn": 0
+          "note": "Используется 'this bank', артикль отсутствует после this."
         },
         {
           "russian": "Мне нравится эта идея",
           "english": "I like this idea",
           "source": "",
-          "note": "Используется 'this idea', артикль отсутствует после this.",
-          "id": "977d4b63-c8c2-41ce-a14f-4b87091787b5",
-          "learn": 0
+          "note": "Используется 'this idea', артикль отсутствует после this."
         },
         {
           "russian": "Я вижу этого мужчину",
           "english": "I see this man",
           "source": "",
-          "note": "Используется 'this man', артикль отсутствует после this.",
-          "id": "4757ccbf-359e-4731-9e63-4077388354fc",
-          "learn": 0
+          "note": "Используется 'this man', артикль отсутствует после this."
         },
         {
           "russian": "Я вижу ту женщину",
           "english": "I see that woman",
           "source": "",
-          "note": "Используется 'that woman', артикль отсутствует после that.",
-          "id": "d2eb1d4b-c258-443a-b476-8822afa5f4ab",
-          "learn": 0
+          "note": "Используется 'that woman', артикль отсутствует после that."
         },
         {
           "russian": "у меня есть эти деньги",
           "english": "I have this money",
           "source": "",
-          "note": "В английском слово 'money' (деньги) - единственное число, поэтому 'эти деньги' переводится как 'This Money'. Артикль отсутствует после This.",
-          "id": "918e0759-af8b-497e-9edc-c2933661f062",
-          "learn": 0
+          "note": "В английском слово 'money' (деньги) - единственное число, поэтому 'эти деньги' переводится как 'This Money'. Артикль отсутствует после This."
         },
         {
           "russian": "Нам нравится этот язык",
           "english": "We like this language",
           "source": "",
-          "note": "'Этот язык' – 'this language' (this + существительное в ед.ч.).",
-          "id": "7dc77cc1-73be-4291-a362-d49c73bd98f3",
-          "learn": 0
+          "note": "'Этот язык' – 'this language' (this + существительное в ед.ч.)."
         },
         {
           "russian": "Им нравится это место",
           "english": "They like this place",
           "source": "",
-          "note": "'Это место' – 'this place' (this + существительное в ед.ч.).",
-          "id": "882921cd-0000-492c-9850-c3b03c9c5378",
-          "learn": 0
+          "note": "'Это место' – 'this place' (this + существительное в ед.ч.)."
         },
         {
           "russian": "Я вижу эту проблему",
           "english": "I see this problem",
           "source": "",
-          "note": "'Эту проблему' – 'this problem' (this + существительное в ед.ч.).",
-          "id": "ad4fd45d-2c74-4824-bb4d-7086f1cadab5",
-          "learn": 0
+          "note": "'Эту проблему' – 'this problem' (this + существительное в ед.ч.)."
         },
         {
           "russian": "Мне нравится эта вещь",
           "english": "I like this thing",
           "source": "",
-          "note": "'Эта вещь' – 'this thing' (this + существительное в ед.ч.).",
-          "id": "991d2109-e677-42b1-a880-fb18fb35d302",
-          "learn": 0
+          "note": "'Эта вещь' – 'this thing' (this + существительное в ед.ч.)."
         },
         {
           "russian": "Мне очень нравится это место",
           "english": "I really like this place",
           "source": "",
-          "note": "'Это место' – 'this place'.",
-          "id": "2c9d94c4-7a58-4280-b639-6487ae4c8274",
-          "learn": 0
+          "note": "'Это место' – 'this place'."
         },
         {
           "russian": "Мне нравится мой результат",
           "english": "I like my result",
           "source": "",
-          "note": "My result - используется притяжательное местоимение my, артикль отсутствует.",
-          "id": "0dca6fd9-8b0e-4859-a3fe-2925d321ab73",
-          "learn": 0
+          "note": "My result - используется притяжательное местоимение my, артикль отсутствует."
         },
         {
           "russian": "Я вижу свой Прогресс",
           "english": "I see my progress",
           "source": "",
-          "note": "Русское 'свой' при подлежащем 'Я' переводится как 'my'. Артикль отсутствует после my.",
-          "id": "5bfeca03-f12d-4184-abf9-2accdc68365b",
-          "learn": 0
+          "note": "Русское 'свой' при подлежащем 'Я' переводится как 'my'. Артикль отсутствует после my."
         },
         {
           "russian": "Я вижу наш дом",
           "english": "I see our house",
           "source": "",
-          "note": "Our house - используется притяжательное местоимение our, артикль отсутствует.",
-          "id": "0bdc2534-ceb8-41a3-9df1-72a5c63e2a0e",
-          "learn": 0
+          "note": "Our house - используется притяжательное местоимение our, артикль отсутствует."
         },
         {
           "russian": "Я понимаю твой вопрос",
           "english": "I understand your question",
           "source": "",
-          "note": "Your question - используется притяжательное местоимение your, артикль отсутствует.",
-          "id": "1e95a2db-c32d-41f4-a5f0-9d2bb4bac7ce",
-          "learn": 0
+          "note": "Your question - используется притяжательное местоимение your, артикль отсутствует."
         },
         {
           "russian": "Мне нравится его идея",
           "english": "I like his idea",
           "source": "",
-          "note": "His idea - используется притяжательное местоимение his, артикль отсутствует.",
-          "id": "dc92345a-350f-46a2-bfc2-9b2dc798c058",
-          "learn": 0
+          "note": "His idea - используется притяжательное местоимение his, артикль отсутствует."
         },
         {
           "russian": "Я вижу её дом",
           "english": "I see her house",
           "source": "",
-          "note": "Her house - используется притяжательное местоимение her, артикль отсутствует.",
-          "id": "15853daa-8ac3-4c38-b1c8-618a77a6209b",
-          "learn": 0
+          "note": "Her house - используется притяжательное местоимение her, артикль отсутствует."
         },
         {
           "russian": "Я вижу его друга",
           "english": "I see his friend",
           "source": "",
-          "note": "His friend - используется притяжательное местоимение his, артикль отсутствует.. Сравните с 'Я знаю его' (I Know Him), где его - местоимение-дополнение.",
-          "id": "16dffa14-5885-4e11-85f7-6de4e91fbb8c",
-          "learn": 0
+          "note": "His friend - используется притяжательное местоимение his, артикль отсутствует.. Сравните с 'Я знаю его' (I Know Him), где его - местоимение-дополнение."
         },
         {
           "russian": "Мне нравится моя работа",
           "english": "I like my job",
           "source": "",
-          "note": "My job - используется притяжательное местоимение my, артикль отсутствует.",
-          "id": "ec1287ef-7df6-46eb-9f96-3d86dc880360",
-          "learn": 0
+          "note": "My job - используется притяжательное местоимение my, артикль отсутствует."
         },
         {
           "russian": "Мне нравится проводить время со своими друзьями",
           "english": "I like spending time with my friends",
           "source": "",
-          "note": "При подлежащем 'I' 'со своими друзьями' переводится как 'with my friends'.",
-          "id": "3f904120-ffd3-4f92-a236-90c819f0c559",
-          "learn": 0
+          "note": "При подлежащем 'I' 'со своими друзьями' переводится как 'with my friends'."
         },
         {
           "russian": "Мне нравится проводить время со своими друзьями",
           "english": "I like to spend time with my friends",
           "source": "",
-          "note": "При подлежащем 'I' 'со своими друзьями' переводится как 'with my friends'.",
-          "id": "519ed3f1-e587-458a-b75a-d0658da1e8d8",
-          "learn": 0
+          "note": "При подлежащем 'I' 'со своими друзьями' переводится как 'with my friends'."
         },
         {
           "russian": "Я вижу отель",
           "english": "I see the hotel",
           "source": "",
-          "note": "В значении 'этот отель', конкретный отель. Грамматически правильно, как и I See This Hotel.",
-          "id": "97d716bf-8ceb-4353-8ca0-74238cb7e614",
-          "learn": 0
+          "note": "В значении 'этот отель', конкретный отель. Грамматически правильно, как и I See This Hotel."
         },
         {
           "russian": "мы видим такси",
           "english": "We see the taxi",
           "source": "",
-          "note": "В значении 'это такси', конкретное такси. Грамматически правильно, как и We see This Taxi.",
-          "id": "8b446e78-86e2-45e4-a51d-e8aaa39666df",
-          "learn": 0
+          "note": "В значении 'это такси', конкретное такси. Грамматически правильно, как и We see This Taxi."
         },
         {
           "russian": "Я вижу банк",
           "english": "I see the bank",
           "source": "",
-          "note": "В значении 'этот банк', конкретный банк. Грамматически также верно, как I See A Bank или I See This Bank.",
-          "id": "021c54a6-0cdf-4faa-8417-8f3e3225d173",
-          "learn": 0
+          "note": "В значении 'этот банк', конкретный банк. Грамматически также верно, как I See A Bank или I See This Bank."
         },
         {
           "russian": "Она пьёт",
           "english": "She drinks",
           "source": "",
-          "note": "К глаголу 'drink' добавлено окончание -s.",
-          "id": "185dd08d-6659-4895-af43-1b5e16e582e6",
-          "learn": 0
+          "note": "К глаголу 'drink' добавлено окончание -s."
         },
         {
           "russian": "У неё есть",
           "english": "She has",
           "source": "",
-          "note": "'Have' принимает форму 'has' для She.",
-          "id": "1e0ab7a0-3045-4c79-832d-03bd32dfb0a9",
-          "learn": 0
+          "note": "'Have' принимает форму 'has' для She."
         },
         {
           "russian": "У него есть",
           "english": "He has",
           "source": "",
-          "note": "'Have' принимает форму 'has' для He.",
-          "id": "48b39246-c172-427a-90ac-76e9f84b96f5",
-          "learn": 0
+          "note": "'Have' принимает форму 'has' для He."
         },
         {
           "russian": "У этого есть",
           "english": "It has",
           "source": "",
-          "note": "'Have' принимает форму 'has' для It (например, о компании или организации).",
-          "id": "0e5fd669-f4ef-41c9-b050-eb90181dbc65",
-          "learn": 0
+          "note": "'Have' принимает форму 'has' для It (например, о компании или организации)."
         },
         {
           "russian": "Я живу в Нью-Йорке",
           "english": "I live in New York",
-          "source": "",
-          "id": "6651616c-8fea-4fe3-a4d3-1dbd9dbf9566",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я понимаю тебя",
           "english": "I understand you",
           "source": "",
-          "note": "'You' может переводиться как тебя или вас.",
-          "id": "a57cf5d3-4833-42e7-8fac-dc08bf468213",
-          "learn": 0
+          "note": "'You' может переводиться как тебя или вас."
         },
         {
           "russian": "Ты знаешь это",
           "english": "You know it",
           "source": "",
-          "note": "'Это' по умолчанию переводится как 'it', но также можно использовать 'this' или 'that'.",
-          "id": "8078ee7f-f62a-4b2c-8696-5c0c24165f05",
-          "learn": 0
+          "note": "'Это' по умолчанию переводится как 'it', но также можно использовать 'this' или 'that'."
         },
         {
           "russian": "Мы путешествуем каждый год",
           "english": "We travel every year",
-          "source": "",
-          "id": "57e9d9bc-aad9-49ec-9aa1-b92a5d987c32",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Они живут здесь",
           "english": "They live here",
-          "source": "",
-          "id": "0e110d5f-db94-4f75-9f81-f8d442dc5efb",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я живу здесь",
           "english": "I live here",
-          "source": "",
-          "id": "ad9f3953-9109-4e00-8b52-0db080401888",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я работаю там",
           "english": "I work there",
-          "source": "",
-          "id": "53ac6cae-4e6b-4f50-95c6-0b87b2aaca45",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я вижу тебя",
           "english": "I see you",
           "source": "",
-          "note": "'You' в данном случае переводится как 'тебя'.",
-          "id": "d15514af-f542-413b-a40e-5e20ffed4158",
-          "learn": 0
+          "note": "'You' в данном случае переводится как 'тебя'."
         },
         {
           "russian": "Я работаю каждый день",
           "english": "I work everyday",
           "source": "",
-          "note": "Фразы времени 'every day', 'every year' часто ставятся в конце предложения.",
-          "id": "45d92296-f136-443d-b6ef-11f1d7c52be1",
-          "learn": 0
+          "note": "Фразы времени 'every day', 'every year' часто ставятся в конце предложения."
         },
         {
           "russian": "Я много работаю",
           "english": "I work a lot",
           "source": "",
-          "note": "Фраза 'a lot' (много) в утверждениях обычно ставится в конце.",
-          "id": "d8f4c5c2-ff81-4473-b696-e5380e7c3624",
-          "learn": 0
+          "note": "Фраза 'a lot' (много) в утверждениях обычно ставится в конце."
         },
         {
           "russian": "Я обычно делаю это утром",
           "english": "I usually do it in the morning",
-          "source": "",
-          "id": "26d7116d-42f4-4b1a-b5fa-2e5a8c72ed33",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я часто хожу туда",
           "english": "I often go there",
-          "source": "",
-          "id": "60715953-3f43-45f5-affe-3176c89885d2",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я часто думаю об этом",
           "english": "I often think about it",
           "source": "",
-          "note": "'Об этом' переводится как 'about it'.",
-          "id": "8c68999e-f9f1-4e54-836c-62ec74e8ab68",
-          "learn": 0
+          "note": "'Об этом' переводится как 'about it'."
         },
         {
           "russian": "Я иногда делаю это",
           "english": "I sometimes do it",
-          "source": "",
-          "id": "a68683a3-4e6f-44af-ad13-882fa736379e",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Иногда я делаю Это",
           "english": "Sometimes I do it",
-          "source": "",
-          "id": "eaf427b5-fc08-40a4-8ce4-6d6c57ce3377",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Ты очень хорошо говоришь по-английски",
           "english": "You speak english very well",
           "source": "",
-          "note": "'Very well' ставится в конце предложения.",
-          "id": "fb89b343-e61e-4cb2-a5a5-7e9ef82071a3",
-          "learn": 0
+          "note": "'Very well' ставится в конце предложения."
         },
         {
           "russian": "Я очень сильно тебя люблю",
           "english": "I love you very much",
           "source": "",
-          "note": "'Very much' ставится в конце предложения.",
-          "id": "4614b65b-8d49-4823-a46e-5c5b27e676b4",
-          "learn": 0
+          "note": "'Very much' ставится в конце предложения."
         },
         {
           "russian": "Я так сильно тебя люблю",
           "english": "I love you so much",
           "source": "",
-          "note": "'So much' ставится в конце предложения.",
-          "id": "f6a6043d-0655-4cde-8a13-276c0ac901c5",
-          "learn": 0
+          "note": "'So much' ставится в конце предложения."
         },
         {
           "russian": "Я езжу туда каждый год",
           "english": "I go there every year",
           "source": "",
-          "note": "'Every year' ставится в конце предложения.",
-          "id": "1422b60b-256f-47c9-a7d1-c52d80b8cead",
-          "learn": 0
+          "note": "'Every year' ставится в конце предложения."
         },
         {
           "russian": "Я работаю и учусь",
           "english": "I work and study",
-          "source": "",
-          "id": "9a43006a-2b83-438c-85ce-0c26a2275bd9",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я учусь и работаю",
           "english": "I study and work",
-          "source": "",
-          "id": "613347de-9ebe-41a1-ac9c-3225f126f9bc",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Ходить на работу",
           "english": "Go to work",
-          "source": "",
-          "id": "5a1f7ff6-4e56-4d06-a15a-4271a750dc13",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Ходить в школу",
           "english": "Go to school",
-          "source": "",
-          "id": "85a1ca19-e62f-4ac9-a459-e66d0856b3ec",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Ходить в университет",
           "english": "Go to University",
-          "source": "",
-          "id": "7d6664dc-5bef-4cf5-a65e-ad2de29273e5",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Ходить в колледж",
           "english": "Go to college",
-          "source": "",
-          "id": "ba39b04a-a889-43b3-838f-c6a63f477b8f",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я хожу на работу",
           "english": "I go to work",
-          "source": "",
-          "id": "7d3f8542-2ace-4add-a55b-d7f82cbfe315",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я хожу в школу",
           "english": "I go to school",
-          "source": "",
-          "id": "8bbaa981-ecd7-4573-b0ca-166634f7ac42",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я хожу в университет",
           "english": "I go to university",
-          "source": "",
-          "id": "4a0ffcf8-b06d-421f-9a27-2327b7efbd37",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я хожу в колледж",
           "english": "I go to college",
-          "source": "",
-          "id": "6986edf7-e04d-497d-a67f-fd3a2a0f1eb3",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я также хожу в университет",
           "english": "I also go to university",
-          "source": "",
-          "id": "6c85e4c2-27b6-4570-a483-53e800a94b6a",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я хожу на работу каждый день",
           "english": "i go to work every day",
-          "source": "",
-          "id": "6227fd95-8b15-4b5b-b745-34709b24e5aa",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Идти домой",
           "english": "Go home",
-          "source": "",
-          "id": "25e8ab98-37dd-4c0f-b2b2-63fb5b6b46ae",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Идти назад",
           "english": "Go back",
-          "source": "",
-          "id": "6a53236f-746c-43ec-a93e-71d6ea7cbe2b",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Возвращаться",
           "english": "Go back",
-          "source": "",
-          "id": "8a37739e-fa37-4759-99fd-d226d58027e3",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Идти сюда",
           "english": "Go here",
-          "source": "",
-          "id": "ae24d301-4a3c-48db-a8cd-ea8871aaa747",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Идти туда",
           "english": "Go there",
-          "source": "",
-          "id": "0b1e4e3e-602f-4f5a-8743-d2d06d509837",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Ездить туда",
           "english": "Go there",
-          "source": "",
-          "id": "bbe79606-7aa6-4faf-b8aa-3de58449ba3d",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я хожу туда",
           "english": "I go there",
-          "source": "",
-          "id": "c5d40876-bfd2-4bd7-a18a-9f09ffeef96e",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я говорю по-английски",
           "english": "I speak English",
           "source": "",
-          "note": "Для обозначения говорения на языке используется фраза 'speak English', предлог 'по' не переводится.",
-          "id": "18e1ae42-da19-4bd5-bcd1-9f889332565c",
-          "learn": 0
+          "note": "Для обозначения говорения на языке используется фраза 'speak English', предлог 'по' не переводится."
         },
         {
           "russian": "Я играю в футбол",
           "english": "I play football",
           "source": "",
-          "note": "При названии спорта предлог 'в' не используется.",
-          "id": "63e35da6-d379-40b4-bd23-fffb0890bf73",
-          "learn": 0
+          "note": "При названии спорта предлог 'в' не используется."
         },
         {
           "russian": "Я так думаю",
           "english": "I think so",
-          "source": "",
-          "id": "58c3511b-54e0-4227-aa97-d7a9100d24cf",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Мы так думаем",
           "english": "We think so",
-          "source": "",
-          "id": "b6eea94e-7ec2-4978-805e-adcd932841f6",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я люблю тебя",
           "english": "I love you",
           "source": "",
-          "note": "Важно произношение слова 'love' (/lʌv/) ('любить'), отличное от 'laugh' (/lɑːf/) ('смеяться').",
-          "id": "e591f6b1-97f1-49b1-861d-95e9269e313a",
-          "learn": 0
+          "note": "Важно произношение слова 'love' (/lʌv/) ('любить'), отличное от 'laugh' (/lɑːf/) ('смеяться')."
         },
         {
           "russian": "Я учусь",
           "english": "I study",
           "source": "",
-          "note": "Обычно используется, когда глагол 'учиться' употребляется сам по себе или при обучении в учебном заведении.",
-          "id": "0229c466-23f7-4e9b-b60c-fc6a93297cc1",
-          "learn": 0
+          "note": "Обычно используется, когда глагол 'учиться' употребляется сам по себе или при обучении в учебном заведении."
         },
         {
           "russian": "Мы учимся",
           "english": "We study",
-          "source": "",
-          "id": "a2468e9c-d608-4e5b-b966-2ede0f32153e",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я изучаю английский",
           "english": "I learn English",
           "source": "",
-          "note": "Обычно используется для изучения языка в целом (онлайн, самостоятельно).",
-          "id": "559fc375-824f-4f52-a474-aea07aa01734",
-          "learn": 0
+          "note": "Обычно используется для изучения языка в целом (онлайн, самостоятельно)."
         },
         {
           "russian": "Я изучаю английский онлайн",
           "english": "I learn English online",
-          "source": "",
-          "id": "9cd4662e-ea3c-4dc6-bf26-18e48c75c35b",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я изучаю английский здесь",
           "english": "I learn English here",
-          "source": "",
-          "id": "e4852b7c-7bc0-4506-9161-0da24e545f53",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я могу говорить по-английски",
           "english": "I can speak English",
           "source": "",
-          "note": "'Can' переводится как 'могу' или 'умею'.",
-          "id": "dfd9ef40-0d3e-4bde-b6ca-0ff8202655fc",
-          "learn": 0
+          "note": "'Can' переводится как 'могу' или 'умею'."
         },
         {
           "russian": "Я могу помочь тебе",
           "english": "I can help you",
           "source": "",
-          "note": "'You' в данном случае переводится как 'тебе'.",
-          "id": "f7d0ab46-e897-4133-9343-025850a7cd12",
-          "learn": 0
+          "note": "'You' в данном случае переводится как 'тебе'."
         },
         {
           "russian": "Мне нравится это",
           "english": "I like it",
           "source": "",
-          "note": "'Мне нравится' переводится как 'I like'. Порядок слов в английском: Кто нравится (I) + like + Что нравится (it).",
-          "id": "8fa97c63-98f8-44bf-9b7f-e64d932e6f61",
-          "learn": 0
+          "note": "'Мне нравится' переводится как 'I like'. Порядок слов в английском: Кто нравится (I) + like + Что нравится (it)."
         },
         {
           "russian": "Мне нравится музыка",
           "english": "I like music",
           "source": "",
-          "note": "Music - неисчисляемое, артикль не ставится.",
-          "id": "d2da472c-720d-4249-ae2c-f1ff29f3d291",
-          "learn": 0
+          "note": "Music - неисчисляемое, артикль не ставится."
         },
         {
           "russian": "Мне нравится спорт",
           "english": "I like sport",
           "source": "",
-          "note": "Sport - неисчисляемое, артикль не ставится.",
-          "id": "4e08a79e-8e50-4a3f-b01d-043577a33248",
-          "learn": 0
+          "note": "Sport - неисчисляемое, артикль не ставится."
         },
         {
           "russian": "Мне нравится музыка и спорт",
           "english": "I like music and sport",
-          "source": "",
-          "id": "418bc348-b30a-4db3-8336-4b7f7ba47f34",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Нам нравится этот язык",
           "english": "We like this language",
           "source": "",
-          "note": "'Нам нравится' переводится как 'we like'. 'Этот язык' – 'this language' (this + существительное в ед.ч.). Артикль не ставится после this.",
-          "id": "3ea58508-72af-4edc-9241-8e5696a5f60a",
-          "learn": 0
+          "note": "'Нам нравится' переводится как 'we like'. 'Этот язык' – 'this language' (this + существительное в ед.ч.). Артикль не ставится после this."
         },
         {
           "russian": "Им нравится это место",
           "english": "They like this place",
           "source": "",
-          "note": "'Им нравится' переводится как 'they like'. 'Это место' – 'this place' (this + существительное в ед.ч.). Артикль не ставится после this.",
-          "id": "fe7c7892-6aed-43ad-849b-78d0ad3f6fc3",
-          "learn": 0
+          "note": "'Им нравится' переводится как 'they like'. 'Это место' – 'this place' (this + существительное в ед.ч.). Артикль не ставится после this."
         },
         {
           "russian": "Мне нравится эта идея",
           "english": "I like this idea",
           "source": "",
-          "note": "'Эта идея' – 'this idea' (this + существительное в ед.ч.). Артикль не ставится после this.",
-          "id": "ff326028-b671-4710-afe4-0bcdb1e005fb",
-          "learn": 0
+          "note": "'Эта идея' – 'this idea' (this + существительное в ед.ч.). Артикль не ставится после this."
         },
         {
           "russian": "Мне нравится эта вещь",
           "english": "I like this thing",
           "source": "",
-          "note": "'Эта вещь' – 'this thing' (this + существительное в ед.ч.).",
-          "id": "d95ec301-6085-4ffe-b1f8-8255b8e4fc25",
-          "learn": 0
+          "note": "'Эта вещь' – 'this thing' (this + существительное в ед.ч.)."
         },
         {
           "russian": "Мне нравятся эти вещи",
           "english": "I like these things",
           "source": "",
-          "note": "'Эти вещи' – 'these things' (these + существительное во мн.ч.).",
-          "id": "55141488-987b-4af3-8922-9bb856890215",
-          "learn": 0
+          "note": "'Эти вещи' – 'these things' (these + существительное во мн.ч.)."
         },
         {
           "russian": "Мне нравится английский",
           "english": "I like English",
-          "source": "",
-          "id": "006fa724-2218-4659-9c33-24d842387154",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Мне нравится мой результат",
           "english": "I like my result",
           "source": "",
-          "note": "My result - используется притяжательное местоимение my, артикль отсутствует.",
-          "id": "a94af1b1-13aa-454c-9190-bead859f123c",
-          "learn": 0
+          "note": "My result - используется притяжательное местоимение my, артикль отсутствует."
         },
         {
           "russian": "мне нравится его Идея",
           "english": "I like his idea",
           "source": "",
-          "note": "His Idea - используется притяжательное местоимение his, артикль отсутствует.",
-          "id": "939f1628-776a-4081-b6c5-816c2010e68d",
-          "learn": 0
+          "note": "His Idea - используется притяжательное местоимение his, артикль отсутствует."
         },
         {
           "russian": "мне нравится моя работа",
           "english": "I like my job",
           "source": "",
-          "note": "My Job - используется притяжательное местоимение my, артикль отсутствует.",
-          "id": "3f1e97a0-5883-46d4-aefd-a5a47159be36",
-          "learn": 0
+          "note": "My Job - используется притяжательное местоимение my, артикль отсутствует."
         },
         {
           "russian": "Мне нравится путешествовать",
           "english": "I like traveling",
           "source": "",
-          "note": "Предпочтительный вариант, если действие действительно очень нравится.",
-          "id": "ff8a8222-a743-4c46-8de3-8309bb7c32e5",
-          "learn": 0
+          "note": "Предпочтительный вариант, если действие действительно очень нравится."
         },
         {
           "russian": "Мне нравится проводить время со своими друзьями",
           "english": "I like spending time with my friends",
           "source": "",
-          "note": "'Проводить время' – 'spend time'. При подлежащем 'I' 'со своими друзьями' переводится как 'with my friends'.",
-          "id": "4740415b-868a-44bc-a382-26d59489d969",
-          "learn": 0
+          "note": "'Проводить время' – 'spend time'. При подлежащем 'I' 'со своими друзьями' переводится как 'with my friends'."
         },
         {
           "russian": "Мне нравится путешествовать",
           "english": "I like to travel",
           "source": "",
-          "note": "Альтернативный вариант, может подразумевать привычку.",
-          "id": "2c63b92d-28a4-4dfd-9e7f-f81c2e2e396a",
-          "learn": 0
+          "note": "Альтернативный вариант, может подразумевать привычку."
         },
         {
           "russian": "Мне нравится проводить время со своими друзьями",
           "english": "I like to spend time with my friends",
           "source": "",
-          "note": "'Проводить время' – 'spend time'. При подлежащем 'I' 'со своими друзьями' переводится как 'with my friends'.",
-          "id": "356e24b7-dbec-4a3e-aa00-6d2913c95a9f",
-          "learn": 0
+          "note": "'Проводить время' – 'spend time'. При подлежащем 'I' 'со своими друзьями' переводится как 'with my friends'."
         },
         {
           "russian": "Ты знаешь это",
           "english": "You know it",
           "source": "",
-          "note": "'Это' по умолчанию переводится как 'it', но также возможны варианты 'this' или 'that'.",
-          "id": "68e64419-4326-4e88-9fad-051605e5284b",
-          "learn": 0
+          "note": "'Это' по умолчанию переводится как 'it', но также возможны варианты 'this' или 'that'."
         },
         {
           "russian": "Я знаю это",
           "english": "I know it",
           "source": "",
-          "note": "Также возможен вариант 'I know this'.",
-          "id": "c1448142-83e4-45f6-84f0-d79401404a45",
-          "learn": 0
+          "note": "Также возможен вариант 'I know this'."
         },
         {
           "russian": "Я понимаю это",
           "english": "I understand it",
           "source": "",
-          "note": "Также возможен вариант 'I understand this'.",
-          "id": "3ffd3921-f213-4a64-9838-da79c52834b2",
-          "learn": 0
+          "note": "Также возможен вариант 'I understand this'."
         },
         {
           "russian": "Мне нравится это место",
           "english": "I really like this place",
           "source": "",
-          "note": "Используется 'this', так как 'это' относится к существительному 'место' (ед.ч.).",
-          "id": "44a9f34c-0aef-46d7-aed1-66d07b6a4f6a",
-          "learn": 0
+          "note": "Используется 'this', так как 'это' относится к существительному 'место' (ед.ч.)."
         },
         {
           "russian": "Я вижу эту проблему",
           "english": "I see this problem",
           "source": "",
-          "note": "'Эту проблему' – 'this problem' (this + существительное в ед.ч.).",
-          "id": "0c1a9173-e98e-457f-8f9b-c50cbe525436",
-          "learn": 0
+          "note": "'Эту проблему' – 'this problem' (this + существительное в ед.ч.)."
         },
         {
           "russian": "Мне нравится эта идея",
           "english": "I like this idea",
           "source": "",
-          "note": "'Эта идея' – 'this idea' (this + существительное в ед.ч.).",
-          "id": "6c74fb0f-11c9-4ada-8055-68be77ec9983",
-          "learn": 0
+          "note": "'Эта идея' – 'this idea' (this + существительное в ед.ч.)."
         },
         {
           "russian": "Мне нравится эта вещь",
           "english": "I like this thing",
           "source": "",
-          "note": "'Эта вещь' – 'this thing' (this + существительное в ед.ч.).",
-          "id": "9011b85d-7694-4288-bf43-f72bbe65a1a5",
-          "learn": 0
+          "note": "'Эта вещь' – 'this thing' (this + существительное в ед.ч.)."
         },
         {
           "russian": "Я часто думаю об этом",
           "english": "I often think about it",
           "source": "",
-          "note": "'Об этом' переводится как 'about it'. Также возможны варианты 'about this' или 'about that'.",
-          "id": "3b301709-51f1-4f88-8927-67be7349a233",
-          "learn": 0
+          "note": "'Об этом' переводится как 'about it'. Также возможны варианты 'about this' или 'about that'."
         },
         {
           "russian": "Я вижу эту проблему",
           "english": "I see this problem",
           "source": "",
-          "note": "'This' используется с существительным в единственном числе ('problem'). Произносится с кратким звуком 'и' и 'с' на конце.",
-          "id": "bcaaa034-57f5-4dcb-8d4f-fb1aa227bd1d",
-          "learn": 0
+          "note": "'This' используется с существительным в единственном числе ('problem'). Произносится с кратким звуком 'и' и 'с' на конце."
         },
         {
           "russian": "Мне нравятся эти видео",
           "english": "I like these videos",
           "source": "",
-          "note": "'These' используется с существительным во множественном числе ('videos'). Произносится с долгим звуком 'и' и 'з' на конце.",
-          "id": "027f8ce5-7f58-47e8-9afb-9a306dd8550a",
-          "learn": 0
+          "note": "'These' используется с существительным во множественном числе ('videos'). Произносится с долгим звуком 'и' и 'з' на конце."
         },
         {
           "russian": "Я смотрю различные видео",
           "english": "I watch different videos",
           "source": "",
-          "note": "'Videos' – существительное во множественном числе. Используется глагол 'watch' для просмотра видео.",
-          "id": "8374a1f4-07d4-4cf8-b167-20fa0608c1de",
-          "learn": 0
+          "note": "'Videos' – существительное во множественном числе. Используется глагол 'watch' для просмотра видео."
         },
         {
           "russian": "Мне нравится эта вещь",
           "english": "I like this thing",
           "source": "",
-          "note": "'This' с существительным в ед.ч. ('thing').",
-          "id": "ea7fbd8b-ca62-4dca-88bd-9b53b332f6de",
-          "learn": 0
+          "note": "'This' с существительным в ед.ч. ('thing')."
         },
         {
           "russian": "Мне нравятся эти вещи",
           "english": "I like these things",
           "source": "",
-          "note": "'These' с существительным во мн.ч. ('things').",
-          "id": "7827132c-82f5-4517-963a-533464720759",
-          "learn": 0
+          "note": "'These' с существительным во мн.ч. ('things')."
         },
         {
           "russian": "Я обычно делаю это утром",
           "english": "I usually do it in the morning",
-          "source": "",
-          "id": "2706818e-1565-4c2b-b4ee-c010472c3809",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я часто хожу туда",
           "english": "I often go there",
-          "source": "",
-          "id": "c0123fb2-1729-4eed-b1ba-3bb51168ecd6",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я часто путешествую",
           "english": "I often travel",
-          "source": "",
-          "id": "59ef246a-3f66-4a97-9761-5f6d046bd007",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я часто думаю об этом",
           "english": "I often think about it",
           "source": "",
-          "note": "'Об этом' переводится как 'about it'.",
-          "id": "8622feb4-9db7-48d2-af97-c0e7d1fe3b8e",
-          "learn": 0
+          "note": "'Об этом' переводится как 'about it'."
         },
         {
           "russian": "Я также хожу в университет",
           "english": "I also go to university",
           "source": "",
-          "note": "'Also' ставится перед глаголом.",
-          "id": "5d218c2f-c448-464d-8a92-d5c35828dad3",
-          "learn": 0
+          "note": "'Also' ставится перед глаголом."
         },
         {
           "russian": "Я тоже так думаю",
           "english": "I also think so",
           "source": "",
-          "note": "'Also' ставится перед глаголом.",
-          "id": "b16433e4-6d88-4db7-aabd-8c3c107211e3",
-          "learn": 0
+          "note": "'Also' ставится перед глаголом."
         },
         {
           "russian": "я действительно люблю спорт",
           "english": "I really love sport",
           "source": "",
-          "note": "'Really' используется вместо 'very' перед глаголом и переводится как 'очень', 'действительно' или 'реально'.",
-          "id": "781c4c5c-d7cf-4c85-8dda-bf30cb1e9bc3",
-          "learn": 0
+          "note": "'Really' используется вместо 'very' перед глаголом и переводится как 'очень', 'действительно' или 'реально'."
         },
         {
           "russian": "Я очень люблю музыку",
           "english": "I really love music",
           "source": "",
-          "note": "'Really' используется вместо 'very' перед глаголом.",
-          "id": "265e26ce-789a-4a7a-a0d3-268e940a6d11",
-          "learn": 0
+          "note": "'Really' используется вместо 'very' перед глаголом."
         },
         {
           "russian": "Я очень хочу этого",
           "english": "I really want it",
           "source": "",
-          "note": "'Really' используется вместо 'very' перед глаголом.",
-          "id": "06c68cb4-bc42-458b-bd4f-448fee188d5c",
-          "learn": 0
+          "note": "'Really' используется вместо 'very' перед глаголом."
         },
         {
           "russian": "Мне очень нравится это место",
           "english": "I really like this place",
           "source": "",
-          "note": "'Очень нравится' переводится как 'really like'. 'Это место' – 'this place'.",
-          "id": "e9da7269-91a4-4c5a-a38b-5460710f967f",
-          "learn": 0
+          "note": "'Очень нравится' переводится как 'really like'. 'Это место' – 'this place'."
         },
         {
           "russian": "Ты реально помогаешь мне / Ты очень помогаешь мне",
           "english": "You really help me",
           "source": "",
-          "note": "'Really' может переводиться как 'реально', 'действительно' или 'очень'.",
-          "id": "723f793d-e9a2-4746-94bf-fb4191cb8eb0",
-          "learn": 0
+          "note": "'Really' может переводиться как 'реально', 'действительно' или 'очень'."
         },
         {
           "russian": "Я иногда делаю это",
           "english": "I sometimes do it",
-          "source": "",
-          "id": "b219a4c4-e6fb-440b-89cb-a4f36d1be579",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Иногда я делаю это",
           "english": "Sometimes I do it",
-          "source": "",
-          "id": "e59659df-2192-4e19-bf1e-ba2c02b05217",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я делаю это иногда",
           "english": "I do it sometimes",
-          "source": "",
-          "id": "9885b7b2-4112-486c-9c20-188553caed06",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Ты очень хорошо говоришь по-английски",
           "english": "You speak english very well",
           "source": "",
-          "note": "Порядок слов в английском: Subject + Verb + Object + Adverbial Phrase.",
-          "id": "fc15bbf5-c947-43d4-a798-964f6ddb7ed0",
-          "learn": 0
+          "note": "Порядок слов в английском: Subject + Verb + Object + Adverbial Phrase."
         },
         {
           "russian": "Я очень сильно тебя люблю",
           "english": "I love you very much",
-          "source": "",
-          "id": "385ae69a-70ab-4467-9dff-c7b96ca81b5e",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я так сильно тебя люблю",
           "english": "I love you so much",
           "source": "",
-          "note": "'So much' дословно означает 'так много'.",
-          "id": "7bc57427-0d18-4fc4-adee-256bb5f8b323",
-          "learn": 0
+          "note": "'So much' дословно означает 'так много'."
         },
         {
           "russian": "Я работаю так много",
           "english": "I work so much",
           "source": "",
-          "note": "'so much' следует за глаголом.",
-          "id": "48c1da19-172b-4ca2-a3c1-a577eeae3a75",
-          "learn": 0
+          "note": "'so much' следует за глаголом."
         },
         {
           "russian": "Я много работаю",
           "english": "I work a lot",
           "source": "",
-          "note": "'a lot' используется для 'много' в утверждениях и следует за глаголом.",
-          "id": "e1343c6f-40bc-4a83-96e4-343e6cb7d721",
-          "learn": 0
+          "note": "'a lot' используется для 'много' в утверждениях и следует за глаголом."
         },
         {
           "russian": "Я делаю Это каждый день",
           "english": "I do it every day",
-          "source": "",
-          "id": "0829bc5a-6bb8-40b6-ae34-1486a9a5d951",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я езжу туда каждый год",
           "english": "I go there every year",
-          "source": "",
-          "id": "170d7a9c-a7cd-472a-ad23-1b50ca9f0a4b",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я путешествую каждый год",
           "english": "I travel every year",
-          "source": "",
-          "id": "ac040633-8631-47bf-ae98-d2725bf67aa5",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я хожу на работу каждый день",
           "english": "i go to Work every day",
-          "source": "",
-          "id": "847c8dd5-1105-4cb4-98d9-b8d3140356d1",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "Я работаю каждый день",
           "english": "I work everyday",
-          "source": "",
-          "id": "8588f6fc-2ebe-416c-abc1-e765d5a8cdbc",
-          "learn": 0
+          "source": ""
         },
         {
           "russian": "У меня есть результаты",
           "english": "I have results",
           "source": "",
-          "note": "Грамматически верно, поскольку results - множественное число, артикль не нужен.",
-          "id": "f21ead4d-2a9a-4e70-9852-48b96a61e9d1",
-          "learn": 0
+          "note": "Грамматически верно, поскольку results - множественное число, артикль не нужен."
         },
         {
           "russian": "У меня есть некоторые результаты",
           "english": "I have some results",
           "source": "",
-          "note": "Results - множественное число. Добавление 'some' звучит более естественно для носителей. Часто это предпочтительный способ сказать 'у меня есть результаты' (без 'некоторые').",
-          "id": "da5536d5-624a-400e-b907-9e6b2f3b8ad1",
-          "learn": 0
+          "note": "Results - множественное число. Добавление 'some' звучит более естественно для носителей. Часто это предпочтительный способ сказать 'у меня есть результаты' (без 'некоторые')."
         },
         {
           "russian": "у меня есть немного времени",
           "english": "I have some time",
           "source": "",
-          "note": "Time - неисчисляемое. 'Some' используется в значении 'немного'.",
-          "id": "aff9171c-1a11-47fa-b6f4-e39b538aa35a",
-          "learn": 0
+          "note": "Time - неисчисляемое. 'Some' используется в значении 'немного'."
         },
         {
           "russian": "У меня есть деньги",
           "english": "I have money",
           "source": "",
-          "note": "Money - неисчисляемое. Так говорят, но часто добавляют 'some'.",
-          "id": "8a2afcf3-4d87-452b-adca-4be7775285f4",
-          "learn": 0
+          "note": "Money - неисчисляемое. Так говорят, но часто добавляют 'some'."
         },
         {
           "russian": "У меня есть немного денег",
           "english": "I have some money",
           "source": "",
-          "note": "Money - неисчисляемое. 'Some' используется в значении 'немного'.",
-          "id": "ef7638f2-c443-4537-9797-7d27a96652cd",
-          "learn": 0
+          "note": "Money - неисчисляемое. 'Some' используется в значении 'немного'."
         },
         {
           "russian": "У неё есть немного времени",
           "english": "She has sometime",
           "source": "",
-          "note": "Time - неисчисляемое. Для She используется has.",
-          "id": "71a6c094-e055-44ba-a54d-345405f75261",
-          "learn": 0
+          "note": "Time - неисчисляемое. Для She используется has."
         },
         {
           "russian": "у него есть немного денег",
           "english": "He has some money",
           "source": "",
-          "note": "Money - неисчисляемое. Для He используется has.",
-          "id": "9605130d-4d17-40d3-9e76-133d52d372e9",
-          "learn": 0
+          "note": "Money - неисчисляемое. Для He используется has."
         },
         {
           "russian": "У меня есть некоторые идеи",
           "english": "I have some ideas",
           "source": "",
-          "note": "Ideas - множественное число.",
-          "id": "7f818b9f-8774-49c0-ac07-b8ad5387b90d",
-          "learn": 0
+          "note": "Ideas - множественное число."
         },
         {
           "russian": "Я вижу свой результат",
           "english": "I see my result",
           "source": "",
-          "note": "'Свой' при подлежащем 'Я' переводится как 'my'. Артикль не ставится после притяжательного местоимения.",
-          "id": "4994975c-030f-4665-91fa-ae8de8a25188",
-          "learn": 0
+          "note": "'Свой' при подлежащем 'Я' переводится как 'my'. Артикль не ставится после притяжательного местоимения."
         },
         {
           "russian": "Я вижу свой прогресс",
           "english": "I see my progress",
           "source": "",
-          "note": "'Свой' при подлежащем 'Я' переводится как 'my'. Артикль не ставится после притяжательного местоимения.",
-          "id": "542b6b3f-d93d-42c7-9c9d-4b19ff35d195",
-          "learn": 0
+          "note": "'Свой' при подлежащем 'Я' переводится как 'my'. Артикль не ставится после притяжательного местоимения."
         },
         {
           "russian": "мне нравится моя работа",
           "english": "I like my job",
           "source": "",
-          "note": "'Моя работа' - My Job. Артикль не ставится после притяжательного местоимения.",
-          "id": "264c46f7-34a2-42cc-b0a6-56a10bb3285a",
-          "learn": 0
+          "note": "'Моя работа' - My Job. Артикль не ставится после притяжательного местоимения."
         },
         {
           "russian": "Мне нравится проводить время со своими друзьями",
           "english": "I like spending time with my friends",
           "source": "",
-          "note": "При подлежащем 'I' 'со своими друзьями' переводится как 'with my friends'.",
-          "id": "b63ca382-8df9-497c-bd57-bccdc08cbece",
-          "learn": 0
+          "note": "При подлежащем 'I' 'со своими друзьями' переводится как 'with my friends'."
         },
         {
           "russian": "Мне нравится проводить время со своими друзьями",
           "english": "I like to spend time with my friends",
           "source": "",
-          "note": "При подлежащем 'I' 'со своими друзьями' переводится как 'with my friends'.",
-          "id": "a64e828c-8f7c-4900-b787-ffb9bb106880",
-          "learn": 0
+          "note": "При подлежащем 'I' 'со своими друзьями' переводится как 'with my friends'."
         },
         {
           "russian": "Я знаю его",
           "english": "I know him",
           "source": "",
-          "note": "'Его' (кого?) без последующего существительного переводится как Him. Сравните с притяжательным местоимением his ('его друга' - his Friend).",
-          "id": "f4ec4d7b-cb6e-4d60-8d11-63fa23d1c34a",
-          "learn": 0
+          "note": "'Его' (кого?) без последующего существительного переводится как Him. Сравните с притяжательным местоимением his ('его друга' - his Friend)."
         },
         {
           "russian": "Я вижу его",
           "english": "I see him",
           "source": "",
-          "note": "'Его' (кого?) без последующего существительного переводится как Him.",
-          "id": "fd984a07-19f4-4ab8-b2d0-d28b1bba3445",
-          "learn": 0
+          "note": "'Его' (кого?) без последующего существительного переводится как Him."
         },
         {
           "russian": "Я вижу её",
           "english": "I see her",
           "source": "",
-          "note": "'Её' (кого?) переводится как her. Неважно, есть ли после нее существительное.",
-          "id": "dec1f7b5-31fa-4b5c-a7cb-205031c7df32",
-          "learn": 0
+          "note": "'Её' (кого?) переводится как her. Неважно, есть ли после нее существительное."
         },
         {
           "russian": "Я могу помочь тебе",
           "english": "I can help you",
           "source": "",
-          "note": "'You' в данном случае переводится как 'тебе'.",
-          "id": "020cf994-7d93-4773-bb41-5dcb1f98e685",
-          "learn": 0
+          "note": "'You' в данном случае переводится как 'тебе'."
         },
         {
           "russian": "Я вижу тебя",
           "english": "I see you",
           "source": "",
-          "note": "'You' в данном случае переводится как 'тебя'.",
-          "id": "edbf0d79-c0bd-432c-b9a5-137754e474f1",
-          "learn": 0
+          "note": "'You' в данном случае переводится как 'тебя'."
         },
         {
           "russian": "Я очень сильно тебя люблю",
           "english": "I love you very much",
           "source": "",
-          "note": "'Тебя' (кого?) переводится как you.",
-          "id": "739485b3-fb27-4835-96f1-e939c1f54b7f",
-          "learn": 0
+          "note": "'Тебя' (кого?) переводится как you."
         },
         {
           "russian": "Ты реально помогаешь мне / Ты очень помогаешь мне",
           "english": "You really help me",
           "source": "",
-          "note": "'Мне' (кому? -> вин. падеж в англ.) переводится как me.",
-          "id": "5f01d9ad-6681-41e6-be7f-5f73f7a9d97a",
-          "learn": 0
+          "note": "'Мне' (кому? -> вин. падеж в англ.) переводится как me."
         },
         {
           "russian": "Я понимаю тебя",
           "english": "I understand you",
           "source": "",
-          "note": "'You' может переводиться как тебя или вас.",
-          "id": "dd3548c8-166e-47c3-b2df-485cb95b597d",
-          "learn": 0
+          "note": "'You' может переводиться как тебя или вас."
         },
         {
           "russian": "Я смотрю различные видео",
           "english": "I watch different videos",
           "source": "",
-          "note": "Videos - множественное число.",
-          "id": "51ee3c18-482a-4fe8-ae52-7a950e211231",
-          "learn": 0
+          "note": "Videos - множественное число."
         },
         {
           "russian": "Я смотрю видео",
           "english": "I watch videos",
           "source": "",
-          "note": "Videos - множественное число.",
-          "id": "3ceda600-52e4-499c-9614-8044d6ca141c",
-          "learn": 0
+          "note": "Videos - множественное число."
         },
         {
           "russian": "У меня есть работа",
           "english": "I have a job",
           "source": "",
-          "note": "Используется 'Job' в значении профессии или оплачиваемой работы. 'Job' - исчисляемое в ед.ч., поэтому ставится артикль **a**.",
-          "id": "1b4f8c7c-a06a-4e2d-b8ce-bc6c8b8312bb",
-          "learn": 0
+          "note": "Используется 'Job' в значении профессии или оплачиваемой работы. 'Job' - исчисляемое в ед.ч., поэтому ставится артикль **a**."
         },
         {
           "russian": "У меня есть работа",
           "english": "I have work",
           "source": "",
-          "note": "Используется 'Work' в значении общей занятости. 'Work' - неисчисляемое, артикль не ставится.",
-          "id": "a40420fe-bf02-4985-a6be-2a6a11f2c0f6",
-          "learn": 0
+          "note": "Используется 'Work' в значении общей занятости. 'Work' - неисчисляемое, артикль не ставится."
         },
         {
           "russian": "мне нравится моя работа",
           "english": "I like my job",
           "source": "",
-          "note": "Используется 'Job'. После притяжательного местоимения my артикль не ставится.",
-          "id": "ecf9bbd2-22f7-47d7-b0d6-ead3f359e5b5",
-          "learn": 0
+          "note": "Используется 'Job'. После притяжательного местоимения my артикль не ставится."
         }
       ]
     }

@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { Analytics, AnalyticsItem, Example, Lesson } from '@/types/lesson';
+import { Analytics, AnalyticsItem, Example, Lesson, LessonStatus, SpacedRepetitionInfo } from '@/types/lesson';
 import { getActiveProfile } from './profileUtils';
 
 // Server-side utility functions that use Node.js modules
@@ -8,6 +8,18 @@ const DATA_DIR = path.join(process.cwd(), 'data');
 const LESSONS_DIR = path.join(DATA_DIR, 'lessons');
 const ANALYTICS_DIR = path.join(DATA_DIR, 'analytics');
 const ANALYTICS_FILE = path.join(DATA_DIR, 'analytics.json');
+
+// Интервалы повторения по кривой забывания в днях
+// Интервалы повторения по кривой забывания Эббингауза (в днях)
+const REPETITION_INTERVALS = [
+  1,    // Повторение 2: через 1 день после изучения
+  3,    // Повторение 3: через 3 дня после изучения
+  7,    // Повторение 4: через 7 дней (неделя)
+  14,   // Повторение 5: через 14 дней (2 недели)
+  30,   // Повторение 6: через 30 дней (месяц)
+  60,   // Повторение 7: через 60 дней (2 месяца)
+  120   // Повторение 8: через 120 дней (4 месяца)
+];
 
 // Ensure data directories exist
 export const ensureDirectories = () => {
@@ -108,7 +120,9 @@ export const getAnalytics = (profileId?: string): Analytics => {
       lastPracticeDate: 0,
       lessonProgress: [],
       completedSentences: {},
-      lessonCompletionCounts: {}
+      lessonCompletionCounts: {},
+      spacedRepetition: [],
+      prioritySentences: {}
     };
     
     // Ensure the directory exists
@@ -201,145 +215,93 @@ export const removeError = (lessonId: string, sentence: { russian: string, engli
     const normalizedRussian = sentence.russian.trim().toLowerCase();
     const normalizedEnglish = sentence.english.trim().toLowerCase();
     
-    // Find all matching errors (there could be multiple entries for the same sentence)
-    const matchingErrors = analytics.errors.filter(error => {
-      // Match by ID if provided
-      if (errorId && error.id === errorId) {
-        return true;
-      }
-      
-      // Normalize the error sentence for comparison
-      const errorRussian = error.sentence.russian.trim().toLowerCase();
-      const errorEnglish = error.sentence.english.trim().toLowerCase();
-      
-      // Если lessonId равен 'practice', игнорируем проверку lessonId
-      // и ищем ошибки только по содержимому предложения
-      if (lessonId === 'practice') {
-        return errorRussian === normalizedRussian || errorEnglish === normalizedEnglish;
-      }
-      
-      // В противном случае, проверяем и lessonId, и содержимое
-      return error.lessonId === lessonId && 
-             (errorRussian === normalizedRussian || errorEnglish === normalizedEnglish);
-    });
-    
-    console.log(`Found ${matchingErrors.length} matching errors to remove`);
-    
-    if (matchingErrors.length > 0) {
-      // Log the errors being removed
-      matchingErrors.forEach(error => {
-        console.log(`Removing error: ${JSON.stringify(error)}`);
-      });
-      
-      // Get the IDs of errors to remove
-      const errorIdsToRemove = matchingErrors.map(error => error.id);
-      
-      // Filter out all matching errors by ID
-      analytics.errors = analytics.errors.filter(error => !errorIdsToRemove.includes(error.id));
-      
-      console.log(`Errors after removal: ${analytics.errors.length}`);
-      
-      // Save updated analytics
-      saveAnalytics(analytics, profileId);
-      console.log('Analytics saved successfully after error removal');
-    } else {
-      // Try a more lenient approach - match by just the English text
-      const lenientMatches = analytics.errors.filter(error => {
-        const errorEnglish = error.sentence.english.trim().toLowerCase();
-        return error.lessonId === lessonId && errorEnglish === normalizedEnglish;
-      });
-      
-      if (lenientMatches.length > 0) {
-        console.log(`Found ${lenientMatches.length} lenient matches by English text only`);
-        
-        // Log the errors being removed
-        lenientMatches.forEach(error => {
-          console.log(`Removing error (lenient match): ${JSON.stringify(error)}`);
-        });
-        
-        // Get the IDs of errors to remove
-        const errorIdsToRemove = lenientMatches.map(error => error.id);
-        
-        // Filter out all matching errors by ID
-        analytics.errors = analytics.errors.filter(error => !errorIdsToRemove.includes(error.id));
-        
-        console.log(`Errors after lenient removal: ${analytics.errors.length}`);
-        
-        // Save updated analytics
-        saveAnalytics(analytics, profileId);
-        console.log('Analytics saved successfully after lenient error removal');
+    if (errorId) {
+      // If errorId is provided, find and remove by ID
+      const index = analytics.errors.findIndex(error => error.id === errorId);
+      if (index !== -1) {
+        analytics.errors.splice(index, 1);
+        console.log(`Removed error with ID ${errorId}`);
       } else {
-        console.log(`No matching error found to remove for "${sentence.english}"`);
+        console.log(`Error with ID ${errorId} not found`);
+      }
+    } else {
+      // If no errorId, find by sentence content
+      const filteredErrors = analytics.errors.filter(error => {
+        const errorRussian = error.sentence.russian.trim().toLowerCase();
+        const errorEnglish = error.sentence.english.trim().toLowerCase();
         
-        // Log all errors for debugging
-        console.log('Current errors:');
-        analytics.errors.forEach((error, index) => {
-          console.log(`${index}: ${error.id} - "${error.sentence.english}" (${error.lessonId})`);
-        });
+        const matchesRussian = errorRussian === normalizedRussian;
+        const matchesEnglish = errorEnglish === normalizedEnglish;
+        const matchesLesson = error.lessonId === lessonId;
+        
+        // Keep errors that don't match this sentence
+        return !(matchesRussian && matchesEnglish && matchesLesson);
+      });
+      
+      if (filteredErrors.length < analytics.errors.length) {
+        console.log(`Removed ${analytics.errors.length - filteredErrors.length} errors matching "${sentence.english}"`);
+        analytics.errors = filteredErrors;
+      } else {
+        console.log(`No errors found matching "${sentence.english}"`);
       }
     }
+    
+    saveAnalytics(analytics, profileId);
+    
+    // Log errors after removal
+    console.log(`Errors after removal: ${analytics.errors.length}`);
   } catch (error) {
     console.error('Error removing error from analytics:', error);
   }
 };
 
-// Mark a lesson as completed
-export const markLessonCompleted = (lessonId: string, profileId?: string): void => {
+/**
+ * Отметить урок как завершенный
+ * Если урок пройден без ошибок, он будет автоматически скрыт
+ * 
+ * @param lessonId - ID урока
+ * @param profileId - ID профиля пользователя (опционально)
+ */
+export const markLessonCompleted = async (lessonId: string, profileId?: string): Promise<void> => {
   try {
     const analytics = getAnalytics(profileId);
     
-    // Получаем количество пройденных предложений в этом уроке
-    const completedSentencesCount = analytics.completedSentences && 
-                                   analytics.completedSentences[lessonId] ? 
-                                   analytics.completedSentences[lessonId].length : 0;
-    
-    // Если урок уже отмечен как завершенный, увеличиваем счетчик прохождений
-    if (analytics.completedLessons.includes(lessonId)) {
-      // Инициализируем массив счетчиков прохождений, если он не существует
-      if (!analytics.lessonCompletionCounts) {
-        analytics.lessonCompletionCounts = {};
-      }
-      
-      // Увеличиваем счетчик прохождений для этого урока
-      if (!analytics.lessonCompletionCounts[lessonId]) {
-        analytics.lessonCompletionCounts[lessonId] = [1];
-      } else {
-        const currentCount = analytics.lessonCompletionCounts[lessonId].length > 0 ?
-          analytics.lessonCompletionCounts[lessonId][0] : 0;
-        analytics.lessonCompletionCounts[lessonId] = [currentCount + 1];
-      }
-    } else {
-      // Добавляем урок в список завершенных
+    // Add to completed lessons if not already there
+    if (!analytics.completedLessons.includes(lessonId)) {
       analytics.completedLessons.push(lessonId);
-      console.log(`Added lesson ${lessonId} to completed lessons`);
-      
-      // Инициализируем массив счетчиков прохождений, если он не существует
-      if (!analytics.lessonCompletionCounts) {
-        analytics.lessonCompletionCounts = {};
-      }
-      
-      // Устанавливаем счетчик прохождений для этого урока в 1
-      analytics.lessonCompletionCounts[lessonId] = [1];
     }
     
-    // Увеличиваем счетчик выполненных упражнений на количество пройденных предложений
-    analytics.totalExercisesCompleted += completedSentencesCount;
-    console.log(`Updated totalExercisesCompleted to ${analytics.totalExercisesCompleted}`);
-    
-    // Сбрасываем список пройденных предложений для этого урока при завершении урока
-    // Это позволит начать новый цикл прохождения урока
-    if (analytics.completedSentences && analytics.completedSentences[lessonId]) {
-      analytics.completedSentences[lessonId] = [];
+    // Initialize lessonCompletionCounts if it doesn't exist
+    if (!analytics.lessonCompletionCounts) {
+      analytics.lessonCompletionCounts = {};
     }
     
-    // Удалить прогресс для этого урока, так как он завершен
-    if (analytics.lessonProgress) {
-      analytics.lessonProgress = analytics.lessonProgress.filter(p => p.lessonId !== lessonId);
+    // Initialize the array for this lesson if it doesn't exist
+    if (!analytics.lessonCompletionCounts[lessonId]) {
+      analytics.lessonCompletionCounts[lessonId] = [];
     }
+    
+    // Add the current timestamp to the completion counts
+    const now = Date.now();
+    analytics.lessonCompletionCounts[lessonId].push(now);
+    
+    // Update the last practice date
+    analytics.lastPracticeDate = now;
+    
+    // Подсчитываем количество ошибок для этого урока
+    const errorCount = analytics.errors.filter(error => error.lessonId === lessonId).length;
+    
+    // Определяем, нужно ли автоматически скрыть урок
+    // Скрываем урок, если он пройден без ошибок или с минимальным количеством ошибок (<=2)
+    const shouldHide = errorCount <= 2;
+    
+    // Обновляем статус урока в системе интервального повторения
+    // Если урок пройден без ошибок, скрываем его
+    updateLessonSpacedRepetitionInfo(lessonId, LessonStatus.Completed, shouldHide, errorCount, profileId);
     
     saveAnalytics(analytics, profileId);
     
-    console.log(`Lesson ${lessonId} marked as completed. Completion count: ${analytics.lessonCompletionCounts[lessonId][0]}`);
+    console.log(`Marked lesson ${lessonId} as completed${shouldHide ? ' and hidden' : ''}`);
   } catch (error) {
     console.error('Error marking lesson as completed:', error);
   }
@@ -357,59 +319,71 @@ export const saveLessonProgress = (lessonId: string, lastExerciseEnglish: string
   try {
     const analytics = getAnalytics(profileId);
     
-    // Если урок уже завершен, не сохраняем прогресс
-    if (analytics.completedLessons.includes(lessonId)) {
-      return;
-    }
-    
-    // Инициализируем массив прогресса, если он не существует
+    // Initialize lessonProgress if it doesn't exist
     if (!analytics.lessonProgress) {
       analytics.lessonProgress = [];
     }
     
-    // Инициализируем массив пройденных предложений, если он не существует
+    // Initialize completedSentences if it doesn't exist
     if (!analytics.completedSentences) {
       analytics.completedSentences = {};
     }
     
-    // Инициализируем массив пройденных предложений для текущего урока, если он не существует
+    // Initialize completedSentences for this lesson if it doesn't exist
     if (!analytics.completedSentences[lessonId]) {
       analytics.completedSentences[lessonId] = [];
     }
     
-    // Добавляем ID предложения в список пройденных, если оно не уже там и ID был передан
+    // Add sentenceId to completedSentences if provided and not already there
     if (sentenceId && !analytics.completedSentences[lessonId].includes(sentenceId)) {
       analytics.completedSentences[lessonId].push(sentenceId);
     }
     
-    // Проверяем, есть ли уже прогресс для этого урока
-    const existingProgressIndex = analytics.lessonProgress.findIndex(p => p.lessonId === lessonId);
+    // Find existing progress for this lesson
+    const existingProgressIndex = analytics.lessonProgress.findIndex(
+      progress => progress.lessonId === lessonId
+    );
+    
+    const now = Date.now();
     
     if (existingProgressIndex !== -1) {
-      // Обновляем существующий прогресс
-      analytics.lessonProgress[existingProgressIndex] = {
-        lessonId,
-        lastExerciseEnglish,
-        timestamp: Date.now(),
-        completedSentences: analytics.completedSentences[lessonId] || []
-      };
+      // Update existing progress
+      analytics.lessonProgress[existingProgressIndex].lastExerciseEnglish = lastExerciseEnglish;
+      analytics.lessonProgress[existingProgressIndex].timestamp = now;
+      
+      // Update completedSentences if it exists
+      if (analytics.lessonProgress[existingProgressIndex].completedSentences && sentenceId) {
+        if (!analytics.lessonProgress[existingProgressIndex].completedSentences?.includes(sentenceId)) {
+          analytics.lessonProgress[existingProgressIndex].completedSentences?.push(sentenceId);
+        }
+      } else if (sentenceId) {
+        // Initialize completedSentences if it doesn't exist
+        analytics.lessonProgress[existingProgressIndex].completedSentences = [sentenceId];
+      }
     } else {
-      // Добавляем новый прогресс
-      analytics.lessonProgress.push({
+      // Create new progress entry
+      const newProgress: LessonProgress = {
         lessonId,
         lastExerciseEnglish,
-        timestamp: Date.now(),
-        completedSentences: analytics.completedSentences[lessonId] || []
-      });
+        timestamp: now
+      };
+      
+      // Add completedSentences if sentenceId is provided
+      if (sentenceId) {
+        newProgress.completedSentences = [sentenceId];
+      }
+      
+      analytics.lessonProgress.push(newProgress);
     }
     
-    // Обновляем дату последней практики
-    analytics.lastPracticeDate = Date.now();
+    // Обновляем статус урока в системе интервального повторения
+    // Если урок еще не завершен, устанавливаем статус "В процессе"
+    const repetitionInfo = getLessonSpacedRepetitionInfo(lessonId, profileId);
+    if (!repetitionInfo || repetitionInfo.status === LessonStatus.NotStarted) {
+      updateLessonSpacedRepetitionInfo(lessonId, LessonStatus.InProgress, false, 0, profileId);
+    }
     
-    // Сохраняем аналитику с обновленным прогрессом
     saveAnalytics(analytics, profileId);
-    
-    console.log(`Progress saved for lesson ${lessonId}: ${lastExerciseEnglish}, completed sentences: ${analytics.completedSentences[lessonId]?.length || 0}`);
   } catch (error) {
     console.error('Error saving lesson progress:', error);
   }
@@ -417,44 +391,64 @@ export const saveLessonProgress = (lessonId: string, lastExerciseEnglish: string
 
 // Получить прогресс урока
 export const getLessonProgress = (lessonId: string, profileId?: string): { lastExerciseEnglish: string | null, completedSentences: string[] } => {
-  const analytics = getAnalytics(profileId);
-  
-  // Если урок уже завершен, возвращаем null для lastExerciseEnglish и пустой массив для completedSentences
-  if (analytics.completedLessons.includes(lessonId)) {
+  try {
+    const analytics = getAnalytics(profileId);
+    
+    if (!analytics.lessonProgress) {
+      return { lastExerciseEnglish: null, completedSentences: [] };
+    }
+    
+    const progress = analytics.lessonProgress.find(p => p.lessonId === lessonId);
+    
+    if (!progress) {
+      return { lastExerciseEnglish: null, completedSentences: [] };
+    }
+    
+    // Get completedSentences from either the progress object or the analytics.completedSentences
+    const completedSentences = progress.completedSentences || 
+                              (analytics.completedSentences && analytics.completedSentences[lessonId]) || 
+                              [];
+    
+    return {
+      lastExerciseEnglish: progress.lastExerciseEnglish,
+      completedSentences: completedSentences
+    };
+  } catch (error) {
+    console.error('Error getting lesson progress:', error);
     return { lastExerciseEnglish: null, completedSentences: [] };
   }
-  
-  // Инициализируем массив пройденных предложений, если он не существует
-  if (!analytics.completedSentences) {
-    analytics.completedSentences = {};
-  }
-  
-  // Инициализируем массив пройденных предложений для текущего урока, если он не существует
-  if (!analytics.completedSentences[lessonId]) {
-    analytics.completedSentences[lessonId] = [];
-  }
-  
-  // Если нет прогресса, возвращаем null для lastExerciseEnglish и текущий массив completedSentences
-  if (!analytics.lessonProgress) {
-    return { lastExerciseEnglish: null, completedSentences: analytics.completedSentences[lessonId] || [] };
-  }
-  
-  // Находим прогресс для этого урока
-  const progress = analytics.lessonProgress.find(p => p.lessonId === lessonId);
-  
-  return { 
-    lastExerciseEnglish: progress ? progress.lastExerciseEnglish : null,
-    completedSentences: analytics.completedSentences[lessonId] || []
-  };
 };
 
 // Get most problematic sentences for practice
 export const getMostProblematicSentences = (limit: number = 10, profileId?: string): AnalyticsItem[] => {
-  const analytics = getAnalytics(profileId);
-  
-  return [...analytics.errors]
-    .sort((a, b) => b.errors - a.errors)
-    .slice(0, limit);
+  try {
+    const analytics = getAnalytics(profileId);
+    
+    if (!analytics.errors || analytics.errors.length === 0) {
+      return [];
+    }
+    
+    // Group errors by sentence
+    const errorGroups: { [key: string]: AnalyticsItem } = {};
+    
+    analytics.errors.forEach(error => {
+      const key = `${error.lessonId}_${error.sentence.russian}_${error.sentence.english}`;
+      
+      if (!errorGroups[key]) {
+        errorGroups[key] = { ...error, errors: 0 };
+      }
+      
+      errorGroups[key].errors += 1;
+    });
+    
+    // Convert to array and sort by error count (descending)
+    return Object.values(errorGroups)
+      .sort((a, b) => b.errors - a.errors)
+      .slice(0, limit);
+  } catch (error) {
+    console.error('Error getting problematic sentences:', error);
+    return [];
+  }
 };
 
 // Save a new lesson file
@@ -504,34 +498,48 @@ export const deleteLesson = (lessonId: string): { success: boolean, message: str
   try {
     const lessonPath = path.join(LESSONS_DIR, `${lessonId}.json`);
     
-    // Don't allow deleting lesson1.json from the root directory
-    if (lessonId === 'lesson1') {
-      return { 
-        success: false, 
-        message: 'Нельзя удалить базовый урок lesson1.json.' 
-      };
-    }
-    
     // Check if file exists
     if (!fs.existsSync(lessonPath)) {
+      // Try to find the lesson in the root directory
+      const rootLessonPath = path.join(process.cwd(), `${lessonId}.json`);
+      if (fs.existsSync(rootLessonPath)) {
+        // Don't delete lesson1.json from the root directory
+        if (lessonId === 'lesson1') {
+          return { 
+            success: false, 
+            message: 'Нельзя удалить основной урок (lesson1.json).' 
+          };
+        }
+        
+        fs.unlinkSync(rootLessonPath);
+        
+        // Update analytics
+        const analytics = getAnalytics();
+        analytics.loadedLessons = analytics.loadedLessons.filter(id => id !== lessonId);
+        saveAnalytics(analytics);
+        
+        return { success: true, message: 'Урок успешно удален.' };
+      }
+      
       return { 
         success: false, 
         message: 'Файл урока не найден.' 
       };
     }
     
+    // Don't delete lesson1.json
+    if (lessonId === 'lesson1') {
+      return { 
+        success: false, 
+        message: 'Нельзя удалить основной урок (lesson1.json).' 
+      };
+    }
+    
     fs.unlinkSync(lessonPath);
     
-    // Update loaded lessons in analytics
+    // Update analytics
     const analytics = getAnalytics();
     analytics.loadedLessons = analytics.loadedLessons.filter(id => id !== lessonId);
-    
-    // Remove errors related to this lesson
-    analytics.errors = analytics.errors.filter(error => error.lessonId !== lessonId);
-    
-    // Remove from completed lessons if present
-    analytics.completedLessons = analytics.completedLessons.filter(id => id !== lessonId);
-    
     saveAnalytics(analytics);
     
     return { success: true, message: 'Урок успешно удален.' };
@@ -539,7 +547,7 @@ export const deleteLesson = (lessonId: string): { success: boolean, message: str
     console.error('Error deleting lesson file:', error);
     return { 
       success: false, 
-      message: 'Ошибка при удалении файла.' 
+      message: 'Ошибка при удалении файла урока.' 
     };
   }
 };
@@ -547,6 +555,30 @@ export const deleteLesson = (lessonId: string): { success: boolean, message: str
 // Create backup of analytics
 export const createAnalyticsBackup = (profileId?: string): { success: boolean, message: string } => {
   try {
+    // If profileId is not provided, try to get the active profile
+    if (!profileId) {
+      const activeProfile = getActiveProfile();
+      profileId = activeProfile?.id;
+    }
+    
+    // Если ID профиля не найден, не создаем бэкап
+    if (!profileId) {
+      return { 
+        success: false, 
+        message: 'Нет активного профиля для создания бэкапа.' 
+      };
+    }
+    
+    const analyticsPath = path.join(ANALYTICS_DIR, `${profileId}.json`);
+    
+    // Check if analytics file exists
+    if (!fs.existsSync(analyticsPath)) {
+      return { 
+        success: false, 
+        message: 'Файл аналитики не найден.' 
+      };
+    }
+    
     // Create backup directory if it doesn't exist
     const backupDir = path.join(DATA_DIR, 'backups');
     if (!fs.existsSync(backupDir)) {
@@ -555,83 +587,254 @@ export const createAnalyticsBackup = (profileId?: string): { success: boolean, m
     
     // Create timestamp for backup filename
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+    const backupPath = path.join(backupDir, `analytics_${profileId}_${timestamp}.json`);
     
-    if (profileId) {
-      // Backup specific profile
-      const analytics = getAnalytics(profileId);
-      const backupFile = path.join(backupDir, `analytics-backup-${profileId}-${timestamp}.json`);
-      fs.writeFileSync(backupFile, JSON.stringify(analytics, null, 2));
-      
-      return {
-        success: true,
-        message: `Backup created successfully for profile ${profileId}: ${path.basename(backupFile)}`
-      };
-    } else {
-      // Backup all profiles
-      const profilesDir = path.join(DATA_DIR, 'profiles');
-      const profilesFile = path.join(profilesDir, 'profiles.json');
-      
-      if (fs.existsSync(profilesFile)) {
-        const profilesData = JSON.parse(fs.readFileSync(profilesFile, 'utf8'));
-        const backupProfilesFile = path.join(backupDir, `profiles-backup-${timestamp}.json`);
-        fs.writeFileSync(backupProfilesFile, JSON.stringify(profilesData, null, 2));
-      }
-      
-      // Backup default analytics file if it exists
-      const defaultAnalyticsFile = path.join(DATA_DIR, 'analytics.json');
-      if (fs.existsSync(defaultAnalyticsFile)) {
-        const analytics = JSON.parse(fs.readFileSync(defaultAnalyticsFile, 'utf8'));
-        const backupFile = path.join(backupDir, `analytics-backup-default-${timestamp}.json`);
-        fs.writeFileSync(backupFile, JSON.stringify(analytics, null, 2));
-      }
-      
-      // Backup all profile analytics files
-      const analyticsDir = path.join(DATA_DIR, 'analytics');
-      if (fs.existsSync(analyticsDir)) {
-        const files = fs.readdirSync(analyticsDir);
-        for (const file of files) {
-          if (file.endsWith('.json')) {
-            const filePath = path.join(analyticsDir, file);
-            const profileId = file.replace('.json', '');
-            const backupFile = path.join(backupDir, `analytics-backup-${profileId}-${timestamp}.json`);
-            fs.copyFileSync(filePath, backupFile);
-          }
-        }
-      }
-      
-      return {
-        success: true,
-        message: `Backup created successfully for all profiles at ${timestamp}`
-      };
-    }
+    // Copy analytics file to backup
+    fs.copyFileSync(analyticsPath, backupPath);
+    
+    return { 
+      success: true, 
+      message: `Резервная копия аналитики создана: ${path.basename(backupPath)}` 
+    };
   } catch (error) {
     console.error('Error creating analytics backup:', error);
-    return {
-      success: false,
-      message: `Failed to create backup: ${error instanceof Error ? error.message : String(error)}`
+    return { 
+      success: false, 
+      message: `Ошибка при создании резервной копии: ${error instanceof Error ? error.message : String(error)}` 
     };
   }
 };
 
 // Copy lesson1.json to the lessons directory if it doesn't exist there
 export const copyLesson1ToLessonsDir = (): void => {
-  ensureDirectories();
-  
-  const rootLesson1Path = path.join(process.cwd(), 'lesson1.json');
-  const lessonsLesson1Path = path.join(LESSONS_DIR, 'lesson1.json');
-  
-  if (fs.existsSync(rootLesson1Path) && !fs.existsSync(lessonsLesson1Path)) {
-    try {
-      fs.copyFileSync(rootLesson1Path, lessonsLesson1Path);
-      
-      // Update loaded lessons in analytics
-      const analytics = getAnalytics();
-      if (!analytics.loadedLessons.includes('lesson1')) {
-        analytics.loadedLessons.push('lesson1');
-        saveAnalytics(analytics);
+  try {
+    const rootLessonPath = path.join(process.cwd(), 'lesson1.json');
+    const lessonsLessonPath = path.join(LESSONS_DIR, 'lesson1.json');
+    
+    // Check if lesson1.json exists in the root directory
+    if (fs.existsSync(rootLessonPath)) {
+      // Check if it doesn't exist in the lessons directory
+      if (!fs.existsSync(lessonsLessonPath)) {
+        // Ensure the lessons directory exists
+        if (!fs.existsSync(LESSONS_DIR)) {
+          fs.mkdirSync(LESSONS_DIR, { recursive: true });
+        }
+        
+        // Copy the file
+        fs.copyFileSync(rootLessonPath, lessonsLessonPath);
+        console.log('Copied lesson1.json to lessons directory');
       }
-    } catch (error) {
-      console.error('Error copying lesson1.json to lessons directory:', error);
     }
+  } catch (error) {
+    console.error('Error copying lesson1.json to lessons directory:', error);
+  }
+};
+
+// Функции для работы с системой интервального повторения
+
+// Получить информацию о повторении урока
+export const getLessonSpacedRepetitionInfo = (lessonId: string, profileId?: string): SpacedRepetitionInfo | null => {
+  const analytics = getAnalytics(profileId);
+  
+  // Инициализируем массив spacedRepetition, если он не существует
+  if (!analytics.spacedRepetition) {
+    analytics.spacedRepetition = [];
+  }
+  
+  // Поиск информации о повторении для данного урока
+  const repetitionInfo = analytics.spacedRepetition.find(info => info.lessonId === lessonId);
+  
+  return repetitionInfo || null;
+};
+
+/**
+ * Создать или обновить информацию о повторении урока по кривой забывания Эббингауза
+ * 
+ * @param lessonId - ID урока
+ * @param status - Статус урока
+ * @param isHidden - Скрыт ли урок
+ * @param errorCount - Количество ошибок при прохождении
+ * @param profileId - ID профиля пользователя
+ * @returns Обновленная информация о повторении
+ */
+export const updateLessonSpacedRepetitionInfo = (lessonId: string, status: LessonStatus, isHidden: boolean = false, errorCount: number = 0, profileId?: string): SpacedRepetitionInfo => {
+  const analytics = getAnalytics(profileId);
+  
+  // Инициализируем массив spacedRepetition, если он не существует
+  if (!analytics.spacedRepetition) {
+    analytics.spacedRepetition = [];
+  }
+  
+  // Поиск существующей информации о повторении
+  let repetitionInfo = analytics.spacedRepetition.find(info => info.lessonId === lessonId);
+  const now = Date.now();
+  
+  if (!repetitionInfo) {
+    // Создаем новую запись, если она не существует
+    repetitionInfo = {
+      lessonId,
+      status,
+      completionDates: status === LessonStatus.Completed ? [now] : [],
+      repetitionLevel: 0,
+      nextReviewDate: status === LessonStatus.Completed ? now + REPETITION_INTERVALS[0] * 24 * 60 * 60 * 1000 : 0,
+      isHidden,
+      lastErrorCount: errorCount
+    };
+    
+    analytics.spacedRepetition.push(repetitionInfo);
+  } else {
+    // Обновляем существующую запись
+    repetitionInfo.status = status;
+    repetitionInfo.isHidden = isHidden;
+    repetitionInfo.lastErrorCount = errorCount;
+    
+    if (status === LessonStatus.Completed) {
+      // Добавляем дату завершения
+      repetitionInfo.completionDates.push(now);
+      
+      // Определяем текущий уровень повторения на основе количества завершений
+      // Первое завершение = уровень 0, второе = уровень 1, и т.д.
+      const completionsCount = repetitionInfo.completionDates.length;
+      
+      // Адаптируем уровень повторения на основе ошибок
+      if (completionsCount <= REPETITION_INTERVALS.length) {
+        // Стандартное продвижение по уровням повторения
+        repetitionInfo.repetitionLevel = completionsCount - 1;
+        
+        // Корректировка на основе ошибок
+        if (errorCount > 5) {
+          // Много ошибок - повторяем текущий уровень (не увеличиваем интервал)
+          if (repetitionInfo.repetitionLevel > 0) {
+            repetitionInfo.repetitionLevel--;
+          }
+        } else if (errorCount > 2) {
+          // Средний уровень ошибок - оставляем текущий уровень
+          // Не изменяем repetitionLevel
+        }
+        // При малом количестве ошибок (<=2) - стандартное продвижение
+      } else {
+        // Если все повторения пройдены, остаемся на максимальном уровне
+        repetitionInfo.repetitionLevel = REPETITION_INTERVALS.length - 1;
+      }
+      
+      // Рассчитываем дату следующего повторения
+      const intervalDays = REPETITION_INTERVALS[repetitionInfo.repetitionLevel];
+      repetitionInfo.nextReviewDate = now + intervalDays * 24 * 60 * 60 * 1000;
+    }
+  }
+  
+  // Сохраняем обновленную аналитику
+  saveAnalytics(analytics, profileId);
+  
+  return repetitionInfo;
+};
+
+/**
+ * Получить список уроков, которые нужно повторить
+ * Возвращает уроки, у которых наступила дата повторения
+ * 
+ * @param profileId - ID профиля пользователя
+ * @returns Массив информации о уроках для повторения
+ */
+export const getLessonsDueForReview = (profileId?: string): SpacedRepetitionInfo[] => {
+  const analytics = getAnalytics(profileId);
+  
+  if (!analytics.spacedRepetition) {
+    return [];
+  }
+  
+  const now = Date.now();
+  
+  // Фильтруем уроки, которые нужно повторить
+  return analytics.spacedRepetition.filter(info => 
+    !info.isHidden && 
+    info.status === LessonStatus.Completed && 
+    info.nextReviewDate > 0 && 
+    info.nextReviewDate <= now
+  );
+};
+
+// Получить список скрытых уроков
+export const getHiddenLessons = (profileId?: string): SpacedRepetitionInfo[] => {
+  const analytics = getAnalytics(profileId);
+  
+  if (!analytics.spacedRepetition) {
+    return [];
+  }
+  
+  // Фильтруем скрытые уроки
+  return analytics.spacedRepetition.filter(info => info.isHidden);
+};
+
+// Изменить видимость урока
+export const toggleLessonVisibility = (lessonId: string, isHidden: boolean, profileId?: string): SpacedRepetitionInfo | null => {
+  try {
+    console.log(`Сервер: Изменение видимости урока ${lessonId} на ${isHidden ? 'скрытый' : 'видимый'}`);
+    
+    // Получаем аналитику
+    const analytics = getAnalytics(profileId);
+    
+    // Находим информацию о повторении урока
+    let repetitionInfo = analytics.spacedRepetition?.find(info => info.lessonId === lessonId);
+    
+    // Если информация о повторении не найдена, создаем новую
+    if (!repetitionInfo) {
+      // Используем статус NotStarted, если урок не был завершен
+      const status = analytics.completedLessons?.includes(lessonId) ? LessonStatus.Completed : LessonStatus.NotStarted;
+      repetitionInfo = updateLessonSpacedRepetitionInfo(lessonId, status, isHidden, 0, profileId);
+    } else {
+      // Обновляем существующую информацию
+      repetitionInfo.isHidden = isHidden;
+      
+      // Обновляем информацию в аналитике
+      if (!analytics.spacedRepetition) {
+        analytics.spacedRepetition = [];
+      }
+      
+      const index = analytics.spacedRepetition.findIndex(info => info.lessonId === lessonId);
+      if (index !== -1) {
+        analytics.spacedRepetition[index] = repetitionInfo;
+      } else {
+        analytics.spacedRepetition.push(repetitionInfo);
+      }
+      
+      // Сохраняем аналитику
+      saveAnalytics(analytics, profileId);
+    }
+    
+    console.log(`Сервер: Видимость урока ${lessonId} успешно изменена на ${isHidden ? 'скрытый' : 'видимый'}`);
+    return repetitionInfo;
+  } catch (error) {
+    console.error('Ошибка при изменении видимости урока:', error);
+    return null;
+  }
+};
+
+/**
+ * Обновить статусы уроков для повторения
+ * Устанавливает статус DueForReview для уроков, у которых наступила дата повторения
+ * 
+ * @param profileId - ID профиля пользователя
+ */
+export const updateLessonStatuses = (profileId?: string): void => {
+  const analytics = getAnalytics(profileId);
+  
+  if (!analytics.spacedRepetition) {
+    return;
+  }
+  
+  const now = Date.now();
+  let updated = false;
+  
+  // Обновляем статусы уроков
+  analytics.spacedRepetition.forEach(info => {
+    if (!info.isHidden && info.status === LessonStatus.Completed && info.nextReviewDate > 0 && info.nextReviewDate <= now) {
+      info.status = LessonStatus.DueForReview;
+      updated = true;
+    }
+  });
+  
+  if (updated) {
+    saveAnalytics(analytics, profileId);
   }
 };

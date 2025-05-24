@@ -1,4 +1,4 @@
-import { Analytics, AnalyticsItem, Example, Lesson } from '@/types/lesson';
+import { Analytics, AnalyticsItem, Example, Lesson, LessonFile, UploadResult, SpacedRepetitionInfo } from '@/types/lesson';
 
 // Client-side utility functions that don't use Node.js modules
 
@@ -265,6 +265,7 @@ export const getMostProblematicSentences = async (limit: number = 10, profileId?
   }
 };
 
+// Загрузка одного урока (для обратной совместимости)
 export const uploadLesson = async (fileName: string, lessonData: string): Promise<{ success: boolean, message: string }> => {
   const baseUrl = getBaseUrl();
   const profileId = getActiveProfileId();
@@ -287,6 +288,262 @@ export const uploadLesson = async (fileName: string, lessonData: string): Promis
   }
   
   return await response.json();
+};
+
+// Загрузка нескольких уроков
+
+export const uploadMultipleLessons = async (files: LessonFile[]): Promise<{ success: boolean, results: UploadResult[], message: string }> => {
+  const baseUrl = getBaseUrl();
+  const profileId = getActiveProfileId();
+  
+  if (!profileId) {
+    throw new Error('No active profile');
+  }
+  
+  const response = await fetch(`${baseUrl}/api/admin/lessons?profileId=${encodeURIComponent(profileId)}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ files }),
+  });
+  
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.error || 'Failed to upload lessons');
+  }
+  
+  return await response.json();
+};
+
+// Функции для работы с системой интервального повторения
+
+// Получить информацию о повторении урока
+export const getLessonSpacedRepetitionInfo = async (lessonId: string, profileId?: string): Promise<SpacedRepetitionInfo | null> => {
+  try {
+    const baseUrl = getBaseUrl();
+    const activeProfileId = profileId || getActiveProfileId();
+    
+    if (!activeProfileId) {
+      return null;
+    }
+    
+    const response = await fetch(`${baseUrl}/api/analytics?action=spaced-repetition-info&lessonId=${encodeURIComponent(lessonId)}&profileId=${encodeURIComponent(activeProfileId)}`);
+    
+    if (!response.ok) {
+      return null;
+    }
+    
+    const data = await response.json();
+    return data.repetitionInfo;
+  } catch (error) {
+    console.error('Error fetching lesson repetition info:', error);
+    return null;
+  }
+};
+
+// Изменить видимость урока
+export const toggleLessonVisibility = async (lessonId: string, isHidden: boolean, profileId?: string): Promise<boolean> => {
+  try {
+    const baseUrl = getBaseUrl();
+    const activeProfileId = profileId || getActiveProfileId();
+    
+    if (!activeProfileId) {
+      return false;
+    }
+    
+    // Используем API-эндпоинт для аналитики
+    const response = await fetch(`${baseUrl}/api/analytics`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ 
+        action: 'toggle-visibility',
+        lessonId, 
+        isHidden, 
+        profileId: activeProfileId 
+      }),
+    });
+    
+    if (!response.ok) {
+      console.error('Error response from toggle visibility API:', await response.text());
+      return false;
+    }
+    
+    const data = await response.json();
+    return data.success || true;
+  } catch (error) {
+    console.error('Error toggling lesson visibility:', error);
+    return false;
+  }
+};
+
+// Получить список уроков, которые нужно повторить
+export const getLessonsDueForReview = async (profileId?: string): Promise<SpacedRepetitionInfo[]> => {
+  try {
+    const baseUrl = getBaseUrl();
+    const activeProfileId = profileId || getActiveProfileId();
+    
+    if (!activeProfileId) {
+      return [];
+    }
+    
+    const response = await fetch(`${baseUrl}/api/analytics?action=due-for-review&profileId=${encodeURIComponent(activeProfileId)}`);
+    
+    if (!response.ok) {
+      return [];
+    }
+    
+    const data = await response.json();
+    return data.lessons || [];
+  } catch (error) {
+    console.error('Error fetching lessons due for review:', error);
+    return [];
+  }
+};
+
+/**
+ * Получить приоритетные предложения для урока
+ * 
+ * @param lessonId - ID урока
+ * @param profileId - ID профиля пользователя (опционально)
+ * @returns Массив приоритетных предложений
+ */
+export const getPrioritySentences = async (lessonId: string, profileId?: string): Promise<any[]> => {
+  try {
+    const baseUrl = getBaseUrl();
+    const activeProfileId = profileId || getActiveProfileId();
+    
+    if (!activeProfileId) {
+      return [];
+    }
+    
+    const response = await fetch(
+      `${baseUrl}/api/spaced-repetition/priority-sentences?action=get&lessonId=${encodeURIComponent(lessonId)}&profileId=${encodeURIComponent(activeProfileId)}`
+    );
+    
+    if (!response.ok) {
+      return [];
+    }
+    
+    const data = await response.json();
+    return data.sentences || [];
+  } catch (error) {
+    console.error('Error fetching priority sentences:', error);
+    return [];
+  }
+};
+
+/**
+ * Сохранить приоритетные предложения для урока
+ * 
+ * @param lessonId - ID урока
+ * @param profileId - ID профиля пользователя (опционально)
+ * @returns Массив сохраненных приоритетных предложений
+ */
+export const savePrioritySentences = async (lessonId: string, profileId?: string): Promise<any[]> => {
+  try {
+    const baseUrl = getBaseUrl();
+    const activeProfileId = profileId || getActiveProfileId();
+    
+    if (!activeProfileId) {
+      return [];
+    }
+    
+    const response = await fetch(
+      `${baseUrl}/api/spaced-repetition/priority-sentences?action=save&lessonId=${encodeURIComponent(lessonId)}&profileId=${encodeURIComponent(activeProfileId)}`
+    );
+    
+    if (!response.ok) {
+      return [];
+    }
+    
+    const data = await response.json();
+    return data.sentences || [];
+  } catch (error) {
+    console.error('Error saving priority sentences:', error);
+    return [];
+  }
+};
+
+/**
+ * Получить предложения, которые нужно повторить сегодня
+ * 
+ * @param profileId - ID профиля пользователя (опционально)
+ * @returns Массив предложений для повторения
+ */
+export const getSentencesDueForReview = async (profileId?: string): Promise<any[]> => {
+  try {
+    const baseUrl = getBaseUrl();
+    const activeProfileId = profileId || getActiveProfileId();
+    
+    if (!activeProfileId) {
+      return [];
+    }
+    
+    const response = await fetch(
+      `${baseUrl}/api/spaced-repetition/priority-sentences?action=due-for-review&profileId=${encodeURIComponent(activeProfileId)}`
+    );
+    
+    if (!response.ok) {
+      return [];
+    }
+    
+    const data = await response.json();
+    return data.sentences || [];
+  } catch (error) {
+    console.error('Error fetching sentences due for review:', error);
+    return [];
+  }
+};
+
+// Получить список скрытых уроков
+export const getHiddenLessons = async (profileId?: string): Promise<SpacedRepetitionInfo[]> => {
+  try {
+    const baseUrl = getBaseUrl();
+    const activeProfileId = profileId || getActiveProfileId();
+    
+    if (!activeProfileId) {
+      return [];
+    }
+    
+    const response = await fetch(`${baseUrl}/api/analytics?action=hidden-lessons&profileId=${encodeURIComponent(activeProfileId)}`);
+    
+    if (!response.ok) {
+      return [];
+    }
+    
+    const data = await response.json();
+    return data.lessons || [];
+  } catch (error) {
+    console.error('Error fetching hidden lessons:', error);
+    return [];
+  }
+};
+
+// Получить все уроки с информацией о повторении
+export const getAllLessonsWithRepetitionInfo = async (profileId?: string): Promise<SpacedRepetitionInfo[]> => {
+  try {
+    const baseUrl = getBaseUrl();
+    const activeProfileId = profileId || getActiveProfileId();
+    
+    if (!activeProfileId) {
+      return [];
+    }
+    
+    const response = await fetch(`${baseUrl}/api/analytics?action=all-lessons-repetition&profileId=${encodeURIComponent(activeProfileId)}`);
+    
+    if (!response.ok) {
+      return [];
+    }
+    
+    const data = await response.json();
+    return data.lessons || [];
+  } catch (error) {
+    console.error('Error fetching all lessons with repetition info:', error);
+    return [];
+  }
 };
 
 export const deleteLesson = async (lessonId: string): Promise<{ success: boolean, message: string }> => {
@@ -328,4 +585,71 @@ export const createAnalyticsBackup = async (): Promise<{ success: boolean, messa
   }
   
   return await response.json();
+};
+
+// Функция для получения содержимого урока для редактирования
+export const fetchLessonForEditing = async (lessonId: string): Promise<{ success: boolean, lessonContent: string }> => {
+  const baseUrl = getBaseUrl();
+  const profileId = getActiveProfileId();
+  
+  if (!profileId) {
+    throw new Error('No active profile');
+  }
+  
+  // Обработка ID урока для API запроса
+  // Если ID урока содержит только число, добавляем префикс 'lesson'
+  const apiLessonId = lessonId.startsWith('lesson') ? lessonId : `lesson${lessonId}`;
+  
+  try {
+    const response = await fetch(`${baseUrl}/api/admin/lessons/${apiLessonId}?profileId=${encodeURIComponent(profileId)}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
+    
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || `Не удалось загрузить урок ${lessonId} для редактирования`);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error(`Ошибка при загрузке урока ${lessonId}:`, error);
+    throw error;
+  }
+};
+
+// Функция для обновления содержимого урока
+export const updateLesson = async (lessonId: string, lessonContent: string): Promise<{ success: boolean, message: string }> => {
+  const baseUrl = getBaseUrl();
+  const profileId = getActiveProfileId();
+  
+  if (!profileId) {
+    throw new Error('No active profile');
+  }
+  
+  // Обработка ID урока для API запроса
+  // Если ID урока содержит только число, добавляем префикс 'lesson'
+  const apiLessonId = lessonId.startsWith('lesson') ? lessonId : `lesson${lessonId}`;
+  
+  try {
+    const response = await fetch(`${baseUrl}/api/admin/lessons/${apiLessonId}?profileId=${encodeURIComponent(profileId)}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ lessonContent }),
+    });
+    
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || `Не удалось обновить урок ${lessonId}`);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error(`Ошибка при обновлении урока ${lessonId}:`, error);
+    throw error;
+  }
 };
