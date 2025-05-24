@@ -7,6 +7,8 @@ import {
   updateAnalyticsForPrioritySentences
 } from '@/utils/spacedRepetitionUtils';
 
+export const dynamic = 'force-dynamic';
+
 /**
  * GET /api/spaced-repetition/priority-sentences
  * 

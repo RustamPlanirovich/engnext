@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getHiddenLessons } from '@/utils/serverUtils';
 import { getActiveProfile } from '@/utils/profileUtils';
 
+export const dynamic = 'force-dynamic';
+
 // API-эндпоинт для получения списка скрытых уроков
 export async function GET(request: NextRequest) {
   try {

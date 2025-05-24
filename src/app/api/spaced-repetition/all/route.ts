@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getAnalytics, updateLessonStatuses } from '@/utils/serverUtils';
 import { getActiveProfile } from '@/utils/profileUtils';
 
+export const dynamic = 'force-dynamic';
+
 // API-эндпоинт для получения всех уроков с информацией о повторении
 export async function GET(request: NextRequest) {
   try {
