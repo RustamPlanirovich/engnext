@@ -208,12 +208,14 @@ export const removeError = (lessonId: string, sentence: { russian: string, engli
     // Log all errors for debugging before removal
     console.log('Current errors before removal:');
     analytics.errors.forEach((error, index) => {
-      console.log(`${index}: ${error.id} - "${error.sentence.english}" (${error.lessonId})`);
+      console.log(`${index}: ${error.id || 'no ID'} - "${error.sentence.english}" (${error.lessonId})`);
     });
     
     // Normalize the input sentence for comparison
     const normalizedRussian = sentence.russian.trim().toLowerCase();
     const normalizedEnglish = sentence.english.trim().toLowerCase();
+    
+    let removed = false;
     
     if (errorId) {
       // If errorId is provided, find and remove by ID
@@ -221,18 +223,21 @@ export const removeError = (lessonId: string, sentence: { russian: string, engli
       if (index !== -1) {
         analytics.errors.splice(index, 1);
         console.log(`Removed error with ID ${errorId}`);
+        removed = true;
       } else {
-        console.log(`Error with ID ${errorId} not found`);
+        console.log(`Error with ID ${errorId} not found, trying to find by content`);
       }
-    } else {
-      // If no errorId, find by sentence content
+    }
+    
+    // If no errorId or errorId not found, try to find by sentence content
+    if (!removed) {
       const filteredErrors = analytics.errors.filter(error => {
         const errorRussian = error.sentence.russian.trim().toLowerCase();
         const errorEnglish = error.sentence.english.trim().toLowerCase();
         
         const matchesRussian = errorRussian === normalizedRussian;
         const matchesEnglish = errorEnglish === normalizedEnglish;
-        const matchesLesson = error.lessonId === lessonId;
+        const matchesLesson = error.lessonId === lessonId || lessonId === 'practice';
         
         // Keep errors that don't match this sentence
         return !(matchesRussian && matchesEnglish && matchesLesson);
@@ -241,15 +246,16 @@ export const removeError = (lessonId: string, sentence: { russian: string, engli
       if (filteredErrors.length < analytics.errors.length) {
         console.log(`Removed ${analytics.errors.length - filteredErrors.length} errors matching "${sentence.english}"`);
         analytics.errors = filteredErrors;
+        removed = true;
       } else {
         console.log(`No errors found matching "${sentence.english}"`);
       }
     }
     
-    saveAnalytics(analytics, profileId);
-    
-    // Log errors after removal
-    console.log(`Errors after removal: ${analytics.errors.length}`);
+    if (removed) {
+      saveAnalytics(analytics, profileId);
+      console.log(`Errors after removal: ${analytics.errors.length}`);
+    }
   } catch (error) {
     console.error('Error removing error from analytics:', error);
   }
@@ -773,6 +779,15 @@ export const toggleLessonVisibility = (lessonId: string, isHidden: boolean, prof
     
     // Получаем аналитику
     const analytics = getAnalytics(profileId);
+    
+    // Проверяем, есть ли ошибки для этого урока
+    if (isHidden) {
+      const hasErrors = analytics.errors.some(error => error.lessonId === lessonId);
+      if (hasErrors) {
+        console.log(`Сервер: Невозможно скрыть урок ${lessonId}, так как в нем есть предложения с ошибками`);
+        return null;
+      }
+    }
     
     // Находим информацию о повторении урока
     let repetitionInfo = analytics.spacedRepetition?.find(info => info.lessonId === lessonId);

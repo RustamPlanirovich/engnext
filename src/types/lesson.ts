@@ -120,6 +120,8 @@ export interface UserSettings {
   darkMode?: boolean;
   exerciseMode?: ExerciseMode;
   exercisesPerSession?: number;
+  hideCompleted?: boolean;
+  showDueForReview?: boolean;
 }
 
 export interface Profile {

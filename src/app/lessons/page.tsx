@@ -1,16 +1,38 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { Typography, Grid, Card, CardContent, CardActions, Button, Box, FormControlLabel, Switch, Chip, Tooltip, CircularProgress } from '@mui/material';
-import ClientLayout from '@/components/ClientLayout';
-import { fetchLessons, getAllLessonsWithRepetitionInfo, toggleLessonVisibility } from '@/utils/clientUtils';
+import { useState, useEffect } from 'react';
+import { 
+  Box, 
+  Typography, 
+  Button, 
+  Card, 
+  CardContent, 
+  CardActions, 
+  Grid, 
+  CircularProgress, 
+  Chip,
+  Switch,
+  FormControlLabel,
+  Tooltip
+} from '@mui/material';
+import { 
+  CheckCircle as CheckCircleIcon,
+  Refresh as RefreshIcon,
+  AccessTime as AccessTimeIcon,
+  Visibility as VisibilityIcon,
+  VisibilityOff as VisibilityOffIcon
+} from '@mui/icons-material';
 import Link from 'next/link';
+import ClientLayout from '@/components/ClientLayout';
 import { LessonStatus, SpacedRepetitionInfo } from '@/types/lesson';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import RefreshIcon from '@mui/icons-material/Refresh';
+import { 
+  fetchLessons, 
+  getAllLessonsWithRepetitionInfo, 
+  toggleLessonVisibility, 
+  getActiveProfileId, 
+  getBaseUrl 
+} from '@/utils/clientUtils';
+import { fetchProfileSettings } from '@/utils/clientProfileUtils';
 
 export default function LessonsPage() {
   const [lessons, setLessons] = useState<Array<{ id: string, title: string, description: string }>>([]);
@@ -19,7 +41,7 @@ export default function LessonsPage() {
   const [hideCompleted, setHideCompleted] = useState(false);
   const [showDueForReview, setShowDueForReview] = useState(true);
   
-  // Загрузка уроков и информации о повторении
+  // Загрузка уроков, информации о повторении и настроек профиля
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -31,6 +53,21 @@ export default function LessonsPage() {
         // Загружаем информацию о повторении
         const repetitionData = await getAllLessonsWithRepetitionInfo();
         setRepetitionInfo(repetitionData);
+        
+        // Загружаем настройки профиля
+        const activeProfileId = getActiveProfileId();
+        if (activeProfileId) {
+          const profileData = await fetchProfileSettings(activeProfileId);
+          if (profileData && profileData.settings) {
+            // Загружаем сохраненные состояния чекбоксов, если они есть
+            if (profileData.settings.hideCompleted !== undefined) {
+              setHideCompleted(profileData.settings.hideCompleted);
+            }
+            if (profileData.settings.showDueForReview !== undefined) {
+              setShowDueForReview(profileData.settings.showDueForReview);
+            }
+          }
+        }
       } catch (error) {
         console.error('Error loading lessons data:', error);
       } finally {
@@ -40,6 +77,35 @@ export default function LessonsPage() {
     
     loadData();
   }, []);
+  
+  // Сохранение состояния чекбоксов в профиль
+  const saveCheckboxStates = async (hideCompletedValue: boolean, showDueForReviewValue: boolean) => {
+    try {
+      const activeProfileId = getActiveProfileId();
+      if (activeProfileId) {
+        const profileData = await fetchProfileSettings(activeProfileId);
+        if (profileData && profileData.settings) {
+          // Обновляем настройки профиля
+          const updatedSettings = {
+            ...profileData.settings,
+            hideCompleted: hideCompletedValue,
+            showDueForReview: showDueForReviewValue
+          };
+          
+          // Сохраняем обновленные настройки
+          await fetch(`${getBaseUrl()}/api/profiles/${activeProfileId}/settings`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedSettings)
+          });
+        }
+      }
+    } catch (error) {
+      console.error('Error saving checkbox states:', error);
+    }
+  };
   
   // Функция для изменения видимости урока
   const handleToggleVisibility = async (lessonId: string, isHidden: boolean) => {
@@ -95,17 +161,23 @@ export default function LessonsPage() {
   /**
    * Фильтруем уроки в соответствии с настройками
    * Правила фильтрации:
-   * 1. Если "Hide completed" включено, скрываем завершенные уроки, кроме тех, которые нужно повторить
-   * 2. Если "Hide completed" выключено, показываем все уроки, включая скрытые
+   * 1. Если "Show for repetition" включено, показываем только уроки, которые нужно повторить
+   * 2. Если "Hide completed" включено, скрываем завершенные уроки, кроме тех, которые нужно повторить
    */
   const filteredLessons = lessons.filter(lesson => {
     const status = getLessonStatus(lesson.id);
     const isHidden = isLessonHidden(lesson.id);
     const isDueForReview = isLessonDueForReview(lesson.id);
     
-    // Если урок нужно повторить, всегда показываем его
-    if (isDueForReview) {
-      return true;
+    // Если "Show for repetition" включено, показываем только уроки для повторения
+    if (showDueForReview) {
+      // Если урок нужно повторить, показываем его
+      if (isDueForReview) {
+        return true;
+      } else {
+        // Если урок не нужно повторять и включен режим "Show for repetition", скрываем его
+        return false;
+      }
     }
     
     // Если "Hide completed" включено
@@ -139,7 +211,11 @@ export default function LessonsPage() {
             control={
               <Switch
                 checked={hideCompleted}
-                onChange={(e) => setHideCompleted(e.target.checked)}
+                onChange={(e) => {
+                  const newValue = e.target.checked;
+                  setHideCompleted(newValue);
+                  saveCheckboxStates(newValue, showDueForReview);
+                }}
                 color="primary"
               />
             }
@@ -150,7 +226,11 @@ export default function LessonsPage() {
             control={
               <Switch
                 checked={showDueForReview}
-                onChange={(e) => setShowDueForReview(e.target.checked)}
+                onChange={(e) => {
+                  const newValue = e.target.checked;
+                  setShowDueForReview(newValue);
+                  saveCheckboxStates(hideCompleted, newValue);
+                }}
                 color="primary"
               />
             }
