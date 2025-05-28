@@ -140,30 +140,67 @@ export const removeError = async (lessonId: string, sentence: { russian: string,
   }
 };
 
-export const markLessonCompleted = async (lessonId: string, profileId?: string): Promise<void> => {
+export const markLessonCompleted = async (lessonId: string, profileId?: string): Promise<{ nextReviewDate: number }> => {
   try {
-    const activeProfileId = profileId || getActiveProfileId();
-    console.log(`Marking lesson ${lessonId} as completed for profile ${activeProfileId}`);
-    
     const baseUrl = getBaseUrl();
-    const url = `${baseUrl}/api/analytics/complete`;
+    const activeProfileId = profileId || getActiveProfileId();
     
-    const response = await fetch(url, {
+    const response = await fetch(`${baseUrl}/api/lessons/${lessonId}/complete`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ 
-        lessonId, 
-        profileId: activeProfileId 
-      })
+      body: JSON.stringify({ profileId: activeProfileId }),
     });
     
     if (!response.ok) {
       throw new Error('Failed to mark lesson as completed');
     }
+    
+    const data = await response.json();
+    console.log(`Marked lesson ${lessonId} as completed. Next review date: ${new Date(data.nextReviewDate).toLocaleDateString()}`);
+    return data;
   } catch (error) {
     console.error('Error marking lesson as completed:', error);
+    return { nextReviewDate: 0 };
+  }
+};
+
+/**
+ * Отметить урок как повторенный
+ * Обновляет информацию о повторении и рассчитывает новую дату повторения
+ * 
+ * @param lessonId - ID урока
+ * @param errorCount - Количество ошибок при повторении
+ * @param profileId - ID профиля пользователя (опционально)
+ * @returns Информация о следующем повторении или null, если все повторения завершены
+ */
+export const markLessonRepeated = async (lessonId: string, errorCount: number = 0, profileId?: string): Promise<{ nextReviewDate: number, isComplete: boolean }> => {
+  try {
+    const baseUrl = getBaseUrl();
+    const activeProfileId = profileId || getActiveProfileId();
+    
+    const response = await fetch(`${baseUrl}/api/lessons/${lessonId}/repeat`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ 
+        profileId: activeProfileId,
+        errorCount
+      }),
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to mark lesson as repeated');
+    }
+    
+    const data = await response.json();
+    console.log(`Marked lesson ${lessonId} as repeated. Next review date: ${new Date(data.nextReviewDate).toLocaleDateString()}`);
+    return data;
+  } catch (error) {
+    console.error('Error marking lesson as repeated:', error);
+    return { nextReviewDate: 0, isComplete: false };
   }
 };
 
@@ -229,14 +266,7 @@ export const getMostProblematicSentences = async (limit: number = 10, profileId?
       ? `${baseUrl}/api/analytics?profileId=${encodeURIComponent(activeProfileId)}`
       : `${baseUrl}/api/analytics`;
       
-    const response = await fetch(url, {
-      cache: 'no-store',
-      headers: {
-        'Cache-Control': 'no-cache, no-store, must-revalidate',
-        'Pragma': 'no-cache',
-        'Expires': '0'
-      }
-    });
+    const response = await fetch(url);
     
     if (!response.ok) {
       console.error('Failed to fetch analytics');
@@ -404,6 +434,54 @@ export const getLessonsDueForReview = async (profileId?: string): Promise<Spaced
 };
 
 /**
+ * Завершить повторение урока
+ * Обновляет статус урока и рассчитывает новую дату повторения
+ * 
+ * @param lessonId - ID урока
+ * @param errorCount - Количество ошибок при повторении
+ * @param profileId - ID профиля пользователя (опционально)
+ * @returns Результат операции
+ */
+export const completeReviewLesson = async (lessonId: string, errorCount: number = 0, profileId?: string): Promise<{ success: boolean; message: string; nextReviewDate?: number }> => {
+  try {
+    const baseUrl = getBaseUrl();
+    const activeProfileId = profileId || getActiveProfileId();
+    
+    if (!activeProfileId) {
+      return { success: false, message: 'Не найден активный профиль' };
+    }
+    
+    console.log(`Отправляем запрос на завершение повторения: lessonId=${lessonId}, errorCount=${errorCount}, profileId=${activeProfileId}`);
+    
+    const response = await fetch(`${baseUrl}/api/spaced-repetition/complete-review`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ lessonId, errorCount, profileId: activeProfileId })
+    });
+    
+    const data = await response.json();
+    
+    if (!response.ok) {
+      console.error('Ошибка при завершении повторения:', data);
+      return { success: false, message: data.error || 'Ошибка при завершении повторения урока' };
+    }
+    
+    console.log('Успешно завершено повторение урока:', data);
+    
+    return { 
+      success: true, 
+      message: data.message || 'Урок успешно повторен', 
+      nextReviewDate: data.nextReviewDate 
+    };
+  } catch (error) {
+    console.error('Error completing lesson review:', error);
+    return { success: false, message: 'Ошибка при завершении повторения урока' };
+  }
+};
+
+/**
  * Получить приоритетные предложения для урока
  * 
  * @param lessonId - ID урока
@@ -471,26 +549,38 @@ export const savePrioritySentences = async (lessonId: string, profileId?: string
  * Получить предложения, которые нужно повторить сегодня
  * 
  * @param profileId - ID профиля пользователя (опционально)
+ * @param lessonId - ID урока (опционально)
  * @returns Массив предложений для повторения
  */
-export const getSentencesDueForReview = async (profileId?: string): Promise<any[]> => {
+export const getSentencesDueForReview = async (profileId?: string, lessonId?: string): Promise<any[]> => {
   try {
     const baseUrl = getBaseUrl();
-    const activeProfileId = profileId || getActiveProfileId();
+    const activeProfileId = profileId || getActiveProfileId() || localStorage.getItem('activeProfileId');
     
     if (!activeProfileId) {
+      console.error('Не найден активный профиль для получения предложений');
       return [];
     }
     
-    const response = await fetch(
-      `${baseUrl}/api/spaced-repetition/priority-sentences?action=due-for-review&profileId=${encodeURIComponent(activeProfileId)}`
-    );
+    console.log(`Получаем предложения для повторения: profileId=${activeProfileId}, lessonId=${lessonId || 'не указан'}`);
+    
+    // Добавляем параметры action и lessonId
+    const url = lessonId
+      ? `${baseUrl}/api/spaced-repetition/priority-sentences?action=due-for-review&profileId=${encodeURIComponent(activeProfileId)}&lessonId=${encodeURIComponent(lessonId)}`
+      : `${baseUrl}/api/spaced-repetition/priority-sentences?action=due-for-review&profileId=${encodeURIComponent(activeProfileId)}`;
+    
+    console.log(`Отправляем запрос: ${url}`);
+    
+    const response = await fetch(url);
     
     if (!response.ok) {
+      const errorData = await response.json();
+      console.error(`Ошибка при получении предложений (${response.status}):`, errorData);
       return [];
     }
     
     const data = await response.json();
+    console.log(`Получено ${data.sentences ? data.sentences.length : 0} предложений для повторения`);
     return data.sentences || [];
   } catch (error) {
     console.error('Error fetching sentences due for review:', error);

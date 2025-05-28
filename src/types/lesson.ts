@@ -41,11 +41,12 @@ export interface LessonProgress {
 
 // Статус урока в системе интервального повторения
 export enum LessonStatus {
-  NotStarted = 'not_started',   // Не начат
-  InProgress = 'in_progress',   // В процессе изучения
-  Completed = 'completed',      // Завершен
-  Hidden = 'hidden',           // Скрыт пользователем
-  DueForReview = 'due_review'   // Нужно повторить
+  NotStarted = 'not_started',           // Не начат
+  InProgress = 'in_progress',           // В процессе изучения
+  Completed = 'completed',              // Завершен
+  Hidden = 'hidden',                   // Скрыт пользователем
+  DueForReview = 'due_review',          // Нужно повторить
+  CompletedAllCycles = 'completed_all_cycles' // Завершены все циклы повторения
 }
 
 // Информация о повторении урока по кривой забывания

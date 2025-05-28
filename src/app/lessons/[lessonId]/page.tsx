@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { notFound, useParams } from 'next/navigation';
 import { Typography, Box, Card, CardContent, CardActions, Button, Grid, CircularProgress, Snackbar, Alert, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Tooltip } from '@mui/material';
 import ClientLayout from '@/components/ClientLayout';
-import { fetchLesson, getLessonSpacedRepetitionInfo, markLessonCompleted, toggleLessonVisibility } from '@/utils/clientUtils';
+import { fetchLesson, getLessonSpacedRepetitionInfo, markLessonCompleted, toggleLessonVisibility, completeReviewLesson } from '@/utils/clientUtils';
 import Link from 'next/link';
 import { Lesson, LessonStatus, SpacedRepetitionInfo } from '@/types/lesson';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -131,6 +131,39 @@ export default function LessonPage() {
     }
   };
   
+  // Завершение повторения урока
+  const handleCompleteReview = async () => {
+    try {
+      // Вызываем API для завершения повторения урока
+      const result = await completeReviewLesson(lessonId);
+      
+      if (result.success) {
+        // Обновляем информацию о повторении
+        const info = await getLessonSpacedRepetitionInfo(lessonId);
+        setRepetitionInfo(info);
+        
+        setSnackbar({
+          open: true,
+          message: result.message || 'Повторение урока успешно завершено',
+          severity: 'success'
+        });
+      } else {
+        setSnackbar({
+          open: true,
+          message: result.message || 'Ошибка при завершении повторения урока',
+          severity: 'error'
+        });
+      }
+    } catch (error) {
+      console.error('Error completing lesson review:', error);
+      setSnackbar({
+        open: true,
+        message: 'Ошибка при завершении повторения урока',
+        severity: 'error'
+      });
+    }
+  };
+  
   // Закрытие snackbar
   const handleCloseSnackbar = () => {
     setSnackbar({ ...snackbar, open: false });
@@ -226,11 +259,21 @@ export default function LessonPage() {
       </Box>
 
       {isDueForReview && (
-        <Box sx={{ mb: 2, p: 2, bgcolor: '#fff3e0', borderRadius: 1, display: 'flex', alignItems: 'center' }}>
-          <RefreshIcon color="warning" sx={{ mr: 1 }} />
-          <Typography variant="body1">
-            Пора повторить этот урок для лучшего запоминания материала!
-          </Typography>
+        <Box sx={{ mb: 2, p: 2, bgcolor: '#fff3e0', borderRadius: 1 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+            <RefreshIcon color="warning" sx={{ mr: 1 }} />
+            <Typography variant="body1">
+              Пора повторить этот урок для лучшего запоминания материала!
+            </Typography>
+          </Box>
+          <Button 
+            variant="contained" 
+            color="warning"
+            onClick={handleCompleteReview}
+            fullWidth
+          >
+            Завершить повторение урока
+          </Button>
         </Box>
       )}
 
@@ -259,7 +302,7 @@ export default function LessonPage() {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Link href={`/lessons/${lessonId}/exercise/${type.id}`} passHref style={{ width: '100%' }}>
+                  <Link href={`/lessons/${lessonId}/exercise/${type.id}${isDueForReview ? '?isRepetition=true' : ''}`} passHref style={{ width: '100%' }}>
                     <Button 
                       variant="contained" 
                       color={type.color as any} 

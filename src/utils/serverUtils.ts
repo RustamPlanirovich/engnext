@@ -52,17 +52,17 @@ export const getLessons = (): string[] => {
 // Get a specific lesson by ID
 export const getLesson = (lessonId: string): Lesson | null => {
   try {
+    // Все уроки находятся только в директории data/lessons
     const lessonPath = path.join(LESSONS_DIR, `${lessonId}.json`);
+    console.log(`Ищем урок ${lessonId} по пути: ${lessonPath}`);
+    
     if (!fs.existsSync(lessonPath)) {
-      // Check if the lesson exists in the root directory (for lesson1.json)
-      const rootLessonPath = path.join(process.cwd(), `${lessonId}.json`);
-      if (fs.existsSync(rootLessonPath)) {
-        const lessonData = fs.readFileSync(rootLessonPath, 'utf8');
-        return JSON.parse(lessonData);
-      }
+      console.log(`Урок ${lessonId} не найден по пути: ${lessonPath}`);
       return null;
     }
+    
     const lessonData = fs.readFileSync(lessonPath, 'utf8');
+    console.log(`Урок ${lessonId} успешно загружен`);
     return JSON.parse(lessonData);
   } catch (error) {
     console.error(`Error reading lesson ${lessonId}:`, error);
@@ -72,20 +72,30 @@ export const getLesson = (lessonId: string): Lesson | null => {
 
 // Extract all examples from a lesson for exercises
 export const extractExamples = (lesson: Lesson): Example[] => {
+  console.log(`extractExamples: Извлекаем примеры из урока`, lesson);
   const examples: Example[] = [];
+  
+  if (!lesson.subconcepts) {
+    console.error(`Урок не содержит subconcepts:`, lesson);
+    return [];
+  }
   
   const processSubconcept = (subconcept: any) => {
     if (subconcept.examples) {
+      console.log(`Найдено ${subconcept.examples.length} примеров в подконцепте`);
       examples.push(...subconcept.examples);
     }
     
     if (subconcept.subconcepts) {
+      console.log(`Обрабатываем ${subconcept.subconcepts.length} вложенных подконцептов`);
       subconcept.subconcepts.forEach(processSubconcept);
     }
   };
   
+  console.log(`Обрабатываем ${lesson.subconcepts.length} основных подконцептов`);
   lesson.subconcepts.forEach(processSubconcept);
   
+  console.log(`Всего извлечено ${examples.length} примеров из урока`);
   return examples;
 };
 
@@ -263,16 +273,16 @@ export const removeError = (lessonId: string, sentence: { russian: string, engli
 
 /**
  * Отметить урок как завершенный
- * Если урок пройден без ошибок, он будет автоматически скрыт
  * 
  * @param lessonId - ID урока
- * @param profileId - ID профиля пользователя (опционально)
+ * @param profileId - ID профиля пользователя
+ * @returns Объект с датой следующего повторения
  */
-export const markLessonCompleted = async (lessonId: string, profileId?: string): Promise<void> => {
+export const markLessonCompleted = async (lessonId: string, profileId?: string): Promise<{ nextReviewDate: number }> => {
   try {
     const analytics = getAnalytics(profileId);
     
-    // Add to completed lessons if not already there
+    // Добавляем урок в список завершенных, если его там еще нет
     if (!analytics.completedLessons.includes(lessonId)) {
       analytics.completedLessons.push(lessonId);
     }
@@ -297,19 +307,183 @@ export const markLessonCompleted = async (lessonId: string, profileId?: string):
     // Подсчитываем количество ошибок для этого урока
     const errorCount = analytics.errors.filter(error => error.lessonId === lessonId).length;
     
-    // Определяем, нужно ли автоматически скрыть урок
-    // Скрываем урок, если он пройден без ошибок или с минимальным количеством ошибок (<=2)
-    const shouldHide = errorCount <= 2;
+    // Инициализируем массив spacedRepetition, если он не существует
+    if (!analytics.spacedRepetition) {
+      analytics.spacedRepetition = [];
+    }
     
-    // Обновляем статус урока в системе интервального повторения
-    // Если урок пройден без ошибок, скрываем его
-    updateLessonSpacedRepetitionInfo(lessonId, LessonStatus.Completed, shouldHide, errorCount, profileId);
+    // Поиск существующей информации о повторении
+    let repetitionInfo = analytics.spacedRepetition.find(info => info.lessonId === lessonId);
+    
+    if (!repetitionInfo) {
+      // Создаем новую запись, если она не существует
+      console.log(`Создаем новую запись о повторении для урока ${lessonId}`);
+      
+      // Рассчитываем дату следующего повторения (через 1 день)
+      const nextReviewDate = now + REPETITION_INTERVALS[0] * 24 * 60 * 60 * 1000;
+      
+      repetitionInfo = {
+        lessonId,
+        status: LessonStatus.Completed,
+        completionDates: [now],
+        repetitionLevel: 0,
+        nextReviewDate: nextReviewDate,
+        isHidden: false,
+        lastErrorCount: errorCount
+      };
+      
+      analytics.spacedRepetition.push(repetitionInfo);
+      console.log(`Создана новая запись для урока ${lessonId}: следующее повторение через ${REPETITION_INTERVALS[0]} дней (на ${new Date(nextReviewDate).toLocaleDateString()})`);
+    } else {
+      // Обновляем существующую запись
+      console.log(`Обновляем существующую запись о повторении для урока ${lessonId}`);
+      
+      // Обновляем статус и счетчик ошибок
+      repetitionInfo.status = LessonStatus.Completed;
+      repetitionInfo.lastErrorCount = errorCount;
+      repetitionInfo.isHidden = false;
+      
+      // Добавляем дату завершения
+      if (!repetitionInfo.completionDates) {
+        repetitionInfo.completionDates = [];
+      }
+      repetitionInfo.completionDates.push(now);
+      
+      // Рассчитываем дату следующего повторения
+      const intervalDays = REPETITION_INTERVALS[repetitionInfo.repetitionLevel];
+      repetitionInfo.nextReviewDate = now + intervalDays * 24 * 60 * 60 * 1000;
+      
+      console.log(`Урок ${lessonId} обновлен: уровень повторения ${repetitionInfo.repetitionLevel}, следующее повторение через ${intervalDays} дней (на ${new Date(repetitionInfo.nextReviewDate).toLocaleDateString()})`);
+    }
     
     saveAnalytics(analytics, profileId);
     
-    console.log(`Marked lesson ${lessonId} as completed${shouldHide ? ' and hidden' : ''}`);
+    console.log(`Marked lesson ${lessonId} as completed. Next review date: ${new Date(repetitionInfo.nextReviewDate).toLocaleDateString()}`);
+    
+    return { nextReviewDate: repetitionInfo.nextReviewDate };
   } catch (error) {
     console.error('Error marking lesson as completed:', error);
+    return { nextReviewDate: 0 };
+  }
+};
+
+/**
+ * Отметить урок как повторенный
+ * 
+ * @param lessonId - ID урока
+ * @param errorCount - Количество ошибок при повторении
+ * @param profileId - ID профиля пользователя
+ * @returns Объект с датой следующего повторения и флагом завершения всех циклов
+ */
+export const markLessonRepeated = async (lessonId: string, errorCount: number = 0, profileId?: string): Promise<{ nextReviewDate: number, isComplete: boolean }> => {
+  try {
+    const analytics = getAnalytics(profileId);
+    
+    // Добавляем урок в список завершенных, если его там еще нет
+    if (!analytics.completedLessons.includes(lessonId)) {
+      analytics.completedLessons.push(lessonId);
+    }
+    
+    // Initialize lessonCompletionCounts if it doesn't exist
+    if (!analytics.lessonCompletionCounts) {
+      analytics.lessonCompletionCounts = {};
+    }
+    
+    // Initialize the array for this lesson if it doesn't exist
+    if (!analytics.lessonCompletionCounts[lessonId]) {
+      analytics.lessonCompletionCounts[lessonId] = [];
+    }
+    
+    // Add the current timestamp to the completion counts
+    const now = Date.now();
+    analytics.lessonCompletionCounts[lessonId].push(now);
+    
+    // Update the last practice date
+    analytics.lastPracticeDate = now;
+    
+    // Инициализируем массив spacedRepetition, если он не существует
+    if (!analytics.spacedRepetition) {
+      analytics.spacedRepetition = [];
+    }
+    
+    // Получаем текущую информацию о повторении
+    let repetitionInfo = analytics.spacedRepetition.find(info => info.lessonId === lessonId);
+    
+    if (!repetitionInfo) {
+      // Если информации нет, создаем новую запись
+      console.log(`Создаем новую запись о повторении для урока ${lessonId}`);
+      repetitionInfo = {
+        lessonId,
+        status: LessonStatus.Completed,
+        completionDates: [now],
+        repetitionLevel: 0,
+        nextReviewDate: now + REPETITION_INTERVALS[0] * 24 * 60 * 60 * 1000,
+        isHidden: false,
+        lastErrorCount: errorCount
+      };
+      
+      analytics.spacedRepetition.push(repetitionInfo);
+    } else {
+      // Обновляем существующую запись
+      console.log(`Обновляем существующую запись о повторении для урока ${lessonId}`);
+      repetitionInfo.status = LessonStatus.Completed;
+      repetitionInfo.lastErrorCount = errorCount;
+      
+      // Добавляем дату завершения
+      if (!repetitionInfo.completionDates) {
+        repetitionInfo.completionDates = [];
+      }
+      repetitionInfo.completionDates.push(now);
+      
+      // Увеличиваем уровень повторения
+      if (repetitionInfo.repetitionLevel < REPETITION_INTERVALS.length - 1) {
+        repetitionInfo.repetitionLevel++;
+      }
+      
+      // Корректировка на основе ошибок
+      if (errorCount > 5) {
+        // Много ошибок - возвращаемся на предыдущий уровень
+        if (repetitionInfo.repetitionLevel > 0) {
+          repetitionInfo.repetitionLevel--;
+        }
+      }
+      
+      // Рассчитываем дату следующего повторения
+      const intervalDays = REPETITION_INTERVALS[repetitionInfo.repetitionLevel];
+      repetitionInfo.nextReviewDate = now + intervalDays * 24 * 60 * 60 * 1000;
+      
+      console.log(`Урок ${lessonId} обновлен: уровень повторения ${repetitionInfo.repetitionLevel}, следующее повторение через ${intervalDays} дней`);
+    }
+    
+    // Проверяем, достиг ли урок максимального уровня повторения
+    const isComplete = repetitionInfo.repetitionLevel >= REPETITION_INTERVALS.length - 1;
+    
+    // Если урок достиг максимального уровня повторения, помечаем его как полностью завершенный
+    if (isComplete) {
+      // Устанавливаем специальный статус для завершенных уроков
+      repetitionInfo.status = LessonStatus.CompletedAllCycles;
+      console.log(`Урок ${lessonId} завершил все циклы повторения!`);
+    }
+    
+    // Обновляем информацию в аналитике
+    const index = analytics.spacedRepetition.findIndex(info => info.lessonId === lessonId);
+    if (index !== -1) {
+      analytics.spacedRepetition[index] = repetitionInfo;
+    } else {
+      analytics.spacedRepetition.push(repetitionInfo);
+    }
+    
+    saveAnalytics(analytics, profileId);
+    
+    console.log(`Marked lesson ${lessonId} as repeated. Next review date: ${new Date(repetitionInfo.nextReviewDate).toLocaleDateString()}`);
+    
+    return { 
+      nextReviewDate: repetitionInfo.nextReviewDate,
+      isComplete 
+    };
+  } catch (error) {
+    console.error('Error marking lesson as repeated:', error);
+    return { nextReviewDate: 0, isComplete: false };
   }
 };
 
@@ -636,21 +810,103 @@ export const copyLesson1ToLessonsDir = (): void => {
   }
 };
 
-// Функции для работы с системой интервального повторения
 
-// Получить информацию о повторении урока
+/**
+ * Получить информацию о повторении урока
+ * 
+ * @param lessonId - ID урока
+ * @param profileId - ID профиля пользователя
+ * @returns Информация о повторении урока или null, если информация не найдена
+ */
 export const getLessonSpacedRepetitionInfo = (lessonId: string, profileId?: string): SpacedRepetitionInfo | null => {
   const analytics = getAnalytics(profileId);
   
-  // Инициализируем массив spacedRepetition, если он не существует
+  // Проверяем, что массив spacedRepetition существует
   if (!analytics.spacedRepetition) {
     analytics.spacedRepetition = [];
+    saveAnalytics(analytics, profileId);
+    return null;
   }
   
   // Поиск информации о повторении для данного урока
   const repetitionInfo = analytics.spacedRepetition.find(info => info.lessonId === lessonId);
   
   return repetitionInfo || null;
+};
+
+/**
+ * Обновить статусы всех уроков в системе интервального повторения
+ * Проверяет уровни повторения и устанавливает статус CompletedAllCycles для уроков, завершивших все циклы
+ * 
+ * @param profileId - ID профиля пользователя
+ * @returns Массив ID уроков, статусы которых были обновлены
+ */
+export const updateLessonStatuses = (profileId?: string): string[] => {
+  const analytics = getAnalytics(profileId);
+  
+  if (!analytics.spacedRepetition) {
+    return [];
+  }
+  
+  const now = Date.now();
+  const updatedLessons: string[] = [];
+  
+  // Проверяем все уроки в системе интервального повторения
+  for (let i = 0; i < analytics.spacedRepetition.length; i++) {
+    const repetitionInfo = analytics.spacedRepetition[i];
+    
+    // Проверяем, достиг ли урок максимального уровня повторения
+    const isComplete = repetitionInfo.repetitionLevel >= REPETITION_INTERVALS.length - 1;
+    
+    // Если урок достиг максимального уровня и его статус не CompletedAllCycles
+    if (isComplete && repetitionInfo.status !== LessonStatus.CompletedAllCycles) {
+      // Устанавливаем специальный статус для завершенных уроков
+      repetitionInfo.status = LessonStatus.CompletedAllCycles;
+      updatedLessons.push(repetitionInfo.lessonId);
+      console.log(`Урок ${repetitionInfo.lessonId} обновлен: статус изменен на CompletedAllCycles`);
+    }
+    
+    // Проверяем, наступило ли время для повторения
+    if (!repetitionInfo.isHidden && repetitionInfo.status === LessonStatus.Completed && repetitionInfo.nextReviewDate > 0 && repetitionInfo.nextReviewDate <= now) {
+      repetitionInfo.status = LessonStatus.DueForReview;
+      updatedLessons.push(repetitionInfo.lessonId);
+      console.log(`Урок ${repetitionInfo.lessonId} обновлен: статус изменен на DueForReview`);
+    }
+  }
+  
+  // Сохраняем обновленную аналитику
+  saveAnalytics(analytics, profileId);
+  
+  return updatedLessons;
+};
+
+/**
+ * Обновить статусы уроков для повторения
+ * Устанавливает статус DueForReview для уроков, у которых наступила дата повторения
+ * 
+ * @param profileId - ID профиля пользователя
+ */
+export const updateLessonStatusesForReview = (profileId?: string): void => {
+  const analytics = getAnalytics(profileId);
+  
+  if (!analytics.spacedRepetition) {
+    return;
+  }
+  
+  const now = Date.now();
+  let updated = false;
+  
+  // Обновляем статусы уроков
+  analytics.spacedRepetition.forEach(info => {
+    if (!info.isHidden && info.status === LessonStatus.Completed && info.nextReviewDate > 0 && info.nextReviewDate <= now) {
+      info.status = LessonStatus.DueForReview;
+      updated = true;
+    }
+  });
+  
+  if (updated) {
+    saveAnalytics(analytics, profileId);
+  }
 };
 
 /**
@@ -661,9 +917,10 @@ export const getLessonSpacedRepetitionInfo = (lessonId: string, profileId?: stri
  * @param isHidden - Скрыт ли урок
  * @param errorCount - Количество ошибок при прохождении
  * @param profileId - ID профиля пользователя
+ * @param isRepeating - Флаг, указывающий, что это повторение урока, а не первое прохождение
  * @returns Обновленная информация о повторении
  */
-export const updateLessonSpacedRepetitionInfo = (lessonId: string, status: LessonStatus, isHidden: boolean = false, errorCount: number = 0, profileId?: string): SpacedRepetitionInfo => {
+export const updateLessonSpacedRepetitionInfo = (lessonId: string, status: LessonStatus, isHidden: boolean = false, errorCount: number = 0, profileId?: string, isRepeating: boolean = false): SpacedRepetitionInfo => {
   const analytics = getAnalytics(profileId);
   
   // Инициализируем массив spacedRepetition, если он не существует
@@ -688,28 +945,32 @@ export const updateLessonSpacedRepetitionInfo = (lessonId: string, status: Lesso
     };
     
     analytics.spacedRepetition.push(repetitionInfo);
+    console.log(`Создана новая запись для урока ${lessonId}: следующее повторение через ${REPETITION_INTERVALS[0]} дней`);
   } else {
     // Обновляем существующую запись
     repetitionInfo.status = status;
     repetitionInfo.isHidden = isHidden;
     repetitionInfo.lastErrorCount = errorCount;
     
+    // Добавляем дату завершения в массив completionDates
+    if (!repetitionInfo.completionDates) {
+      repetitionInfo.completionDates = [];
+    }
+    
     if (status === LessonStatus.Completed) {
       // Добавляем дату завершения
       repetitionInfo.completionDates.push(now);
       
-      // Определяем текущий уровень повторения на основе количества завершений
-      // Первое завершение = уровень 0, второе = уровень 1, и т.д.
-      const completionsCount = repetitionInfo.completionDates.length;
-      
-      // Адаптируем уровень повторения на основе ошибок
-      if (completionsCount <= REPETITION_INTERVALS.length) {
-        // Стандартное продвижение по уровням повторения
-        repetitionInfo.repetitionLevel = completionsCount - 1;
+      // Определяем текущий уровень повторения
+      if (isRepeating) {
+        // Если это повторение урока, увеличиваем уровень повторения
+        if (repetitionInfo.repetitionLevel < REPETITION_INTERVALS.length - 1) {
+          repetitionInfo.repetitionLevel++;
+        }
         
-        // Корректировка на основе ошибок
+        // Корректировка на основе ошибок при повторении
         if (errorCount > 5) {
-          // Много ошибок - повторяем текущий уровень (не увеличиваем интервал)
+          // Много ошибок - возвращаемся на предыдущий уровень
           if (repetitionInfo.repetitionLevel > 0) {
             repetitionInfo.repetitionLevel--;
           }
@@ -719,13 +980,36 @@ export const updateLessonSpacedRepetitionInfo = (lessonId: string, status: Lesso
         }
         // При малом количестве ошибок (<=2) - стандартное продвижение
       } else {
-        // Если все повторения пройдены, остаемся на максимальном уровне
-        repetitionInfo.repetitionLevel = REPETITION_INTERVALS.length - 1;
+        // Если это первое прохождение или обычное завершение
+        const completionsCount = repetitionInfo.completionDates.length;
+        
+        // Адаптируем уровень повторения на основе ошибок
+        if (completionsCount <= REPETITION_INTERVALS.length) {
+          // Стандартное продвижение по уровням повторения
+          repetitionInfo.repetitionLevel = completionsCount - 1;
+          
+          // Корректировка на основе ошибок
+          if (errorCount > 5) {
+            // Много ошибок - повторяем текущий уровень (не увеличиваем интервал)
+            if (repetitionInfo.repetitionLevel > 0) {
+              repetitionInfo.repetitionLevel--;
+            }
+          } else if (errorCount > 2) {
+            // Средний уровень ошибок - оставляем текущий уровень
+            // Не изменяем repetitionLevel
+          }
+          // При малом количестве ошибок (<=2) - стандартное продвижение
+        } else {
+          // Если все повторения пройдены, остаемся на максимальном уровне
+          repetitionInfo.repetitionLevel = REPETITION_INTERVALS.length - 1;
+        }
       }
       
       // Рассчитываем дату следующего повторения
       const intervalDays = REPETITION_INTERVALS[repetitionInfo.repetitionLevel];
       repetitionInfo.nextReviewDate = now + intervalDays * 24 * 60 * 60 * 1000;
+      
+      console.log(`Урок ${lessonId} обновлен: уровень повторения ${repetitionInfo.repetitionLevel}, следующее повторение через ${intervalDays} дней`);
     }
   }
   
@@ -736,43 +1020,13 @@ export const updateLessonSpacedRepetitionInfo = (lessonId: string, status: Lesso
 };
 
 /**
- * Получить список уроков, которые нужно повторить
- * Возвращает уроки, у которых наступила дата повторения
+ * Изменить видимость урока
  * 
+ * @param lessonId - ID урока
+ * @param isHidden - Скрыть или показать урок
  * @param profileId - ID профиля пользователя
- * @returns Массив информации о уроках для повторения
+ * @returns Обновленная информация о повторении или null в случае ошибки
  */
-export const getLessonsDueForReview = (profileId?: string): SpacedRepetitionInfo[] => {
-  const analytics = getAnalytics(profileId);
-  
-  if (!analytics.spacedRepetition) {
-    return [];
-  }
-  
-  const now = Date.now();
-  
-  // Фильтруем уроки, которые нужно повторить
-  return analytics.spacedRepetition.filter(info => 
-    !info.isHidden && 
-    info.status === LessonStatus.Completed && 
-    info.nextReviewDate > 0 && 
-    info.nextReviewDate <= now
-  );
-};
-
-// Получить список скрытых уроков
-export const getHiddenLessons = (profileId?: string): SpacedRepetitionInfo[] => {
-  const analytics = getAnalytics(profileId);
-  
-  if (!analytics.spacedRepetition) {
-    return [];
-  }
-  
-  // Фильтруем скрытые уроки
-  return analytics.spacedRepetition.filter(info => info.isHidden);
-};
-
-// Изменить видимость урока
 export const toggleLessonVisibility = (lessonId: string, isHidden: boolean, profileId?: string): SpacedRepetitionInfo | null => {
   try {
     console.log(`Сервер: Изменение видимости урока ${lessonId} на ${isHidden ? 'скрытый' : 'видимый'}`);
@@ -780,42 +1034,36 @@ export const toggleLessonVisibility = (lessonId: string, isHidden: boolean, prof
     // Получаем аналитику
     const analytics = getAnalytics(profileId);
     
-    // Проверяем, есть ли ошибки для этого урока
-    if (isHidden) {
-      const hasErrors = analytics.errors.some(error => error.lessonId === lessonId);
-      if (hasErrors) {
-        console.log(`Сервер: Невозможно скрыть урок ${lessonId}, так как в нем есть предложения с ошибками`);
-        return null;
-      }
+    // Инициализируем массив spacedRepetition, если он не существует
+    if (!analytics.spacedRepetition) {
+      analytics.spacedRepetition = [];
     }
     
     // Находим информацию о повторении урока
-    let repetitionInfo = analytics.spacedRepetition?.find(info => info.lessonId === lessonId);
+    let repetitionInfo = analytics.spacedRepetition.find(info => info.lessonId === lessonId);
     
-    // Если информация о повторении не найдена, создаем новую
     if (!repetitionInfo) {
-      // Используем статус NotStarted, если урок не был завершен
+      // Если информация о повторении не найдена, создаем новую запись
       const status = analytics.completedLessons?.includes(lessonId) ? LessonStatus.Completed : LessonStatus.NotStarted;
-      repetitionInfo = updateLessonSpacedRepetitionInfo(lessonId, status, isHidden, 0, profileId);
+      
+      repetitionInfo = {
+        lessonId,
+        status,
+        completionDates: [],
+        repetitionLevel: 0,
+        nextReviewDate: 0,
+        isHidden,
+        lastErrorCount: 0
+      };
+      
+      analytics.spacedRepetition.push(repetitionInfo);
     } else {
       // Обновляем существующую информацию
       repetitionInfo.isHidden = isHidden;
-      
-      // Обновляем информацию в аналитике
-      if (!analytics.spacedRepetition) {
-        analytics.spacedRepetition = [];
-      }
-      
-      const index = analytics.spacedRepetition.findIndex(info => info.lessonId === lessonId);
-      if (index !== -1) {
-        analytics.spacedRepetition[index] = repetitionInfo;
-      } else {
-        analytics.spacedRepetition.push(repetitionInfo);
-      }
-      
-      // Сохраняем аналитику
-      saveAnalytics(analytics, profileId);
     }
+    
+    // Сохраняем аналитику
+    saveAnalytics(analytics, profileId);
     
     console.log(`Сервер: Видимость урока ${lessonId} успешно изменена на ${isHidden ? 'скрытый' : 'видимый'}`);
     return repetitionInfo;
@@ -826,30 +1074,46 @@ export const toggleLessonVisibility = (lessonId: string, isHidden: boolean, prof
 };
 
 /**
- * Обновить статусы уроков для повторения
- * Устанавливает статус DueForReview для уроков, у которых наступила дата повторения
+ * Обработать завершение повторения урока
+ * Обновляет статус урока на Completed и рассчитывает новую дату повторения
  * 
+ * @param lessonId - ID урока
+ * @param errorCount - Количество ошибок при повторении
  * @param profileId - ID профиля пользователя
+ * @returns Обновленная информация о повторении
  */
-export const updateLessonStatuses = (profileId?: string): void => {
-  const analytics = getAnalytics(profileId);
-  
-  if (!analytics.spacedRepetition) {
-    return;
-  }
-  
-  const now = Date.now();
-  let updated = false;
-  
-  // Обновляем статусы уроков
-  analytics.spacedRepetition.forEach(info => {
-    if (!info.isHidden && info.status === LessonStatus.Completed && info.nextReviewDate > 0 && info.nextReviewDate <= now) {
-      info.status = LessonStatus.DueForReview;
-      updated = true;
+export const completeReviewLesson = (lessonId: string, errorCount: number = 0, profileId?: string): SpacedRepetitionInfo | null => {
+  try {
+    const analytics = getAnalytics(profileId);
+    
+    if (!analytics.spacedRepetition) {
+      return null;
     }
-  });
-  
-  if (updated) {
-    saveAnalytics(analytics, profileId);
+    
+    // Поиск информации о повторении урока
+    const repetitionInfo = analytics.spacedRepetition.find(info => info.lessonId === lessonId);
+    
+    if (!repetitionInfo) {
+      console.error(`Не найдена информация о повторении для урока ${lessonId}`);
+      return null;
+    }
+    
+    // Обновляем статус урока и рассчитываем новую дату повторения
+    // Передаем флаг isRepeating=true, чтобы указать, что это повторение
+    const updatedInfo = updateLessonSpacedRepetitionInfo(
+      lessonId, 
+      LessonStatus.Completed, 
+      repetitionInfo.isHidden, 
+      errorCount, 
+      profileId, 
+      true // это повторение урока
+    );
+    
+    console.log(`Урок ${lessonId} успешно повторен. Следующее повторение: ${new Date(updatedInfo.nextReviewDate).toLocaleDateString()}`);
+    
+    return updatedInfo;
+  } catch (error) {
+    console.error('Ошибка при завершении повторения урока:', error);
+    return null;
   }
 };

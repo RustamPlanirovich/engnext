@@ -94,7 +94,7 @@ export default function LessonsPage() {
           
           // Сохраняем обновленные настройки
           await fetch(`${getBaseUrl()}/api/profiles/${activeProfileId}/settings`, {
-            method: 'PUT',
+            method: 'PATCH',
             headers: {
               'Content-Type': 'application/json'
             },
@@ -152,6 +152,12 @@ export default function LessonsPage() {
     return info?.status === LessonStatus.DueForReview;
   };
   
+  // Проверяем, завершены ли все циклы повторения
+  const isAllCyclesCompleted = (lessonId: string) => {
+    const info = repetitionInfo.find(info => info.lessonId === lessonId);
+    return info?.status === LessonStatus.CompletedAllCycles;
+  };
+  
   // Получаем дату следующего повторения
   const getNextReviewDate = (lessonId: string) => {
     const info = repetitionInfo.find(info => info.lessonId === lessonId);
@@ -182,9 +188,18 @@ export default function LessonsPage() {
     
     // Если "Hide completed" включено
     if (hideCompleted) {
-      // Скрываем завершенные уроки
-      if (status === LessonStatus.Completed) {
+      // Проверяем, завершены ли все циклы повторения
+      const isCompleted = isAllCyclesCompleted(lesson.id);
+      
+      // Если все циклы завершены, всегда показываем урок
+      
+      if(status===LessonStatus.CompletedAllCycles){
         return false;
+      }
+      
+      // Скрываем обычные завершенные уроки
+      if (status === LessonStatus.Completed) {
+        return true;
       }
       
       // Скрываем скрытые уроки
@@ -248,10 +263,11 @@ export default function LessonsPage() {
           {filteredLessons.map((lesson) => {
             const status = getLessonStatus(lesson.id);
             const isDueForReview = isLessonDueForReview(lesson.id);
+            const isCompleted = isAllCyclesCompleted(lesson.id);
             const nextReviewDate = getNextReviewDate(lesson.id);
             
             return (
-              <Grid item xs={12} sm={6} md={4} key={lesson.id}>
+              <Grid item xs={12} sm={6} md={4} key={lesson.id} >
                 <Card 
                   sx={{ 
                     height: '100%', 
@@ -262,14 +278,13 @@ export default function LessonsPage() {
                       transform: 'translateY(-4px)',
                       boxShadow: '0 8px 16px rgba(0, 0, 0, 0.3)',
                     },
-                    // Подсветка уроков для повторения
-                    ...(isDueForReview && {
-                      border: '2px solid #ff9800',
-                      boxShadow: '0 0 8px rgba(255, 152, 0, 0.5)',
+                     // Анимированный градиентный фон для уроков, завершивших все циклы повторения
+                     ...(isCompleted && {
+                      background: 'linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab)',
                     })
                   }}
                 >
-                  <CardContent sx={{ flexGrow: 1 }}>
+                  <CardContent sx={{ flexGrow: 1}}>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1 }}>
                       <Typography variant="h6" component="h2" gutterBottom>
                         {lesson.title}
@@ -289,7 +304,7 @@ export default function LessonsPage() {
                       </Box>
                     </Box>
                     
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography variant="body2" color={isCompleted ? 'white' : 'text.secondary'}>
                       {lesson.description}
                     </Typography>
                     
@@ -304,14 +319,56 @@ export default function LessonsPage() {
                         />
                       </Box>
                     )}
+                    
+                    {isCompleted && (
+                      <Box sx={{ mt: 2 }}>
+                        <Chip 
+                          icon={<CheckCircleIcon />} 
+                          label="Цикл повторений завершен" 
+                          size="small" 
+                          color="success" 
+                          sx={{
+                            background: 'rgba(181, 8, 229, 0.9)',
+                            color: '#4CAF50',
+                            fontWeight: 'bold',
+                            
+                          }}
+                        />
+                      </Box>
+                    )}
                   </CardContent>
                   
                   <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <Link href={`/lessons/${lesson.id}`} passHref style={{ flexGrow: 1 }}>
-                      <Button variant="contained" color={isDueForReview ? "warning" : "primary"} fullWidth>
-                        {isDueForReview ? "Повторить" : "Начать урок"}
-                      </Button>
-                    </Link>
+                    {isDueForReview ? (
+                      <Link href={`/lessons/${lesson.id}`} passHref style={{ flexGrow: 1 }}>
+                        <Button variant="contained" color="warning" fullWidth>
+                          Повторить
+                        </Button>
+                      </Link>
+                    ) : isCompleted ? (
+                      <Link href={`/lessons/${lesson.id}`} passHref style={{ flexGrow: 1 }}>
+                        <Button 
+                          variant="contained" 
+                          sx={{ 
+                            bgcolor: 'rgba(255, 255, 255, 0.9)', 
+                            color: '#4CAF50',
+                            '&:hover': {
+                              bgcolor: 'rgba(255, 255, 255, 0.7)'
+                            },
+                            
+                          }} 
+                          fullWidth
+                        >
+                          Повторить еще раз
+                        </Button>
+                      </Link>
+                    ) : (
+                      <Link href={`/lessons/${lesson.id}`} passHref style={{ flexGrow: 1 }}>
+                        <Button variant="contained" color="primary" fullWidth>
+                          Начать урок
+                        </Button>
+                      </Link>
+                    )}
                     
                     {status === LessonStatus.Completed && (
                       <Tooltip title={isLessonHidden(lesson.id) ? "Показать урок" : "Скрыть урок"}>

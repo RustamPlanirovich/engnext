@@ -9,7 +9,6 @@ import { AnalyticsItem } from '@/types/lesson';
 
 // Предотвращаем кэширование страницы
 export const dynamic = 'force-dynamic';
-export const revalidate = 0;
 
 export default function PracticePage() {
   const [problematicSentences, setProblematicSentences] = useState<AnalyticsItem[]>([]);

@@ -4,8 +4,6 @@ import {
   createAnalyticsBackup, 
   getLessonSpacedRepetitionInfo, 
   toggleLessonVisibility, 
-  getLessonsDueForReview, 
-  getHiddenLessons,
   updateLessonStatuses
 } from '@/utils/serverUtils';
 
@@ -39,7 +37,12 @@ export async function GET(request: NextRequest) {
           
         case 'due-for-review':
           // Получаем список уроков для повторения
-          const dueForReview = getLessonsDueForReview(profileId || undefined);
+          const analytics1 = getAnalytics(profileId || undefined);
+          const dueForReview = analytics1.spacedRepetition?.filter(info => 
+            !info.isHidden && 
+            info.status === 'due_review' && 
+            info.nextReviewDate > 0
+          ) || [];
           return NextResponse.json({ 
             success: true, 
             lessons: dueForReview 
@@ -47,7 +50,8 @@ export async function GET(request: NextRequest) {
           
         case 'hidden-lessons':
           // Получаем список скрытых уроков
-          const hiddenLessons = getHiddenLessons(profileId || undefined);
+          const analytics2 = getAnalytics(profileId || undefined);
+          const hiddenLessons = analytics2.spacedRepetition?.filter(info => info.isHidden) || [];
           return NextResponse.json({ 
             success: true, 
             lessons: hiddenLessons 
@@ -104,19 +108,27 @@ export async function POST(request: NextRequest) {
       }
       
       // Изменяем видимость урока
-      const repetitionInfo = toggleLessonVisibility(lessonId, isHidden, profileId);
-      
-      if (!repetitionInfo) {
+      try {
+        const repetitionInfo = toggleLessonVisibility(lessonId, isHidden, profileId);
+        
+        if (!repetitionInfo) {
+          return NextResponse.json(
+            { error: 'Failed to toggle lesson visibility' },
+            { status: 404 }
+          );
+        }
+        
+        return NextResponse.json({ 
+          success: true, 
+          repetitionInfo 
+        });
+      } catch (error) {
+        console.error('Error in toggleLessonVisibility:', error);
         return NextResponse.json(
-          { error: 'Failed to toggle lesson visibility' },
-          { status: 404 }
+          { error: 'Internal server error in toggleLessonVisibility' },
+          { status: 500 }
         );
       }
-      
-      return NextResponse.json({ 
-        success: true, 
-        repetitionInfo 
-      });
     }
     
     return NextResponse.json(

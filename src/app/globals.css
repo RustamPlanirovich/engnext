@@ -1,0 +1,37 @@
+/* Глобальные стили */
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+    background-image: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  }
+  25% {
+    background-position: 50% 100%;
+    background-image: linear-gradient(-45deg, #e73c7e, #23a6d5, #23d5ab, #ee7752);
+  }
+  50% {
+    background-position: 100% 50%;
+    background-image: linear-gradient(-45deg, #23a6d5, #23d5ab, #ee7752, #e73c7e);
+  }
+  75% {
+    background-position: 50% 0%;
+    background-image: linear-gradient(-45deg, #23d5ab, #ee7752, #e73c7e, #23a6d5);
+  }
+  100% {
+    background-position: 0% 50%;
+    background-image: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  }
+}
+
+/* Общие стили для всего приложения */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* Стили для анимированных элементов */
+.gradient-animation {
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+}

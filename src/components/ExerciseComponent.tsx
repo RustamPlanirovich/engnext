@@ -19,25 +19,35 @@ import {
   DialogContentText,
   DialogActions,
   CircularProgress,
-  Pagination
+  Pagination,
+  Grid,
+  Tooltip
 } from '@mui/material';
 import { 
   Check as CheckIcon, 
   Close as CloseIcon,
   SkipNext as SkipIcon,
-  Timer as TimerIcon
+  Timer as TimerIcon,
+  CheckCircle as CheckCircleIcon,
+  Cancel as CancelIcon,
+  Refresh as RefreshIcon,
+  ArrowBack as ArrowBackIcon,
+  VolumeUp as VolumeUpIcon
 } from '@mui/icons-material';
 import { useRouter } from 'next/navigation';
-import { Example, ExerciseMode, AnalyticsItem } from '@/types/lesson';
+import { useTheme } from '@mui/material/styles';
+import { Example, ExerciseMode, AnalyticsItem, LessonStatus } from '@/types/lesson';
 import { 
   addError, 
   removeError,
   markLessonCompleted, 
+  markLessonRepeated,
   getActiveProfileId, 
   saveLessonProgress, 
   getLessonProgress,
   getMostProblematicSentences,
-  getBaseUrl 
+  getBaseUrl,
+  getLessonSpacedRepetitionInfo
 } from '@/utils/clientUtils';
 import { fetchProfileSettings } from '@/utils/clientProfileUtils';
 
@@ -46,13 +56,15 @@ interface ExerciseComponentProps {
   lessonTitle: string;
   examples: Example[];
   exerciseType: ExerciseMode;
+  isRepetition?: boolean; // Флаг, указывающий, что это повторение урока
 }
 
 export default function ExerciseComponent({ 
   lessonId, 
   lessonTitle, 
   examples: initialExamples, 
-  exerciseType 
+  exerciseType,
+  isRepetition = false
 }: ExerciseComponentProps) {
   const router = useRouter();
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -62,6 +74,8 @@ export default function ExerciseComponent({
   const [blockWords, setBlockWords] = useState<string[]>([]);
   const [selectedBlocks, setSelectedBlocks] = useState<string[]>([]);
   const [showCompletionDialog, setShowCompletionDialog] = useState(false);
+  const [completionMessage, setCompletionMessage] = useState('');
+  const [errorHistory, setErrorHistory] = useState<boolean[]>([]);
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
   const [timerEnabled, setTimerEnabled] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -422,7 +436,30 @@ export default function ExerciseComponent({
       } else {
         // End of lesson
         if (lessonId !== 'practice') {
-          markLessonCompleted(lessonId);
+          // Определяем, это первое прохождение или повторение
+          if (isRepetition) {
+            // Подсчитываем количество ошибок в текущем прохождении
+            const errorCount = errorHistory.filter(err => err === false).length;
+            
+            // Отмечаем урок как повторенный
+            const result = await markLessonRepeated(lessonId, errorCount);
+            
+            // Если это последнее повторение, показываем особое сообщение
+            if (result.isComplete) {
+              setCompletionMessage(`Поздравляем! Вы успешно завершили все циклы повторения урока "${lessonTitle}". Урок будет отмечен как полностью завершенный.`);
+            } else {
+              // Показываем дату следующего повторения
+              const nextReviewDate = new Date(result.nextReviewDate).toLocaleDateString();
+              setCompletionMessage(`Вы успешно повторили урок "${lessonTitle}". Следующее повторение: ${nextReviewDate}`);
+            }
+          } else {
+            // Первое прохождение урока
+            const result = await markLessonCompleted(lessonId);
+            
+            // Показываем дату следующего повторения
+            const nextReviewDate = new Date(result.nextReviewDate).toLocaleDateString();
+            setCompletionMessage(`Вы успешно завершили урок "${lessonTitle}". Следующее повторение: ${nextReviewDate}`);
+          }
         } else {
           // Если это режим практики, обновляем список проблемных предложений
           // чтобы удалить те, которые были правильно отвечены
@@ -435,7 +472,7 @@ export default function ExerciseComponent({
               console.error('Error refreshing problematic sentences:', error);
             }
           };
-          loadErrorIds();
+          loadErrorIds(); // Вызываем функцию для обновления списка проблемных предложений
         }
         setShowCompletionDialog(true);
       }
@@ -463,6 +500,9 @@ export default function ExerciseComponent({
     
     const correct = normalizedUserAnswer === normalizedExpectedAnswer;
     setIsCorrect(correct);
+    
+    // Track error history for spaced repetition
+    setErrorHistory(prev => [...prev, correct]);
     
     if (!correct) {
       setErrorCount(errorCount + 1);
@@ -503,6 +543,9 @@ export default function ExerciseComponent({
     const userBlockAnswer = selectedBlocks.join(' ');
     const correct = userBlockAnswer.toLowerCase() === expectedAnswer.toLowerCase();
     setIsCorrect(correct);
+    
+    // Track error history for spaced repetition
+    setErrorHistory(prev => [...prev, correct]);
     
     if (!correct) {
       setErrorCount(errorCount + 1);
@@ -840,13 +883,17 @@ export default function ExerciseComponent({
           <DialogContentText>
             {currentPage < totalPages ? (
               `Вы успешно завершили часть ${currentPage} из ${totalPages} урока "${lessonTitle}".`
+            ) : completionMessage ? (
+              completionMessage
             ) : (
               `Вы успешно завершили урок "${lessonTitle}".`
             )}
-            {errorCount > 0 ? (
+            {currentPage < totalPages && errorCount > 0 ? (
               ` Вы допустили ${errorCount} ошибок. Эти предложения будут добавлены в список для повторения.`
-            ) : (
+            ) : currentPage < totalPages ? (
               ' Отличная работа! Вы не допустили ни одной ошибки.'
+            ) : (
+              ''
             )}
           </DialogContentText>
         </DialogContent>

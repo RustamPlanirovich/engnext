@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { 
   Box, 
   Typography, 
@@ -14,7 +15,7 @@ import {
   Alert
 } from '@mui/material';
 import ClientLayout from '@/components/ClientLayout';
-import { getSentencesDueForReview, getLessonsDueForReview } from '@/utils/clientUtils';
+import { getSentencesDueForReview, getLessonsDueForReview, completeReviewLesson } from '@/utils/clientUtils';
 import { PrioritySentence } from '@/types/lesson';
 
 /**
@@ -28,24 +29,60 @@ export default function ReviewPage() {
   const [showAnswer, setShowAnswer] = useState(false);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [lessonsDueCount, setLessonsDueCount] = useState(0);
+  const [currentLessonId, setCurrentLessonId] = useState<string | null>(null);
+  const [errorCount, setErrorCount] = useState(0);
+  const [completingReview, setCompletingReview] = useState(false);
+  const [reviewCompleted, setReviewCompleted] = useState(false);
+  const [completionMessage, setCompletionMessage] = useState('');
+  const router = useRouter();
   
   // Загрузка предложений для повторения
   useEffect(() => {
     const loadSentences = async () => {
       try {
         setLoading(true);
+        console.log(`Страница повторения: Запрашиваем предложения для урока ${currentLessonId || 'все уроки'}`);
         
-        // Получаем уроки, которые нужно повторить
-        const dueForReviewLessons = await getLessonsDueForReview();
-        setLessonsDueCount(dueForReviewLessons.length);
+        // Получаем параметр lessonId из URL, если он есть
+        const searchParams = new URLSearchParams(window.location.search);
+        const lessonIdFromUrl = searchParams.get('lessonId');
         
-        // Получаем предложения для повторения
-        const sentencesDueForReview = await getSentencesDueForReview();
-        
-        // Сортируем по приоритету
-        sentencesDueForReview.sort((a, b) => b.priority - a.priority);
-        
-        setSentences(sentencesDueForReview);
+        // Если есть lessonId в URL, используем его
+        if (lessonIdFromUrl) {
+          setCurrentLessonId(lessonIdFromUrl);
+          
+          // Получаем предложения только для этого урока
+          const sentencesDueForReview = await getSentencesDueForReview(undefined, lessonIdFromUrl);
+          console.log(`Получено ${sentencesDueForReview.length} предложений для повторения:`, sentencesDueForReview);
+          
+          // Сортируем по приоритету
+          sentencesDueForReview.sort((a, b) => b.priority - a.priority);
+          
+          setSentences(sentencesDueForReview);
+        } else {
+          // Если нет lessonId в URL, получаем все уроки для повторения
+          const dueForReviewLessons = await getLessonsDueForReview();
+          setLessonsDueCount(dueForReviewLessons.length);
+          
+          if (dueForReviewLessons.length === 0) {
+            // Нет уроков для повторения
+            setSentences([]);
+            setLoading(false);
+            return;
+          }
+          
+          // Берем первый урок для повторения
+          const lessonToReview = dueForReviewLessons[0];
+          setCurrentLessonId(lessonToReview.lessonId);
+          
+          // Получаем предложения только для этого урока
+          const sentencesDueForReview = await getSentencesDueForReview(undefined, lessonToReview.lessonId);
+          
+          // Сортируем по приоритету
+          sentencesDueForReview.sort((a, b) => b.priority - a.priority);
+          
+          setSentences(sentencesDueForReview);
+        }
       } catch (error) {
         console.error('Error loading sentences for review:', error);
       } finally {
@@ -71,22 +108,71 @@ export default function ReviewPage() {
     const correct = normalizedInput === normalizedAnswer;
     setIsCorrect(correct);
     setShowAnswer(true);
+    
+    // Увеличиваем счетчик ошибок, если ответ неверный
+    if (!correct) {
+      setErrorCount(prev => prev + 1);
+    }
+  };
+  
+  // Завершение повторения урока
+  const completeReview = async () => {
+    if (!currentLessonId) return;
+    
+    try {
+      setCompletingReview(true);
+      
+      // Получаем ID активного профиля из localStorage
+      const profileId = localStorage.getItem('activeProfileId');
+      
+      if (!profileId) {
+        alert('Не найден активный профиль');
+        setCompletingReview(false);
+        return;
+      }
+      
+      console.log(`Завершаем повторение урока ${currentLessonId} для профиля ${profileId}, ошибок: ${errorCount}`);
+      
+      // Вызываем API для завершения повторения урока
+      const result = await completeReviewLesson(currentLessonId, errorCount, profileId);
+      
+      if (result.success) {
+        console.log(`Успешно завершено повторение урока: ${result.message}`);
+        setReviewCompleted(true);
+        setCompletionMessage(result.message);
+      } else {
+        console.error(`Ошибка при завершении повторения:`, result);
+        alert(`Ошибка: ${result.message}`);
+      }
+    } catch (error) {
+      console.error('Error completing lesson review:', error);
+      alert('Произошла ошибка при завершении повторения урока');
+    } finally {
+      setCompletingReview(false);
+    }
   };
   
   // Переход к следующему предложению
   const nextSentence = () => {
     if (currentIndex < sentences.length - 1) {
+      // Переход к следующему предложению
       setCurrentIndex(currentIndex + 1);
       setUserInput('');
       setShowAnswer(false);
       setIsCorrect(null);
     } else {
       // Все предложения пройдены
-      setCurrentIndex(0);
-      setUserInput('');
-      setShowAnswer(false);
-      setIsCorrect(null);
-      alert('Вы повторили все предложения на сегодня!');
+      // Показываем подтверждение завершения повторения
+      if (confirm('Вы повторили все предложения. Завершить повторение урока?')) {
+        // Завершаем повторение урока
+        completeReview();
+      } else {
+        // Возвращаемся к началу
+        setCurrentIndex(0);
+        setUserInput('');
+        setShowAnswer(false);
+        setIsCorrect(null);
+      }
     }
   };
   
@@ -106,6 +192,27 @@ export default function ReviewPage() {
         <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
           <CircularProgress />
         </Box>
+      ) : completingReview ? (
+        <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
+          <CircularProgress />
+          <Typography variant="body1" sx={{ ml: 2 }}>
+            Завершение повторения урока...
+          </Typography>
+        </Box>
+      ) : reviewCompleted ? (
+        <Box sx={{ p: 4, textAlign: 'center' }}>
+          <Alert severity="success" sx={{ mb: 3 }}>
+            {completionMessage}
+          </Alert>
+          <Button 
+            variant="contained" 
+            color="primary" 
+            onClick={() => router.push('/lessons')}
+            sx={{ mt: 2 }}
+          >
+            Вернуться к урокам
+          </Button>
+        </Box>
       ) : sentences.length === 0 ? (
         <Box sx={{ p: 4 }}>
           <Alert severity="info">
@@ -117,6 +224,14 @@ export default function ReviewPage() {
               <span> Возвращайтесь позже.</span>
             )}
           </Alert>
+          <Button 
+            variant="contained" 
+            color="primary" 
+            onClick={() => router.push('/lessons')}
+            sx={{ mt: 2 }}
+          >
+            Перейти к урокам
+          </Button>
         </Box>
       ) : (
         <Box sx={{ mt: 4 }}>

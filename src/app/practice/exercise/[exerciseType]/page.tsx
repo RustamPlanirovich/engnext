@@ -9,7 +9,6 @@ import { Example, ExerciseMode, AnalyticsItem } from '@/types/lesson';
 import { Box, CircularProgress, Typography } from '@mui/material';
 
 export const dynamic = 'force-dynamic';
-export const revalidate = 0;
 
 interface PracticeExercisePageProps {
   params: {

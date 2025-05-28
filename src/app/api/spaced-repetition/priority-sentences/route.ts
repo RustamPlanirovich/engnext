@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getActiveProfile } from '@/utils/profileUtils';
 import { 
   getPrioritySentences, 
   savePrioritySentences, 
@@ -21,36 +20,61 @@ export const dynamic = 'force-dynamic';
  */
 export async function GET(request: NextRequest) {
   try {
-    // Получаем параметры запроса
-    const url = new URL(request.url);
-    const lessonId = url.searchParams.get('lessonId');
-    const profileId = url.searchParams.get('profileId');
-    const action = url.searchParams.get('action') || 'get';
+    // Получаем параметры из запроса
+    const { searchParams } = new URL(request.url);
+    const action = searchParams.get('action');
+    const profileId = searchParams.get('profileId');
+    const lessonId = searchParams.get('lessonId');
     
-    // Получаем активный профиль
-    const activeProfile = await getActiveProfile();
-    const activeProfileId = profileId || activeProfile?.id;
+    console.log(`API priority-sentences: action=${action}, profileId=${profileId}, lessonId=${lessonId}`);
     
-    // Проверяем наличие активного профиля
-    if (!activeProfileId) {
-      return NextResponse.json(
-        { error: 'No active profile' },
-        { status: 400 }
-      );
+    if (!profileId) {
+      return NextResponse.json({ error: 'Не указан profileId' }, { status: 400 });
     }
+    
+    // Используем переданный profileId напрямую
+    const activeProfileId = profileId;
+    
+    console.log(`Используем profileId: ${activeProfileId}`);
     
     // Обновляем аналитику для поддержки приоритетных предложений
     updateAnalyticsForPrioritySentences(activeProfileId);
     
+    console.log(`Получен запрос на приоритетные предложения: profileId=${profileId}, lessonId=${lessonId}, action=${action}`);
+    
+    // Если указан lessonId и action=due-for-review, то получаем предложения для повторения этого урока
+    if (lessonId && action === 'due-for-review') {
+      try {
+        // Используем getSentencesDueForReview для получения предложений для повторения
+        console.log(`Вызываем getSentencesDueForReview для урока ${lessonId}`);
+        const sentences = getSentencesDueForReview(activeProfileId, lessonId);
+        console.log(`Получено ${sentences.length} предложений для повторения`);
+        return NextResponse.json({ sentences });
+      } catch (err) {
+        const error = err as Error;
+        console.error(`Ошибка при получении предложений для урока ${lessonId}:`, error);
+        return NextResponse.json({ error: `Ошибка при получении предложений: ${error.message}` }, { status: 500 });
+      }
+    }
+    
+    // Если указан lessonId и action=get, то получаем все предложения урока
+    if (lessonId && action === 'get') {
+      try {
+        console.log(`Вызываем getPrioritySentences для урока ${lessonId}`);
+        const sentences = getPrioritySentences(lessonId, activeProfileId);
+        console.log(`Получено ${sentences.length} приоритетных предложений`);
+        return NextResponse.json({ sentences });
+      } catch (err) {
+        const error = err as Error;
+        console.error(`Ошибка при получении приоритетных предложений для урока ${lessonId}:`, error);
+        return NextResponse.json({ error: `Ошибка при получении приоритетных предложений: ${error.message}` }, { status: 500 });
+      }
+    }
+    
     // Обрабатываем запрос в зависимости от действия
     switch (action) {
       case 'get':
-        // Если указан ID урока, получаем предложения для этого урока
-        if (lessonId) {
-          const sentences = getPrioritySentences(lessonId, activeProfileId);
-          return NextResponse.json({ sentences });
-        }
-        // Иначе возвращаем ошибку
+        // Если не указан ID урока, возвращаем ошибку
         return NextResponse.json(
           { error: 'Lesson ID is required for this action' },
           { status: 400 }
@@ -62,14 +86,14 @@ export async function GET(request: NextRequest) {
           const sentences = savePrioritySentences(lessonId, activeProfileId);
           return NextResponse.json({ sentences });
         }
-        // Иначе возвращаем ошибку
+        // Если не указан ID урока, возвращаем ошибку
         return NextResponse.json(
           { error: 'Lesson ID is required for this action' },
           { status: 400 }
         );
         
       case 'due-for-review':
-        // Получаем предложения, которые нужно повторить сегодня
+        // Получаем все предложения, которые нужно повторить сегодня
         const sentencesDueForReview = getSentencesDueForReview(activeProfileId);
         return NextResponse.json({ sentences: sentencesDueForReview });
         
