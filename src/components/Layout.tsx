@@ -30,12 +30,14 @@ import {
   BarChart as AnalyticsIcon,
   Settings as SettingsIcon,
   Person as PersonIcon,
-  AccountCircle as AccountCircleIcon
+  AccountCircle as AccountCircleIcon,
+  ChevronLeft as ChevronLeftIcon
 } from '@mui/icons-material';
 import { getActiveProfileId } from '@/utils/clientUtils';
 import { fetchProfile } from '@/utils/clientProfileUtils';
 
 const drawerWidth = 240;
+const collapsedDrawerWidth = 64;
 
 import { ReactNode } from 'react';
 import { useTheme, useMediaQuery } from '@mui/material';
@@ -48,6 +50,14 @@ export default function Layout({ children }: LayoutProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [profileName, setProfileName] = useState<string | null>(null);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  // Используем localStorage для сохранения состояния меню между переходами
+  const [isMenuCollapsed, setIsMenuCollapsed] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const savedState = localStorage.getItem('menuCollapsed');
+      return savedState === 'true';
+    }
+    return false;
+  });
   const pathname = usePathname();
   const router = useRouter();
   const theme = useTheme();
@@ -55,6 +65,14 @@ export default function Layout({ children }: LayoutProps) {
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+  };
+
+  const toggleMenuCollapse = () => {
+    const newState = !isMenuCollapsed;
+    setIsMenuCollapsed(newState);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('menuCollapsed', String(newState));
+    }
   };
 
   // Проверка наличия активного профиля
@@ -109,10 +127,15 @@ export default function Layout({ children }: LayoutProps) {
 
   const drawer = (
     <div>
-      <Toolbar>
-        <Typography variant="h6" noWrap component="div">
-          English Galaxy
-        </Typography>
+      <Toolbar sx={{ display: 'flex', justifyContent: isMenuCollapsed ? 'center' : 'space-between', pr: isMenuCollapsed ? 0 : 1 }}>
+        {!isMenuCollapsed && (
+          <Typography variant="h6" noWrap component="div">
+            English Galaxy
+          </Typography>
+        )}
+        <IconButton onClick={toggleMenuCollapse} sx={{ display: { xs: 'none', sm: 'flex' } }}>
+          {isMenuCollapsed ? <MenuIcon /> : <ChevronLeftIcon />}
+        </IconButton>
       </Toolbar>
       <List>
         {menuItems.map((item) => (
@@ -120,7 +143,7 @@ export default function Layout({ children }: LayoutProps) {
             <Link href={item.href} passHref style={{ textDecoration: 'none', width: '100%', color: 'inherit' }}>
               <ListItemButton selected={pathname === item.href}>
                 <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText primary={item.text} />
+                {!isMenuCollapsed && <ListItemText primary={item.text} />}
               </ListItemButton>
             </Link>
           </ListItem>
@@ -134,8 +157,12 @@ export default function Layout({ children }: LayoutProps) {
       <AppBar
         position="fixed"
         sx={{
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
-          ml: { sm: `${drawerWidth}px` },
+          width: { sm: `calc(100% - ${isMenuCollapsed ? collapsedDrawerWidth : drawerWidth}px)` },
+          ml: { sm: `${isMenuCollapsed ? collapsedDrawerWidth : drawerWidth}px` },
+          transition: theme.transitions.create(['margin', 'width'], {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+          }),
         }}
       >
         <Toolbar>
@@ -219,7 +246,15 @@ export default function Layout({ children }: LayoutProps) {
           variant="permanent"
           sx={{
             display: { xs: 'none', sm: 'block' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            '& .MuiDrawer-paper': { 
+              boxSizing: 'border-box', 
+              width: isMenuCollapsed ? collapsedDrawerWidth : drawerWidth,
+              transition: theme.transitions.create('width', {
+                easing: theme.transitions.easing.sharp,
+                duration: theme.transitions.duration.enteringScreen,
+              }),
+              overflowX: 'hidden',
+            },
           }}
           open
         >
@@ -231,11 +266,15 @@ export default function Layout({ children }: LayoutProps) {
         sx={{
           flexGrow: 1,
           p: 3,
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
+          width: { sm: `calc(100% - ${isMenuCollapsed ? collapsedDrawerWidth : drawerWidth}px)` },
           mt: '64px',
           display: 'flex',
           flexDirection: 'column',
           minHeight: 'calc(100vh - 64px)',
+          transition: theme.transitions.create(['margin', 'width'], {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+          }),
         }}
       >
         <Container maxWidth="lg" sx={{ flexGrow: 1, py: 2 }}>
