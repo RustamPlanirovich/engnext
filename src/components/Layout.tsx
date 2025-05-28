@@ -46,18 +46,22 @@ interface LayoutProps {
   children: ReactNode;
 }
 
+// Используем глобальную переменную для сохранения состояния между рендерами
+let menuCollapsedState = false;
+if (typeof window !== 'undefined') {
+  try {
+    menuCollapsedState = localStorage.getItem('menuCollapsed') === 'true';
+  } catch (e) {
+    console.error('Error accessing localStorage:', e);
+  }
+}
+
 export default function Layout({ children }: LayoutProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [profileName, setProfileName] = useState<string | null>(null);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  // Используем localStorage для сохранения состояния меню между переходами
-  const [isMenuCollapsed, setIsMenuCollapsed] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const savedState = localStorage.getItem('menuCollapsed');
-      return savedState === 'true';
-    }
-    return false;
-  });
+  // Используем глобальную переменную для инициализации
+  const [isMenuCollapsed, setIsMenuCollapsed] = useState(menuCollapsedState);
   const pathname = usePathname();
   const router = useRouter();
   const theme = useTheme();
@@ -70,6 +74,7 @@ export default function Layout({ children }: LayoutProps) {
   const toggleMenuCollapse = () => {
     const newState = !isMenuCollapsed;
     setIsMenuCollapsed(newState);
+    menuCollapsedState = newState; // Обновляем глобальную переменную
     if (typeof window !== 'undefined') {
       localStorage.setItem('menuCollapsed', String(newState));
     }
@@ -120,7 +125,7 @@ export default function Layout({ children }: LayoutProps) {
     { text: 'Главная', href: '/', icon: <HomeIcon /> },
     { text: 'Уроки', href: '/lessons', icon: <BookIcon /> },
     { text: 'Практика', href: '/practice', icon: <PracticeIcon /> },
-    { text: 'Интервальное повторение', href: '/review', icon: <PracticeIcon /> },
+    //{ text: 'Интервальное повторение', href: '/review', icon: <PracticeIcon /> },
     { text: 'Аналитика', href: '/analytics', icon: <AnalyticsIcon /> },
     { text: 'Настройки', href: '/settings', icon: <SettingsIcon /> },
   ];
@@ -140,12 +145,14 @@ export default function Layout({ children }: LayoutProps) {
       <List>
         {menuItems.map((item) => (
           <ListItem key={item.text} disablePadding>
-            <Link href={item.href} passHref style={{ textDecoration: 'none', width: '100%', color: 'inherit' }}>
-              <ListItemButton selected={pathname === item.href}>
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                {!isMenuCollapsed && <ListItemText primary={item.text} />}
-              </ListItemButton>
-            </Link>
+            <Tooltip title={item.text} placement="right" disableHoverListener={!isMenuCollapsed}>
+              <Link href={item.href} passHref style={{ textDecoration: 'none', width: '100%', color: 'inherit' }}>
+                <ListItemButton selected={pathname === item.href}>
+                  <ListItemIcon>{item.icon}</ListItemIcon>
+                  {!isMenuCollapsed && <ListItemText primary={item.text} />}
+                </ListItemButton>
+              </Link>
+            </Tooltip>
           </ListItem>
         ))}
       </List>
