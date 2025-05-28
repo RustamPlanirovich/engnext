@@ -145,16 +145,25 @@ export default function Layout({ children }: LayoutProps) {
       <List>
         {menuItems.map((item) => (
           <ListItem key={item.text} disablePadding>
-            <Tooltip title={item.text} placement="right" disableHoverListener={!isMenuCollapsed}>
+            {isMenuCollapsed ? (
+              <Tooltip title={item.text} placement="right">
+                <Link href={item.href} passHref style={{ textDecoration: 'none', width: '100%', color: 'inherit' }}>
+                  <ListItemButton selected={pathname === item.href}>
+                    <ListItemIcon>{item.icon}</ListItemIcon>
+                  </ListItemButton>
+                </Link>
+              </Tooltip>
+            ) : (
               <Link href={item.href} passHref style={{ textDecoration: 'none', width: '100%', color: 'inherit' }}>
                 <ListItemButton selected={pathname === item.href}>
                   <ListItemIcon>{item.icon}</ListItemIcon>
-                  {!isMenuCollapsed && <ListItemText primary={item.text} />}
+                  <ListItemText primary={item.text} />
                 </ListItemButton>
               </Link>
-            </Tooltip>
+            )}
           </ListItem>
         ))}
+
       </List>
     </div>
   );

@@ -1027,6 +1027,51 @@ export const updateLessonSpacedRepetitionInfo = (lessonId: string, status: Lesso
  * @param profileId - ID профиля пользователя
  * @returns Обновленная информация о повторении или null в случае ошибки
  */
+// Получить список уроков, которые нужно повторить
+// 
+// @param profileId - ID профиля пользователя
+// @returns Массив информации об уроках, которые нужно повторить
+export const getLessonsDueForReview = (profileId?: string): SpacedRepetitionInfo[] => {
+  try {
+    // Обновляем статусы уроков перед получением списка
+    updateLessonStatusesForReview(profileId);
+    
+    const analytics = getAnalytics(profileId);
+    
+    if (!analytics.spacedRepetition) {
+      return [];
+    }
+    
+    // Фильтруем уроки со статусом DueForReview и не скрытые
+    return analytics.spacedRepetition.filter(item => 
+      item.status === LessonStatus.DueForReview && !item.isHidden
+    );
+  } catch (error) {
+    console.error('Error getting lessons due for review:', error);
+    return [];
+  }
+};
+
+// Получить список скрытых уроков
+// 
+// @param profileId - ID профиля пользователя
+// @returns Массив информации о скрытых уроках
+export const getHiddenLessons = (profileId?: string): SpacedRepetitionInfo[] => {
+  try {
+    const analytics = getAnalytics(profileId);
+    
+    if (!analytics.spacedRepetition) {
+      return [];
+    }
+    
+    // Фильтруем скрытые уроки
+    return analytics.spacedRepetition.filter(item => item.isHidden);
+  } catch (error) {
+    console.error('Error getting hidden lessons:', error);
+    return [];
+  }
+};
+
 export const toggleLessonVisibility = (lessonId: string, isHidden: boolean, profileId?: string): SpacedRepetitionInfo | null => {
   try {
     console.log(`Сервер: Изменение видимости урока ${lessonId} на ${isHidden ? 'скрытый' : 'видимый'}`);
