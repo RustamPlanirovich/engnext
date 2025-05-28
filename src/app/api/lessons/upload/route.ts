@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { saveLesson } from '@/utils/serverUtils';
+import { LessonLevel } from '@/types/lesson';
 
 export async function POST(request: NextRequest) {
   try {
@@ -22,7 +23,16 @@ export async function POST(request: NextRequest) {
       );
     }
     
-    const result = await saveLesson(data.fileName, data.lessonData);
+    // Проверка уровня CEFR, если он указан
+    let level = data.level;
+    if (level && !Object.values(LessonLevel).includes(level)) {
+      return NextResponse.json(
+        { error: `Неверный уровень CEFR. Допустимые значения: ${Object.values(LessonLevel).join(', ')}` },
+        { status: 400 }
+      );
+    }
+    
+    const result = await saveLesson(data.fileName, data.lessonData, level);
     
     if (!result.success) {
       return NextResponse.json(

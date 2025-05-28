@@ -296,7 +296,7 @@ export const getMostProblematicSentences = async (limit: number = 10, profileId?
 };
 
 // Загрузка одного урока (для обратной совместимости)
-export const uploadLesson = async (fileName: string, lessonData: string): Promise<{ success: boolean, message: string }> => {
+export const uploadLesson = async (fileName: string, lessonData: string, level?: string): Promise<{ success: boolean, message: string }> => {
   const baseUrl = getBaseUrl();
   const profileId = getActiveProfileId();
   
@@ -309,7 +309,7 @@ export const uploadLesson = async (fileName: string, lessonData: string): Promis
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ fileName, lessonData }),
+    body: JSON.stringify({ fileName, lessonData, level }),
   });
   
   if (!response.ok) {
@@ -323,27 +323,32 @@ export const uploadLesson = async (fileName: string, lessonData: string): Promis
 // Загрузка нескольких уроков
 
 export const uploadMultipleLessons = async (files: LessonFile[]): Promise<{ success: boolean, results: UploadResult[], message: string }> => {
-  const baseUrl = getBaseUrl();
-  const profileId = getActiveProfileId();
-  
-  if (!profileId) {
-    throw new Error('No active profile');
+  try {
+    const baseUrl = getBaseUrl();
+    const profileId = getActiveProfileId();
+    
+    if (!profileId) {
+      throw new Error('No active profile');
+    }
+    
+    const response = await fetch(`${baseUrl}/api/admin/lessons?profileId=${encodeURIComponent(profileId)}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ files }),
+    });
+    
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || 'Failed to upload lessons');
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Error uploading multiple lessons:', error);
+    return { success: false, results: [], message: 'Ошибка при загрузке уроков' };
   }
-  
-  const response = await fetch(`${baseUrl}/api/admin/lessons?profileId=${encodeURIComponent(profileId)}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ files }),
-  });
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.error || 'Failed to upload lessons');
-  }
-  
-  return await response.json();
 };
 
 // Функции для работы с системой интервального повторения
@@ -637,60 +642,70 @@ export const getAllLessonsWithRepetitionInfo = async (profileId?: string): Promi
 };
 
 export const deleteLesson = async (lessonId: string): Promise<{ success: boolean, message: string }> => {
-  const baseUrl = getBaseUrl();
-  const profileId = getActiveProfileId();
-  
-  if (!profileId) {
-    throw new Error('No active profile');
+  try {
+    const baseUrl = getBaseUrl();
+    const profileId = getActiveProfileId();
+    
+    if (!profileId) {
+      throw new Error('No active profile');
+    }
+    
+    const response = await fetch(`${baseUrl}/api/admin/lessons?lessonId=${encodeURIComponent(lessonId)}&profileId=${encodeURIComponent(profileId)}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
+    
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || `Failed to delete lesson ${lessonId}`);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error(`Error deleting lesson ${lessonId}:`, error);
+    return { success: false, message: `Error deleting lesson ${lessonId}` };
   }
-  
-  const response = await fetch(`${baseUrl}/api/admin/lessons?lessonId=${encodeURIComponent(lessonId)}&profileId=${encodeURIComponent(profileId)}`, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.error || `Failed to delete lesson ${lessonId}`);
-  }
-  
-  return await response.json();
 };
 
 export const createAnalyticsBackup = async (): Promise<{ success: boolean, message: string }> => {
-  const baseUrl = getBaseUrl();
-  const response = await fetch(`${baseUrl}/api/analytics`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ action: 'backup' }),
-  });
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.error || 'Failed to create analytics backup');
+  try {
+    const baseUrl = getBaseUrl();
+    const response = await fetch(`${baseUrl}/api/analytics`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ action: 'backup' }),
+    });
+    
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || 'Failed to create analytics backup');
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Error creating analytics backup:', error);
+    return { success: false, message: 'Error creating analytics backup' };
   }
-  
-  return await response.json();
 };
 
 // Функция для получения содержимого урока для редактирования
 export const fetchLessonForEditing = async (lessonId: string): Promise<{ success: boolean, lessonContent: string }> => {
-  const baseUrl = getBaseUrl();
-  const profileId = getActiveProfileId();
-  
-  if (!profileId) {
-    throw new Error('No active profile');
-  }
-  
-  // Обработка ID урока для API запроса
-  // Если ID урока содержит только число, добавляем префикс 'lesson'
-  const apiLessonId = lessonId.startsWith('lesson') ? lessonId : `lesson${lessonId}`;
-  
   try {
+    const baseUrl = getBaseUrl();
+    const profileId = getActiveProfileId();
+    
+    if (!profileId) {
+      throw new Error('No active profile');
+    }
+    
+    // Обработка ID урока для API запроса
+    // Если ID урока содержит только число, добавляем префикс 'lesson'
+    const apiLessonId = lessonId.startsWith('lesson') ? lessonId : `lesson${lessonId}`;
+    
     const response = await fetch(`${baseUrl}/api/admin/lessons/${apiLessonId}?profileId=${encodeURIComponent(profileId)}`, {
       method: 'GET',
       headers: {
@@ -700,31 +715,27 @@ export const fetchLessonForEditing = async (lessonId: string): Promise<{ success
     
     if (!response.ok) {
       const error = await response.json();
-      throw new Error(error.error || `Не удалось загрузить урок ${lessonId} для редактирования`);
+      throw new Error(error.error || `Failed to fetch lesson ${lessonId} for editing`);
     }
     
     return await response.json();
   } catch (error) {
-    console.error(`Ошибка при загрузке урока ${lessonId}:`, error);
-    throw error;
+    console.error(`Error fetching lesson ${lessonId} for editing:`, error);
+    return { success: false, lessonContent: '' };
   }
 };
 
 // Функция для обновления содержимого урока
 export const updateLesson = async (lessonId: string, lessonContent: string): Promise<{ success: boolean, message: string }> => {
-  const baseUrl = getBaseUrl();
-  const profileId = getActiveProfileId();
-  
-  if (!profileId) {
-    throw new Error('No active profile');
-  }
-  
-  // Обработка ID урока для API запроса
-  // Если ID урока содержит только число, добавляем префикс 'lesson'
-  const apiLessonId = lessonId.startsWith('lesson') ? lessonId : `lesson${lessonId}`;
-  
   try {
-    const response = await fetch(`${baseUrl}/api/admin/lessons/${apiLessonId}?profileId=${encodeURIComponent(profileId)}`, {
+    const baseUrl = getBaseUrl();
+    const profileId = getActiveProfileId();
+    
+    if (!profileId) {
+      throw new Error('No active profile');
+    }
+    
+    const response = await fetch(`${baseUrl}/api/admin/lessons/${lessonId}?profileId=${encodeURIComponent(profileId)}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -734,12 +745,12 @@ export const updateLesson = async (lessonId: string, lessonContent: string): Pro
     
     if (!response.ok) {
       const error = await response.json();
-      throw new Error(error.error || `Не удалось обновить урок ${lessonId}`);
+      throw new Error(error.error || `Failed to update lesson ${lessonId}`);
     }
     
     return await response.json();
   } catch (error) {
-    console.error(`Ошибка при обновлении урока ${lessonId}:`, error);
-    throw error;
+    console.error(`Error updating lesson ${lessonId}:`, error);
+    return { success: false, message: `Error updating lesson ${lessonId}` };
   }
 };

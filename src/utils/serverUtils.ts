@@ -632,12 +632,18 @@ export const getMostProblematicSentences = (limit: number = 10, profileId?: stri
 };
 
 // Save a new lesson file
-export const saveLesson = async (fileName: string, lessonData: string): Promise<{ success: boolean, message: string }> => {
+export const saveLesson = async (fileName: string, lessonData: string, level?: string): Promise<{ success: boolean, message: string }> => {
   ensureDirectories();
   
   try {
     // Validate JSON
-    JSON.parse(lessonData);
+    let lessonObject = JSON.parse(lessonData);
+    
+    // Добавляем уровень CEFR, если он указан
+    if (level) {
+      lessonObject.level = level;
+      lessonData = JSON.stringify(lessonObject, null, 2);
+    }
     
     const lessonFileName = fileName.endsWith('.json') ? fileName : `${fileName}.json`;
     const lessonPath = path.join(LESSONS_DIR, lessonFileName);
@@ -661,7 +667,7 @@ export const saveLesson = async (fileName: string, lessonData: string): Promise<
       saveAnalytics(analytics);
     }
     
-    return { success: true, message: 'Урок успешно сохранен.' };
+    return { success: true, message: `Урок успешно сохранен с уровнем ${level || 'A0 (по умолчанию)'}` };
   } catch (error) {
     console.error('Error saving lesson file:', error);
     return { 

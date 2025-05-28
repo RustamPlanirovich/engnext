@@ -44,21 +44,23 @@ export default function LessonsPage() {
   const [loading, setLoading] = useState(true);
   const [hideCompleted, setHideCompleted] = useState(false);
   const [showDueForReview, setShowDueForReview] = useState(true);
-  const [selectedLevel, setSelectedLevel] = useState<string>('all');
+  const [selectedLevel, setSelectedLevel] = useState<string>('A0');
   const [completedLevels, setCompletedLevels] = useState<Set<string>>(new Set(['A0']));
   
-  // Список всех уровней CEFR
-  const levels = ['all', 'A0', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+  // Список всех уровней CEFR (без вкладки 'Все')
+  const levels = ['A0', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
   
   // Функция для проверки, доступен ли уровень
   const isLevelAvailable = (level: string): boolean => {
-    if (level === 'all' || level === 'A0') return true;
+    if (level === 'A0') return true; // A0 всегда доступен
     
     // Получаем предыдущий уровень
     const levelIndex = levels.indexOf(level);
-    if (levelIndex <= 1) return true; // A0 всегда доступен
+    if (levelIndex <= 0) return true; // A0 всегда доступен
     
     const previousLevel = levels[levelIndex - 1];
+    
+    // Уровень доступен только если предыдущий уровень полностью завершен
     return completedLevels.has(previousLevel);
   };
   
@@ -254,7 +256,8 @@ export default function LessonsPage() {
     }
     
     // Фильтруем по выбранному уровню
-    if (selectedLevel !== 'all' && lessonLevel !== selectedLevel) {
+    // Показываем только уроки текущего выбранного уровня
+    if (lessonLevel !== selectedLevel) {
       return false;
     }
     
@@ -356,13 +359,16 @@ export default function LessonsPage() {
                 key={level} 
                 value={level} 
                 label={
-                  <Badge 
-                    color={isCompleted ? "success" : "primary"}
-                    variant="dot"
-                    invisible={!isCompleted || level === 'all'}
-                  >
-                    {level === 'all' ? 'Все' : level}
-                  </Badge>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                    {!isAvailable && <LockIcon fontSize="small" />}
+                    <Badge 
+                      color={isCompleted ? "success" : "primary"}
+                      variant="dot"
+                      invisible={!isCompleted}
+                    >
+                      {level}
+                    </Badge>
+                  </Box>
                 } 
                 disabled={!isAvailable}
                 sx={{

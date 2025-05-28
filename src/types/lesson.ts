@@ -77,6 +77,7 @@ export interface SpacedRepetitionInfo {
 export interface LessonFile {
   fileName: string;            // Имя файла урока
   lessonData: string;          // Содержимое файла урока в формате JSON
+  level?: LessonLevel;         // Уровень урока по CEFR
 }
 
 // Результат загрузки файла урока

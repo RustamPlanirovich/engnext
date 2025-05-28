@@ -44,7 +44,8 @@ export async function POST(request: NextRequest) {
         }
         
         try {
-          const result = await saveLesson(file.fileName, file.lessonData);
+          // Используем уровень CEFR, если он указан
+          const result = await saveLesson(file.fileName, file.lessonData, file.level);
           results.push({
             fileName: file.fileName,
             success: result.success,
@@ -78,7 +79,8 @@ export async function POST(request: NextRequest) {
         );
       }
       
-      const result = await saveLesson(data.fileName, data.lessonData);
+      // Используем уровень CEFR, если он указан
+      const result = await saveLesson(data.fileName, data.lessonData, data.level);
       
       if (!result.success) {
         return NextResponse.json(

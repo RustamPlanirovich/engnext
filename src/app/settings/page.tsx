@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { materialDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import { LessonLevel } from '@/types/lesson';
 import { 
   Typography, 
   Box, 
@@ -46,7 +47,15 @@ import {
   Code as CodeIcon
 } from '@mui/icons-material';
 import ClientLayout from '@/components/ClientLayout';
-import { fetchLessons, uploadLesson, deleteLesson, createAnalyticsBackup, fetchLessonForEditing, updateLesson, uploadMultipleLessons } from '@/utils/clientUtils';
+import { 
+  fetchLessons, 
+  uploadLesson, 
+  deleteLesson, 
+  uploadMultipleLessons, 
+  createAnalyticsBackup, 
+  fetchLessonForEditing, 
+  updateLesson 
+} from '@/utils/clientUtils';
 import { fetchProfileSettings, updateProfileSettings, isAdmin } from '@/utils/clientProfileUtils';
 import { getActiveProfileId } from '@/utils/clientUtils';
 import { UserSettings, ExerciseMode } from '@/types/lesson';
@@ -93,6 +102,7 @@ export default function SettingsPage() {
   // Состояние для администрирования уроков
   const [fileName, setFileName] = useState('');
   const [fileContent, setFileContent] = useState('');
+  const [selectedLevel, setSelectedLevel] = useState<string>('A0');
   const [lessons, setLessons] = useState<{id: string, title: string}[]>([]);
   const [selectedFiles, setSelectedFiles] = useState<{fileName: string, lessonData: string}[]>([]);
   const [uploadResults, setUploadResults] = useState<{fileName: string, success: boolean, message: string}[]>([]);
@@ -206,7 +216,11 @@ export default function SettingsPage() {
       const reader = new FileReader();
       reader.onload = (e) => {
         const content = e.target?.result as string;
-        setSelectedFiles(prev => [...prev, { fileName: file.name, lessonData: content }]);
+        setSelectedFiles(prev => [...prev, { 
+          fileName: file.name, 
+          lessonData: content,
+          level: selectedLevel // Используем текущий выбранный уровень
+        }]);
       };
       reader.readAsText(file);
     });
@@ -215,7 +229,7 @@ export default function SettingsPage() {
   // Сохранение одного урока
   const handleSaveLesson = async () => {
     try {
-      const result = await uploadLesson(fileName, fileContent);
+      const result = await uploadLesson(fileName, fileContent, selectedLevel);
       
       setSnackbar({
         open: true,
@@ -230,6 +244,7 @@ export default function SettingsPage() {
       // Сбрасываем поля
       setFileName('');
       setFileContent('');
+      setSelectedLevel('A0'); // Сбрасываем уровень на значение по умолчанию
     } catch (error) {
       console.error('Error saving lesson:', error);
       setSnackbar({
@@ -541,6 +556,29 @@ export default function SettingsPage() {
                               </Typography>
                             )}
                             
+                            <FormControl fullWidth sx={{ mt: 2, mb: 2 }}>
+                              <InputLabel id="level-select-label">Уровень CEFR</InputLabel>
+                              <Select
+                                labelId="level-select-label"
+                                value={selectedLevel}
+                                label="Уровень CEFR"
+                                onChange={(e) => setSelectedLevel(e.target.value)}
+                              >
+                                {Object.values(LessonLevel).map((level) => (
+                                  <MenuItem key={level} value={level}>
+                                    {level} {level === 'A0' ? '(Начальный)' : 
+                                           level === 'A1' ? '(Элементарный)' : 
+                                           level === 'A2' ? '(Предсредний)' : 
+                                           level === 'B1' ? '(Средний)' : 
+                                           level === 'B2' ? '(Выше среднего)' : 
+                                           level === 'C1' ? '(Продвинутый)' : 
+                                           level === 'C2' ? '(Свободное владение)' : ''}
+                                  </MenuItem>
+                                ))}
+                              </Select>
+                              <FormHelperText>Выберите уровень сложности урока по шкале CEFR</FormHelperText>
+                            </FormControl>
+                            
                             <Button
                               variant="contained"
                               color="primary"
@@ -572,6 +610,29 @@ export default function SettingsPage() {
                                 onChange={handleMultipleFilesUpload}
                               />
                             </Button>
+                            
+                            <FormControl fullWidth sx={{ mt: 2, mb: 2 }}>
+                              <InputLabel id="multiple-level-select-label">Уровень CEFR для всех файлов</InputLabel>
+                              <Select
+                                labelId="multiple-level-select-label"
+                                value={selectedLevel}
+                                label="Уровень CEFR для всех файлов"
+                                onChange={(e) => setSelectedLevel(e.target.value)}
+                              >
+                                {Object.values(LessonLevel).map((level) => (
+                                  <MenuItem key={`multiple-${level}`} value={level}>
+                                    {level} {level === 'A0' ? '(Начальный)' : 
+                                           level === 'A1' ? '(Элементарный)' : 
+                                           level === 'A2' ? '(Предсредний)' : 
+                                           level === 'B1' ? '(Средний)' : 
+                                           level === 'B2' ? '(Выше среднего)' : 
+                                           level === 'C1' ? '(Продвинутый)' : 
+                                           level === 'C2' ? '(Свободное владение)' : ''}
+                                  </MenuItem>
+                                ))}
+                              </Select>
+                              <FormHelperText>Выберите общий уровень сложности для всех загружаемых уроков</FormHelperText>
+                            </FormControl>
                             
                             {selectedFiles.length > 0 && (
                               <Typography variant="body2" sx={{ mb: 1 }}>

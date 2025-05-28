@@ -639,7 +639,7 @@ export default function ExerciseComponent({
       setTimeLeft(null);
     } else {
       setTimerEnabled(true);
-      setTimeLeft(30); // Default timer duration
+      setTimeLeft(timerDuration); // Use the timerDuration from profile settings
     }
   };
   
