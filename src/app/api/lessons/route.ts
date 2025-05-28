@@ -5,7 +5,7 @@ import { getLessons, getLesson, copyLesson1ToLessonsDir } from '@/utils/serverUt
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
     // Ensure lesson1.json is copied to the lessons directory
     copyLesson1ToLessonsDir();
@@ -17,19 +17,29 @@ export async function GET() {
       lessonIds.unshift('lesson1');
     }
     
+    // Get the level filter from query parameters if present
+    const url = new URL(request.url);
+    const levelFilter = url.searchParams.get('level');
+    
     // Преобразуем ID в объекты с дополнительным полем для сортировки
     const lessons = lessonIds.map(id => {
       const lessonData = getLesson(id);
       // Извлекаем числовой номер урока для правильной сортировки
       const lessonNumber = parseInt(id.replace(/\D/g, '')) || 0;
       
+      // Определяем уровень урока (по умолчанию A0 для старых уроков)
+      const level = lessonData?.level || 'A0';
+      
       return {
         id,
         title: lessonData?.concept || `Урок ${id}`,
         description: lessonData?.explanation?.substring(0, 150) + '...' || 'Описание отсутствует',
+        level,
         sortOrder: lessonNumber // Добавляем поле для сортировки
       };
     })
+    // Фильтруем по уровню, если указан фильтр
+    .filter(lesson => !levelFilter || lesson.level === levelFilter)
     // Сортируем по числовому порядку
     .sort((a, b) => a.sortOrder - b.sortOrder)
     // Удаляем вспомогательное поле из результата

@@ -14,11 +14,23 @@ export interface Subconcept {
   subconcepts?: Subconcept[];
 }
 
+// Уровни уроков по CEFR (Common European Framework of Reference for Languages)
+export enum LessonLevel {
+  A0 = 'A0', // Beginner
+  A1 = 'A1', // Elementary
+  A2 = 'A2', // Pre-Intermediate
+  B1 = 'B1', // Intermediate
+  B2 = 'B2', // Upper-Intermediate
+  C1 = 'C1', // Advanced
+  C2 = 'C2'  // Proficiency
+}
+
 export interface Lesson {
   concept: string;
   explanation: string;
   source: string;
   subconcepts: Subconcept[];
+  level?: LessonLevel; // Уровень урока по CEFR
 }
 
 export interface AnalyticsItem {
@@ -58,6 +70,7 @@ export interface SpacedRepetitionInfo {
   nextReviewDate: number;       // Дата следующего повторения (в миллисекундах)
   isHidden: boolean;           // Скрыт ли урок
   lastErrorCount?: number;     // Количество ошибок при последнем прохождении
+  level?: LessonLevel;         // Уровень урока по CEFR
 }
 
 // Тип для загрузки файла урока

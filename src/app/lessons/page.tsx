@@ -13,18 +13,22 @@ import {
   Chip,
   Switch,
   FormControlLabel,
-  Tooltip
+  Tooltip,
+  Tabs,
+  Tab,
+  Badge
 } from '@mui/material';
 import { 
   CheckCircle as CheckCircleIcon,
   Refresh as RefreshIcon,
   AccessTime as AccessTimeIcon,
   Visibility as VisibilityIcon,
-  VisibilityOff as VisibilityOffIcon
+  VisibilityOff as VisibilityOffIcon,
+  Lock as LockIcon
 } from '@mui/icons-material';
 import Link from 'next/link';
 import ClientLayout from '@/components/ClientLayout';
-import { LessonStatus, SpacedRepetitionInfo } from '@/types/lesson';
+import { LessonStatus, SpacedRepetitionInfo, LessonLevel } from '@/types/lesson';
 import { 
   fetchLessons, 
   getAllLessonsWithRepetitionInfo, 
@@ -35,11 +39,40 @@ import {
 import { fetchProfileSettings } from '@/utils/clientProfileUtils';
 
 export default function LessonsPage() {
-  const [lessons, setLessons] = useState<Array<{ id: string, title: string, description: string }>>([]);
+  const [lessons, setLessons] = useState<Array<{ id: string, title: string, description: string, level: string }>>([]);
   const [repetitionInfo, setRepetitionInfo] = useState<SpacedRepetitionInfo[]>([]);
   const [loading, setLoading] = useState(true);
   const [hideCompleted, setHideCompleted] = useState(false);
   const [showDueForReview, setShowDueForReview] = useState(true);
+  const [selectedLevel, setSelectedLevel] = useState<string>('all');
+  const [completedLevels, setCompletedLevels] = useState<Set<string>>(new Set(['A0']));
+  
+  // Список всех уровней CEFR
+  const levels = ['all', 'A0', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+  
+  // Функция для проверки, доступен ли уровень
+  const isLevelAvailable = (level: string): boolean => {
+    if (level === 'all' || level === 'A0') return true;
+    
+    // Получаем предыдущий уровень
+    const levelIndex = levels.indexOf(level);
+    if (levelIndex <= 1) return true; // A0 всегда доступен
+    
+    const previousLevel = levels[levelIndex - 1];
+    return completedLevels.has(previousLevel);
+  };
+  
+  // Функция для проверки, завершен ли уровень
+  const isLevelCompleted = (level: string): boolean => {
+    return completedLevels.has(level);
+  };
+  
+  // Функция для получения предыдущего уровня
+  const getPreviousLevel = (level: string): string => {
+    const levelIndex = levels.indexOf(level);
+    if (levelIndex <= 1) return 'A0'; // Если это A0 или 'all', возвращаем A0
+    return levels[levelIndex - 1];
+  };
   
   // Загрузка уроков, информации о повторении и настроек профиля
   useEffect(() => {
@@ -48,11 +81,47 @@ export default function LessonsPage() {
         setLoading(true);
         // Загружаем список уроков
         const response = await fetchLessons();
-        setLessons(response.lessons);
         
         // Загружаем информацию о повторении
         const repetitionData = await getAllLessonsWithRepetitionInfo();
         setRepetitionInfo(repetitionData);
+        
+        // Вычисляем завершенные уровни на основе завершенных уроков
+        const completedLessonsMap = new Map<string, number>();
+        const totalLessonsMap = new Map<string, number>();
+        
+        // Считаем количество уроков на каждом уровне
+        response.lessons.forEach((lesson: any) => {
+          const level = lesson.level || 'A0';
+          totalLessonsMap.set(level, (totalLessonsMap.get(level) || 0) + 1);
+        });
+        
+        // Считаем завершенные уроки на каждом уровне
+        repetitionData.forEach(info => {
+          const lesson = response.lessons.find((l: any) => l.id === info.lessonId);
+          if (lesson && (info.status === LessonStatus.Completed || info.status === LessonStatus.CompletedAllCycles)) {
+            const level = lesson.level || 'A0';
+            completedLessonsMap.set(level, (completedLessonsMap.get(level) || 0) + 1);
+          }
+        });
+        
+        // Определяем, какие уровни завершены (если все уроки уровня завершены)
+        const newCompletedLevels = new Set<string>(['A0']); // A0 всегда доступен
+        
+        for (const level of levels) {
+          if (level === 'all' || level === 'A0') continue;
+          
+          const totalLessons = totalLessonsMap.get(level) || 0;
+          const completedLessons = completedLessonsMap.get(level) || 0;
+          
+          // Если все уроки уровня завершены и есть хотя бы один урок на этом уровне
+          if (totalLessons > 0 && completedLessons === totalLessons) {
+            newCompletedLevels.add(level);
+          }
+        }
+        
+        setCompletedLevels(newCompletedLevels);
+        setLessons(response.lessons);
         
         // Загружаем настройки профиля
         const activeProfileId = getActiveProfileId();
@@ -169,11 +238,25 @@ export default function LessonsPage() {
    * Правила фильтрации:
    * 1. Если "Show for repetition" включено, показываем только уроки, которые нужно повторить
    * 2. Если "Hide completed" включено, скрываем завершенные уроки, кроме тех, которые нужно повторить
+   * 3. Фильтруем по выбранному уровню
+   * 4. Проверяем доступность уровня урока
    */
-  const filteredLessons = lessons.filter(lesson => {
+  const filteredLessons = lessons.filter((lesson: any) => {
     const status = getLessonStatus(lesson.id);
     const isHidden = isLessonHidden(lesson.id);
     const isDueForReview = isLessonDueForReview(lesson.id);
+    const lessonLevel = lesson.level || 'A0';
+    
+    // Проверяем, доступен ли уровень урока
+    // Если уровень недоступен, скрываем урок
+    if (!isLevelAvailable(lessonLevel)) {
+      return false;
+    }
+    
+    // Фильтруем по выбранному уровню
+    if (selectedLevel !== 'all' && lessonLevel !== selectedLevel) {
+      return false;
+    }
     
     // Если "Show for repetition" включено, показываем только уроки для повторения
     if (showDueForReview) {
@@ -189,11 +272,7 @@ export default function LessonsPage() {
     // Если "Hide completed" включено
     if (hideCompleted) {
       // Проверяем, завершены ли все циклы повторения
-      const isCompleted = isAllCyclesCompleted(lesson.id);
-      
-      // Если все циклы завершены, всегда показываем урок
-      
-      if(status===LessonStatus.CompletedAllCycles){
+      if(status === LessonStatus.CompletedAllCycles){
         return false;
       }
       
@@ -254,17 +333,64 @@ export default function LessonsPage() {
         </Box>
       </Box>
       
+      {/* Табы для выбора уровня */}
+      <Box sx={{ width: '100%', mb: 3 }}>
+        <Tabs 
+          value={selectedLevel} 
+          onChange={(_, newValue) => setSelectedLevel(newValue)}
+          variant="scrollable"
+          scrollButtons="auto"
+          sx={{ 
+            '& .MuiTab-root': { 
+              minWidth: 80,
+              fontWeight: 'bold',
+            }
+          }}
+        >
+          {levels.map(level => {
+            const isAvailable = isLevelAvailable(level);
+            const isCompleted = isLevelCompleted(level);
+            
+            return (
+              <Tab 
+                key={level} 
+                value={level} 
+                label={
+                  <Badge 
+                    color={isCompleted ? "success" : "primary"}
+                    variant="dot"
+                    invisible={!isCompleted || level === 'all'}
+                  >
+                    {level === 'all' ? 'Все' : level}
+                  </Badge>
+                } 
+                disabled={!isAvailable}
+                sx={{
+                  opacity: isAvailable ? 1 : 0.5,
+                  color: isAvailable ? 'text.primary' : 'text.disabled',
+                  '&.Mui-disabled': {
+                    color: 'text.disabled',
+                  }
+                }}
+              />
+            );
+          })}
+        </Tabs>
+      </Box>
+      
       {loading ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
           <CircularProgress />
         </Box>
       ) : (
         <Grid container spacing={3}>
-          {filteredLessons.map((lesson) => {
+          {filteredLessons.map((lesson: any) => {
             const status = getLessonStatus(lesson.id);
             const isDueForReview = isLessonDueForReview(lesson.id);
             const isCompleted = isAllCyclesCompleted(lesson.id);
             const nextReviewDate = getNextReviewDate(lesson.id);
+            const lessonLevel = lesson.level || 'A0';
+            const isLevelLocked = !isLevelAvailable(lessonLevel);
             
             return (
               <Grid item xs={12} sm={6} md={4} key={lesson.id} >
@@ -275,20 +401,34 @@ export default function LessonsPage() {
                     flexDirection: 'column',
                     transition: 'transform 0.2s',
                     '&:hover': {
-                      transform: 'translateY(-4px)',
-                      boxShadow: '0 8px 16px rgba(0, 0, 0, 0.3)',
+                      transform: isLevelLocked ? 'none' : 'translateY(-4px)',
+                      boxShadow: isLevelLocked ? 'none' : '0 8px 16px rgba(0, 0, 0, 0.3)',
                     },
-                     // Анимированный градиентный фон для уроков, завершивших все циклы повторения
-                     ...(isCompleted && {
+                    // Анимированный градиентный фон для уроков, завершивших все циклы повторения
+                    ...(isCompleted && {
                       background: 'linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab)',
+                    }),
+                    // Затемнение для заблокированных уроков
+                    ...(isLevelLocked && {
+                      opacity: 0.7,
+                      filter: 'grayscale(0.8)',
+                      position: 'relative',
                     })
                   }}
                 >
                   <CardContent sx={{ flexGrow: 1}}>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1 }}>
-                      <Typography variant="h6" component="h2" gutterBottom>
-                        {lesson.title}
-                      </Typography>
+                      <Box>
+                        <Typography variant="h6" component="h2" gutterBottom>
+                          {lesson.title}
+                        </Typography>
+                        <Chip 
+                          label={lesson.level || 'A0'} 
+                          size="small" 
+                          color="primary" 
+                          sx={{ mb: 1 }} 
+                        />
+                      </Box>
                       
                       <Box>
                         {status === LessonStatus.Completed && (
@@ -338,8 +478,37 @@ export default function LessonsPage() {
                     )}
                   </CardContent>
                   
+                  {isLevelLocked && (
+                    <Box 
+                      sx={{ 
+                        position: 'absolute', 
+                        top: 0, 
+                        left: 0, 
+                        right: 0, 
+                        bottom: 0, 
+                        display: 'flex', 
+                        flexDirection: 'column',
+                        alignItems: 'center', 
+                        justifyContent: 'center',
+                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                        zIndex: 1,
+                        borderRadius: 'inherit'
+                      }}
+                    >
+                      <LockIcon sx={{ fontSize: 40, color: 'white', mb: 1 }} />
+                      <Typography variant="body1" color="white" align="center" sx={{ px: 2 }}>
+                        Для доступа к этому уровню необходимо завершить все уроки уровня {getPreviousLevel(lessonLevel)}
+                      </Typography>
+                    </Box>
+                  )}
+                  
                   <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                    {isDueForReview ? (
+                    {isLevelLocked ? (
+                      <Button variant="contained" color="primary" fullWidth disabled>
+                        <LockIcon sx={{ mr: 1 }} />
+                        Уровень заблокирован
+                      </Button>
+                    ) : isDueForReview ? (
                       <Link href={`/lessons/${lesson.id}`} passHref style={{ flexGrow: 1 }}>
                         <Button variant="contained" color="warning" fullWidth>
                           Повторить

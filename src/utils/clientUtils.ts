@@ -56,7 +56,7 @@ export const setActiveProfileIdLocal = (profileId: string): void => {
 };
 
 // Client-side API functions
-export const fetchLessons = async (): Promise<{ lessons: { id: string, title: string, description: string }[] }> => {
+export const fetchLessons = async (): Promise<{ lessons: { id: string, title: string, description: string, level: string }[] }> => {
   const baseUrl = getBaseUrl();
   const response = await fetch(`${baseUrl}/api/lessons`);
   if (!response.ok) {

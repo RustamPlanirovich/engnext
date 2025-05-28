@@ -1,16 +1,17 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { notFound, useParams } from 'next/navigation';
-import { Typography, Box, Card, CardContent, CardActions, Button, Grid, CircularProgress, Snackbar, Alert, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Tooltip } from '@mui/material';
+import { notFound, useParams, useRouter } from 'next/navigation';
+import { Typography, Box, Card, CardContent, CardActions, Button, Grid, CircularProgress, Snackbar, Alert, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Tooltip, Paper } from '@mui/material';
 import ClientLayout from '@/components/ClientLayout';
-import { fetchLesson, getLessonSpacedRepetitionInfo, markLessonCompleted, toggleLessonVisibility, completeReviewLesson } from '@/utils/clientUtils';
+import { fetchLesson, getLessonSpacedRepetitionInfo, markLessonCompleted, toggleLessonVisibility, completeReviewLesson, getAllLessonsWithRepetitionInfo, fetchLessons } from '@/utils/clientUtils';
 import Link from 'next/link';
-import { Lesson, LessonStatus, SpacedRepetitionInfo } from '@/types/lesson';
+import { Lesson, LessonStatus, SpacedRepetitionInfo, LessonLevel } from '@/types/lesson';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import RefreshIcon from '@mui/icons-material/Refresh';
+import LockIcon from '@mui/icons-material/Lock';
 
 interface LessonPageProps {
   params: {
@@ -20,6 +21,7 @@ interface LessonPageProps {
 
 export default function LessonPage() {
   const params = useParams();
+  const router = useRouter();
   const lessonId = params.lessonId as string;
   
   const [lesson, setLesson] = useState<Lesson | null>(null);
@@ -28,6 +30,30 @@ export default function LessonPage() {
   const [repetitionInfo, setRepetitionInfo] = useState<SpacedRepetitionInfo | null>(null);
   const [snackbar, setSnackbar] = useState<{open: boolean, message: string, severity: 'success' | 'error' | 'info' | 'warning'}>({ open: false, message: '', severity: 'info' });
   const [completeDialog, setCompleteDialog] = useState(false);
+  const [isLevelLocked, setIsLevelLocked] = useState(false);
+  const [completedLevels, setCompletedLevels] = useState<Set<string>>(new Set(['A0']));
+  
+  // Список всех уровней CEFR
+  const levels = ['all', 'A0', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+  
+  // Функция для проверки, доступен ли уровень
+  const isLevelAvailable = (level: string): boolean => {
+    if (level === 'all' || level === 'A0') return true;
+    
+    // Получаем предыдущий уровень
+    const levelIndex = levels.indexOf(level);
+    if (levelIndex <= 1) return true; // A0 всегда доступен
+    
+    const previousLevel = levels[levelIndex - 1];
+    return completedLevels.has(previousLevel);
+  };
+  
+  // Функция для получения предыдущего уровня
+  const getPreviousLevel = (level: string): string => {
+    const levelIndex = levels.indexOf(level);
+    if (levelIndex <= 1) return 'A0'; // Если это A0 или 'all', возвращаем A0
+    return levels[levelIndex - 1];
+  };
   
   // Загрузка урока и информации о повторении
   useEffect(() => {
@@ -46,6 +72,58 @@ export default function LessonPage() {
         // Загружаем информацию о повторении
         const info = await getLessonSpacedRepetitionInfo(lessonId);
         setRepetitionInfo(info);
+        
+        // Загружаем все уроки и информацию о повторении для проверки доступности уровня
+        const lessonsResponse = await fetchLessons();
+        const repetitionData = await getAllLessonsWithRepetitionInfo();
+        
+        // Вычисляем завершенные уровни на основе завершенных уроков
+        const completedLessonsMap = new Map<string, number>();
+        const totalLessonsMap = new Map<string, number>();
+        
+        // Считаем количество уроков на каждом уровне
+        lessonsResponse.lessons.forEach((lesson: any) => {
+          const level = lesson.level || 'A0';
+          totalLessonsMap.set(level, (totalLessonsMap.get(level) || 0) + 1);
+        });
+        
+        // Считаем завершенные уроки на каждом уровне
+        repetitionData.forEach(info => {
+          const lesson = lessonsResponse.lessons.find((l: any) => l.id === info.lessonId);
+          if (lesson && (info.status === LessonStatus.Completed || info.status === LessonStatus.CompletedAllCycles)) {
+            const level = lesson.level || 'A0';
+            completedLessonsMap.set(level, (completedLessonsMap.get(level) || 0) + 1);
+          }
+        });
+        
+        // Определяем, какие уровни завершены (если все уроки уровня завершены)
+        const newCompletedLevels = new Set<string>(['A0']); // A0 всегда доступен
+        
+        for (const level of levels) {
+          if (level === 'all' || level === 'A0') continue;
+          
+          const totalLessons = totalLessonsMap.get(level) || 0;
+          const completedLessons = completedLessonsMap.get(level) || 0;
+          
+          // Если все уроки уровня завершены и есть хотя бы один урок на этом уровне
+          if (totalLessons > 0 && completedLessons === totalLessons) {
+            newCompletedLevels.add(level);
+          }
+        }
+        
+        setCompletedLevels(newCompletedLevels);
+        
+        // Проверяем, доступен ли уровень текущего урока
+        const currentLesson = lessonsResponse.lessons.find((l: any) => l.id === lessonId);
+        if (currentLesson) {
+          const lessonLevel = currentLesson.level || 'A0';
+          const isAvailable = isLevelAvailable(lessonLevel);
+          setIsLevelLocked(!isAvailable);
+          
+          if (!isAvailable) {
+            setError(`Урок недоступен. Сначала необходимо завершить все уроки уровня ${getPreviousLevel(lessonLevel)}.`);
+          }
+        }
       } catch (error) {
         console.error(`Error fetching lesson ${lessonId}:`, error);
         setError('Ошибка при загрузке урока');
@@ -61,10 +139,38 @@ export default function LessonPage() {
   if (error) {
     return (
       <ClientLayout>
-        <Box sx={{ p: 4, textAlign: 'center' }}>
-          <Typography variant="h6" color="error">
-            {error}
-          </Typography>
+        <Paper 
+          elevation={3} 
+          sx={{ 
+            p: 4, 
+            textAlign: 'center', 
+            maxWidth: 600, 
+            mx: 'auto', 
+            mt: 4,
+            borderRadius: 2,
+            ...(isLevelLocked && {
+              borderLeft: '5px solid #f44336'
+            })
+          }}
+        >
+          {isLevelLocked ? (
+            <>
+              <LockIcon color="error" sx={{ fontSize: 60, mb: 2 }} />
+              <Typography variant="h5" color="error" gutterBottom>
+                Уровень заблокирован
+              </Typography>
+              <Typography variant="body1" paragraph>
+                {error}
+              </Typography>
+              <Typography variant="body2" color="text.secondary" paragraph>
+                Для прогресса в изучении языка важно осваивать материал последовательно.
+              </Typography>
+            </>
+          ) : (
+            <Typography variant="h6" color="error">
+              {error}
+            </Typography>
+          )}
           <Button 
             variant="contained" 
             color="primary" 
@@ -74,7 +180,7 @@ export default function LessonPage() {
           >
             Вернуться к списку уроков
           </Button>
-        </Box>
+        </Paper>
       </ClientLayout>
     );
   }
