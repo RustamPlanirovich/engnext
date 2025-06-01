@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { 
@@ -31,7 +31,8 @@ import {
   Settings as SettingsIcon,
   Person as PersonIcon,
   AccountCircle as AccountCircleIcon,
-  ChevronLeft as ChevronLeftIcon
+  ChevronLeft as ChevronLeftIcon,
+  Chat as ChatIcon
 } from '@mui/icons-material';
 import { getActiveProfileId } from '@/utils/clientUtils';
 import { fetchProfile } from '@/utils/clientProfileUtils';
@@ -46,22 +47,39 @@ interface LayoutProps {
   children: ReactNode;
 }
 
-// Используем глобальную переменную для сохранения состояния между рендерами
-let menuCollapsedState = false;
-if (typeof window !== 'undefined') {
-  try {
-    menuCollapsedState = localStorage.getItem('menuCollapsed') === 'true';
-  } catch (e) {
-    console.error('Error accessing localStorage:', e);
-  }
+// Хук для безопасного использования значений только на стороне клиента
+function useClientSideValue<T>(key: string, defaultValue: T): [T, (value: T) => void] {
+  const [value, setValue] = useState<T>(defaultValue);
+
+  useEffect(() => {
+    try {
+      const storedValue = localStorage.getItem(key);
+      if (storedValue !== null) {
+        setValue(storedValue === 'true' ? true as T : storedValue === 'false' ? false as T : JSON.parse(storedValue));
+      }
+    } catch (e) {
+      console.error(`Error accessing localStorage for key ${key}:`, e);
+    }
+  }, [key]);
+
+  const setClientValue = useCallback((newValue: T) => {
+    setValue(newValue);
+    try {
+      localStorage.setItem(key, typeof newValue === 'object' ? JSON.stringify(newValue) : String(newValue));
+    } catch (e) {
+      console.error(`Error setting localStorage for key ${key}:`, e);
+    }
+  }, [key]);
+
+  return [value, setClientValue];
 }
 
 export default function Layout({ children }: LayoutProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [profileName, setProfileName] = useState<string | null>(null);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  // Используем глобальную переменную для инициализации
-  const [isMenuCollapsed, setIsMenuCollapsed] = useState(menuCollapsedState);
+  // Используем хук для безопасной работы с localStorage
+  const [isMenuCollapsed, setIsMenuCollapsed] = useClientSideValue('menuCollapsed', false);
   const pathname = usePathname();
   const router = useRouter();
   const theme = useTheme();
@@ -74,10 +92,6 @@ export default function Layout({ children }: LayoutProps) {
   const toggleMenuCollapse = () => {
     const newState = !isMenuCollapsed;
     setIsMenuCollapsed(newState);
-    menuCollapsedState = newState; // Обновляем глобальную переменную
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('menuCollapsed', String(newState));
-    }
   };
 
   // Проверка наличия активного профиля
@@ -125,6 +139,7 @@ export default function Layout({ children }: LayoutProps) {
     { text: 'Главная', href: '/', icon: <HomeIcon /> },
     { text: 'Уроки', href: '/lessons', icon: <BookIcon /> },
     { text: 'Практика', href: '/practice', icon: <PracticeIcon /> },
+    { text: 'Диалоги', href: '/dialogs', icon: <ChatIcon /> },
     //{ text: 'Интервальное повторение', href: '/review', icon: <PracticeIcon /> },
     { text: 'Аналитика', href: '/analytics', icon: <AnalyticsIcon /> },
     { text: 'Настройки', href: '/settings', icon: <SettingsIcon /> },
@@ -256,7 +271,29 @@ export default function Layout({ children }: LayoutProps) {
             '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
           }}
         >
-          {drawer}
+          {/* Force mobile drawer to always show text regardless of desktop collapsed state */}
+          <div>
+            <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', pr: 1 }}>
+              <Typography variant="h6" noWrap component="div">
+                English Galaxy
+              </Typography>
+              <IconButton onClick={handleDrawerToggle}>
+                <ChevronLeftIcon />
+              </IconButton>
+            </Toolbar>
+            <List>
+              {menuItems.map((item) => (
+                <ListItem key={item.text} disablePadding>
+                  <Link href={item.href} passHref style={{ textDecoration: 'none', width: '100%', color: 'inherit' }}>
+                    <ListItemButton selected={pathname === item.href}>
+                      <ListItemIcon>{item.icon}</ListItemIcon>
+                      <ListItemText primary={item.text} />
+                    </ListItemButton>
+                  </Link>
+                </ListItem>
+              ))}
+            </List>
+          </div>
         </Drawer>
         <Drawer
           variant="permanent"

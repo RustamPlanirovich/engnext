@@ -1,16 +1,14 @@
 'use client';
 
 import * as React from 'react';
-import { ReactNode } from 'react';
-import { ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
 import { useServerInsertedHTML } from 'next/navigation';
-import theme from '@/styles/theme';
+import { CacheProvider as EmotionCacheProvider } from '@emotion/react';
 
-// Create a custom EmotionCache provider for Next.js App Router
-function NextAppDirEmotionCacheProvider(props: { options: any; children: React.ReactNode }) {
+// This implementation is from the Material UI Next.js App Router example
+// https://github.com/mui/material-ui/tree/master/examples/material-ui-nextjs
+
+export function NextAppDirEmotionCacheProvider(props: { options: any; children: React.ReactNode }) {
   const { options, children } = props;
 
   const [{ cache, flush }] = React.useState(() => {
@@ -53,16 +51,5 @@ function NextAppDirEmotionCacheProvider(props: { options: any; children: React.R
     );
   });
 
-  return <CacheProvider value={cache}>{children}</CacheProvider>;
-}
-
-export default function ThemeRegistry({ children }: { children: ReactNode }) {
-  return (
-    <NextAppDirEmotionCacheProvider options={{ key: 'mui' }}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        {children}
-      </ThemeProvider>
-    </NextAppDirEmotionCacheProvider>
-  );
+  return <EmotionCacheProvider value={cache}>{children}</EmotionCacheProvider>;
 }

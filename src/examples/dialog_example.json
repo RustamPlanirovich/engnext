@@ -1,0 +1,83 @@
+{
+  "lessonId": "lesson1",
+  "level": "A1",
+  "dialogues": [
+    {
+      "level": "easy",
+      "dialogues": [
+        [
+          {
+            "name": "A",
+            "russian": "Привет! Меня зовут Иван. Как тебя зовут?",
+            "english": "Hello! My name is Ivan. What's your name?",
+            "voiceover": "dialog1_1.mp3"
+          },
+          {
+            "name": "B",
+            "russian": "Привет, Иван! Меня зовут Анна. Очень приятно познакомиться.",
+            "english": "Hello, Ivan! My name is Anna. Nice to meet you.",
+            "voiceover": "dialog1_2.mp3"
+          },
+          {
+            "name": "A",
+            "russian": "Мне тоже очень приятно, Анна. Откуда ты?",
+            "english": "Nice to meet you too, Anna. Where are you from?",
+            "voiceover": "dialog1_3.mp3"
+          }
+        ],
+        [
+          {
+            "name": "A",
+            "russian": "Добрый день! Вы говорите по-английски?",
+            "english": "Good afternoon! Do you speak English?",
+            "voiceover": "dialog2_1.mp3"
+          },
+          {
+            "name": "B",
+            "russian": "Да, немного. А вы откуда?",
+            "english": "Yes, a little. Where are you from?",
+            "voiceover": "dialog2_2.mp3"
+          }
+        ]
+      ]
+    },
+    {
+      "level": "medium",
+      "dialogues": [
+        [
+          {
+            "name": "A",
+            "russian": "Добрый день! Можно меню, пожалуйста?",
+            "english": "Good afternoon! Can I have the menu, please?",
+            "voiceover": "dialog3_1.mp3"
+          },
+          {
+            "name": "B",
+            "russian": "Конечно, вот меню. Что будете заказывать?",
+            "english": "Of course, here's the menu. What would you like to order?",
+            "voiceover": "dialog3_2.mp3"
+          }
+        ]
+      ]
+    },
+    {
+      "level": "hard",
+      "dialogues": [
+        [
+          {
+            "name": "A",
+            "russian": "Извините, я не понимаю. Не могли бы вы говорить помедленнее?",
+            "english": "Excuse me, I don't understand. Could you speak more slowly?",
+            "voiceover": "dialog4_1.mp3"
+          },
+          {
+            "name": "B",
+            "russian": "Конечно, извините. Я спрашивал, как долго вы изучаете русский язык?",
+            "english": "Of course, I'm sorry. I was asking how long have you been studying Russian?",
+            "voiceover": "dialog4_2.mp3"
+          }
+        ]
+      ]
+    }
+  ]
+}

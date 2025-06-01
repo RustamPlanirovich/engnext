@@ -37,6 +37,7 @@ import {
   Paper,
   FormHelperText
 } from '@mui/material';
+import DialogUploader from '@/components/DialogUploader';
 import { 
   Delete as DeleteIcon, 
   Backup as BackupIcon,
@@ -422,6 +423,7 @@ export default function SettingsPage() {
                 <Tab label="Настройки профиля" />
                 {isAdminUser && <Tab label="Управление уроками" />}
                 {isAdminUser && <Tab label="Редактор уроков" />}
+                {isAdminUser && <Tab label="Управление диалогами" />}
                 {isAdminUser && <Tab label="Аналитика" />}
               </Tabs>
             </Box>
@@ -971,9 +973,26 @@ export default function SettingsPage() {
               </TabPanel>
             )}
             
-            {/* Вкладка аналитики (только для администратора) */}
+            {/* Вкладка управления диалогами (только для администратора) */}
             {isAdminUser && (
               <TabPanel value={tabValue} index={3}>
+                <Card>
+                  <CardContent>
+                    <DialogUploader onUploadSuccess={() => {
+                      setSnackbar({
+                        open: true,
+                        message: 'Диалоги успешно загружены',
+                        severity: 'success'
+                      });
+                    }} />
+                  </CardContent>
+                </Card>
+              </TabPanel>
+            )}
+            
+            {/* Вкладка аналитики (только для администратора) */}
+            {isAdminUser && (
+              <TabPanel value={tabValue} index={4}>
                 <Card>
                   <CardContent>
                     <Typography variant="h6" gutterBottom>
