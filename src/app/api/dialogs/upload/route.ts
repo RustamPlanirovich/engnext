@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { saveDialogSet } from '@/utils/dialogUtils';
+import { saveDialogSet, getDialogSets } from '@/utils/dialogUtils';
 import { DialogFile } from '@/types/dialog';
 import { LessonLevel } from '@/types/lesson';
+
+// Указываем Next.js не кэшировать этот маршрут
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export async function POST(request: NextRequest) {
   try {
@@ -30,10 +34,38 @@ export async function POST(request: NextRequest) {
       data.level
     );
     
-    return NextResponse.json({
-      success: result.success,
-      message: result.message
-    });
+    if (result.success) {
+      console.log(`Dialog for lesson ${data.lessonId} uploaded successfully`);
+      
+      // Принудительно обновляем список диалогов для очистки кэша
+      try {
+        const dialogSets = getDialogSets();
+        console.log(`Refreshed dialog sets after upload. Found ${dialogSets.length} sets including new upload.`);
+        console.log('Dialog set IDs:', dialogSets.map(ds => ds.lessonId));
+      } catch (refreshError) {
+        console.error('Error refreshing dialog sets after upload:', refreshError);
+      }
+    }
+    
+    // Добавляем заголовки для предотвращения кэширования
+    return new NextResponse(
+      JSON.stringify({
+        success: result.success,
+        message: result.message,
+        timestamp: Date.now()
+      }),
+      {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+          'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0',
+          'Pragma': 'no-cache',
+          'Expires': '-1',
+          'Surrogate-Control': 'no-store',
+          'Vary': '*'
+        }
+      }
+    );
   } catch (error) {
     console.error('Error uploading dialog set:', error);
     return NextResponse.json(

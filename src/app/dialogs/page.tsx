@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { 
   Box, 
@@ -18,14 +19,17 @@ import {
 } from '@mui/material';
 import { 
   Chat as ChatIcon,
-  School as SchoolIcon
+  School as SchoolIcon,
+  Refresh as RefreshIcon
 } from '@mui/icons-material';
 import { useTheme } from '@mui/material/styles';
 import ClientLayout from '@/components/ClientLayout';
 import { DialogSet, DialogDifficulty } from '@/types/dialog';
 import { LessonLevel } from '@/types/lesson';
 
-export default function DialogsPage() {
+// Компонент с использованием useSearchParams, обернутый в Suspense
+function DialogsContent() {
+  const searchParams = useSearchParams();
   const [dialogSets, setDialogSets] = useState<DialogSet[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -63,41 +67,72 @@ export default function DialogsPage() {
   
   console.log('Grouped dialogSets by level:', dialogsByLevel);
   
-  useEffect(() => {
-    const fetchDialogSets = async () => {
-      try {
-        setLoading(true);
-        console.log('Fetching dialogs from API...');
-        const response = await fetch('/api/dialogs');
-        
-        if (!response.ok) {
-          throw new Error(`Не удалось загрузить диалоги: ${response.status} ${response.statusText}`);
+  // Функция для загрузки диалогов
+  const fetchDialogSets = async () => {
+    try {
+      setLoading(true);
+      console.log('Fetching dialogs from API...');
+      
+      // Добавляем случайный параметр для предотвращения кэширования
+      const cacheBuster = `t=${Date.now()}-${Math.random().toString(36).substring(2, 15)}`;
+      console.log('Using cache buster:', cacheBuster);
+      
+      // Используем опцию cache: 'no-store' для предотвращения кэширования
+      const response = await fetch(`/api/dialogs?${cacheBuster}`, {
+        method: 'GET',
+        cache: 'no-store',
+        headers: {
+          'Pragma': 'no-cache',
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
         }
-        
-        const data = await response.json();
-        console.log('API response:', data);
-        
-        if (!data.success) {
-          throw new Error(data.error || 'Не удалось загрузить диалоги');
-        }
-        
-        if (Array.isArray(data.dialogSets)) {
-          console.log(`Received ${data.dialogSets.length} dialog sets from API`);
-          setDialogSets(data.dialogSets);
-        } else {
-          console.error('API returned dialogSets in unexpected format:', data.dialogSets);
-          setDialogSets([]);
-        }
-      } catch (err) {
-        console.error('Error fetching dialog sets:', err);
-        setError(err instanceof Error ? err.message : 'Неизвестная ошибка');
-      } finally {
-        setLoading(false);
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Не удалось загрузить диалоги: ${response.status} ${response.statusText}`);
       }
-    };
-    
+      
+      const text = await response.text();
+      console.log('Raw API response:', text);
+      
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch (e) {
+        console.error('Failed to parse JSON response:', e);
+        throw new Error('Некорректный ответ от сервера');
+      }
+      
+      console.log('Parsed API response:', data);
+      
+      if (!data.success) {
+        throw new Error(data.error || 'Не удалось загрузить диалоги');
+      }
+      
+      if (Array.isArray(data.dialogSets)) {
+        console.log(`Received ${data.dialogSets.length} dialog sets from API with timestamp ${data.timestamp}`);
+        console.log('Dialog set IDs:', data.dialogSets.map((ds: DialogSet) => ds.lessonId));
+        setDialogSets(data.dialogSets);
+      } else {
+        console.error('API returned dialogSets in unexpected format:', data.dialogSets);
+        setDialogSets([]);
+      }
+    } catch (err) {
+      console.error('Error fetching dialog sets:', err);
+      setError(err instanceof Error ? err.message : 'Неизвестная ошибка');
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  // Функция для обновления списка диалогов
+  const handleRefresh = () => {
     fetchDialogSets();
-  }, []);
+  };
+  
+  // Загружаем диалоги при монтировании компонента или при изменении параметра refresh
+  useEffect(() => {
+    fetchDialogSets();
+  }, [searchParams]);
   
   const renderContent = () => {
     if (loading) {
@@ -144,9 +179,20 @@ export default function DialogsPage() {
     
     return (
       <Box>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Диалоги
-        </Typography>
+        <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+          <Typography variant="h4" component="h1">
+            Диалоги
+          </Typography>
+          <Button
+            variant="outlined"
+            color="primary"
+            startIcon={<RefreshIcon />}
+            onClick={handleRefresh}
+            disabled={loading}
+          >
+            Обновить
+          </Button>
+        </Box>
         <Divider sx={{ mb: 3 }} />
         
         {Object.entries(dialogsByLevel).length > 0 ? (
@@ -256,9 +302,20 @@ export default function DialogsPage() {
     );
   };
   
+  return renderContent();
+}
+
+// Основной компонент страницы с Suspense
+export default function DialogsPage() {
   return (
     <ClientLayout>
-      {renderContent()}
+      <Suspense fallback={
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="80vh">
+          <CircularProgress />
+        </Box>
+      }>
+        <DialogsContent />
+      </Suspense>
     </ClientLayout>
   );
 }

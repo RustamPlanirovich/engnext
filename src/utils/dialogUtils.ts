@@ -2,10 +2,23 @@ import fs from 'fs';
 import path from 'path';
 import { DialogSet, DialogDifficulty } from '@/types/dialog';
 import { LessonLevel } from '@/types/lesson';
+import getConfig from 'next/config';
+
+// Получаем конфигурацию Next.js
+const { serverRuntimeConfig } = getConfig() || { serverRuntimeConfig: {} };
+
+// Определяем корневую директорию проекта
+const PROJECT_ROOT = serverRuntimeConfig.PROJECT_ROOT || process.cwd();
 
 // Server-side utility functions for dialogs
-const DATA_DIR = path.join(process.cwd(), 'data');
+const DATA_DIR = path.join(PROJECT_ROOT, 'data');
 const DIALOGS_DIR = path.join(DATA_DIR, 'dialogs');
+
+// Логгирование путей для отладки
+console.log('Project root directory:', PROJECT_ROOT);
+console.log('Current working directory:', process.cwd());
+console.log('Data directory path:', DATA_DIR);
+console.log('Dialogs directory path:', DIALOGS_DIR);
 
 // Ensure dialogs directory exists
 export const ensureDialogsDirectory = () => {

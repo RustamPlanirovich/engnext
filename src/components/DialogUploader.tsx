@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { 
   Box, 
   Button, 
@@ -23,6 +24,7 @@ interface DialogUploaderProps {
 }
 
 export default function DialogUploader({ onUploadSuccess }: DialogUploaderProps) {
+  const router = useRouter();
   const [fileName, setFileName] = useState('');
   const [fileContent, setFileContent] = useState('');
   const [lessonId, setLessonId] = useState('');
@@ -81,6 +83,8 @@ export default function DialogUploader({ onUploadSuccess }: DialogUploaderProps)
       });
       
       if (data.success) {
+        console.log('Dialog upload successful. Uploaded dialog for lesson:', lessonId);
+        
         // Сбрасываем поля
         setFileName('');
         setFileContent('');
@@ -89,6 +93,24 @@ export default function DialogUploader({ onUploadSuccess }: DialogUploaderProps)
         
         // Уведомляем родительский компонент об успешной загрузке
         onUploadSuccess();
+        
+        // Добавляем небольшую задержку перед перенаправлением
+        setTimeout(() => {
+          // Создаем уникальный параметр для предотвращения кэширования
+          const cacheBuster = `refresh=${Date.now()}-${Math.random().toString(36).substring(2, 15)}`;
+          console.log('Redirecting to dialogs page with cache buster:', cacheBuster);
+          
+          // Перенаправляем на страницу диалогов с параметром для предотвращения кэширования
+          // Используем router.replace вместо router.push для полного обновления страницы
+          router.replace(`/dialogs?${cacheBuster}`);
+          
+          // Дополнительно обновляем страницу через window.location для продакшен-режима
+          setTimeout(() => {
+            if (typeof window !== 'undefined') {
+              window.location.href = `/dialogs?${cacheBuster}&force=true`;
+            }
+          }, 500);
+        }, 1000);
       }
     } catch (error) {
       setResult({
